@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Padrinhos — Natan & Izadora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --ivory:#faf7f2;--warm:#f5ede0;--gold:#c9a87a;--gold2:#e8d5a3;
+  --dark:#1c1714;--brown:#5d4c40;--muted:#8a7060;--accent:#b8965a;
+  --green:#27ae60;--red:#e74c3c;--white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:linear-gradient(135deg,var(--ivory),var(--warm));
+  font-family:'Cormorant Garamond',serif;color:var(--dark);
+  min-height:100vh;line-height:1.6;
+}
+.container{max-width:1000px;margin:0 auto;padding:2rem}
+
+/* Convite */
+.invite-card{
+  background:var(--white);border-radius:24px;padding:3rem 2rem;
+  box-shadow:0 20px 50px rgba(93,76,64,.15);margin-bottom:2rem;
+  border:1px solid rgba(201,168,122,.2);position:relative;
+  overflow:hidden;text-align:center;
+}
+.invite-card::before{
+  content:'❤️';position:absolute;top:-20px;left:-20px;
+  font-size:8rem;opacity:.03;transform:rotate(15deg);
+}
+.invite-card::after{
+  content:'❤️';position:absolute;bottom:-20px;right:-20px;
+  font-size:8rem;opacity:.03;transform:rotate(-15deg);
+}
+.invite-hearts{
+  display:flex;justify-content:center;gap:1rem;margin-bottom:2rem;
+}
+.invite-hearts span{
+  font-size:2rem;color:var(--gold);opacity:.6;
+  animation:floatHeart 2s ease-in-out infinite;
+}
+.invite-hearts span:nth-child(2){animation-delay:.3s}
+.invite-hearts span:nth-child(3){animation-delay:.6s}
+@keyframes floatHeart{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.invite-names{
+  font-family:'Dancing Script',cursive;
+  font-size:3.5rem;color:var(--brown);margin-bottom:1rem;
+}
+.invite-couple{
+  font-size:2rem;color:var(--gold);margin-bottom:1.5rem;
+  font-family:'Dancing Script',cursive;
+  background:rgba(201,168,122,.1);
+  padding:.5rem 2rem;
+  border-radius:50px;
+  display:inline-block;
+}
+.invite-message{
+  font-size:1.3rem;color:var(--dark);max-width:600px;margin:0 auto 2rem;
+  line-height:1.8;font-style:italic;
+}
+.invite-message strong{color:var(--gold);font-weight:600}
+.invite-question{
+  font-size:1.6rem;margin:2rem 0 1rem;
+  color:var(--brown);
+  font-family:'Playfair Display',serif;
+}
+.invite-signature{
+  font-family:'Dancing Script',cursive;
+  font-size:2.2rem;color:var(--gold);margin-top:2rem;
+}
+.invite-signature span{color:var(--brown);font-size:1.8rem;}
+
+/* Formulário */
+.form-wrap{
+  background:var(--white);border-radius:24px;padding:2.5rem;
+  box-shadow:0 15px 40px rgba(93,76,64,.1);margin-bottom:2rem;
+}
+.form-title{
+  font-family:'Playfair Display',serif;font-size:2rem;
+  color:var(--dark);margin-bottom:.5rem;text-align:center;
+}
+.form-sub{
+  text-align:center;color:var(--muted);margin-bottom:2rem;
+  font-style:italic;font-size:1.1rem;
+}
+.form-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+  margin-bottom:1.5rem;
+}
+.form-group{
+  margin-bottom:1.2rem;
+}
+.form-group label{
+  display:block;font-family:'Jost',sans-serif;font-size:.7rem;
+  font-weight:500;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5rem;
+}
+.form-input{
+  width:100%;padding:.9rem 1.2rem;border:2px solid rgba(201,168,122,.2);
+  border-radius:12px;font-family:'Cormorant Garamond',serif;
+  font-size:1rem;color:var(--dark);outline:none;transition:all .3s;
+}
+.form-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,122,.1)}
+.radio-group{
+  display:flex;gap:1.5rem;justify-content:center;margin:2rem 0;
+}
+.radio-option{flex:1;max-width:200px}
+.radio-option input{display:none}
+.radio-label{
+  display:flex;flex-direction:column;align-items:center;gap:.8rem;
+  padding:1.5rem;background:rgba(245,237,224,.4);border:2px solid rgba(201,168,122,.2);
+  border-radius:16px;cursor:pointer;transition:all .3s;
+}
+.radio-option input:checked + .radio-label{
+  background:rgba(201,168,122,.1);border-color:var(--gold);
+  box-shadow:0 5px 20px rgba(201,168,122,.2);
+}
+.radio-label i{font-size:2rem;color:var(--gold)}
+.radio-label span{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--dark)}
+.submit-btn{
+  width:100%;padding:1.2rem;background:linear-gradient(135deg,var(--brown),var(--dark));
+  color:#fff;border:none;border-radius:50px;font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:500;cursor:pointer;transition:all .3s;
+  display:flex;align-items:center;justify-content:center;gap:.8rem;
+}
+.submit-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(93,76,64,.25);}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Área dos Padrinhos (após confirmação) */
+.godparent-area{
+  display:none;background:var(--white);border-radius:24px;padding:2.5rem;
+  box-shadow:0 20px 50px rgba(93,76,64,.15);
+}
+.area-header{
+  text-align:center;margin-bottom:2.5rem;padding-bottom:1.5rem;
+  border-bottom:2px solid rgba(201,168,122,.2);
+}
+.area-header h2{
+  font-family:'Dancing Script',cursive;font-size:2.8rem;
+  color:var(--brown);margin-bottom:.5rem;
+}
+.area-header p{color:var(--muted);font-size:1.2rem;font-style:italic;}
+.welcome-message{
+  background:rgba(201,168,122,.08);padding:1.5rem;border-radius:12px;
+  margin-bottom:2rem;border-left:4px solid var(--gold);
+  font-size:1.2rem;color:var(--dark);
+}
+
+/* Cards de informações */
+.info-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin-bottom:2.5rem;
+}
+.info-card{
+  background:linear-gradient(135deg,var(--ivory),var(--warm));
+  border-radius:16px;padding:1.8rem;border:1px solid rgba(201,168,122,.2);
+}
+.info-card h3{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  color:var(--dark);margin-bottom:1.2rem;display:flex;
+  align-items:center;gap:.6rem;padding-bottom:.6rem;
+  border-bottom:2px solid rgba(201,168,122,.15);
+}
+.info-card h3 i{color:var(--gold)}
+.info-row{
+  display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.8rem;
+}
+.info-row i{color:var(--gold);font-size:1rem;width:20px;margin-top:.2rem;}
+.info-row .label{font-weight:600;color:var(--brown);min-width:80px;}
+.info-row .value{color:var(--dark);}
+
+/* Traje dos Padrinhos */
+.godparent-attire{
+  background:linear-gradient(135deg,#fff9f0,#fff5e6);
+  border-radius:16px;padding:2rem;margin:2rem 0;
+  border-left:4px solid var(--gold);position:relative;
+  overflow:hidden;
+}
+.godparent-attire::before{
+  content:'👔';position:absolute;bottom:-10px;right:-10px;
+  font-size:5rem;opacity:.1;transform:rotate(-10deg);
+}
+.godparent-attire::after{
+  content:'👗';position:absolute;top:-10px;left:-10px;
+  font-size:5rem;opacity:.1;transform:rotate(10deg);
+}
+.attire-title{
+  font-family:'Playfair Display',serif;font-size:1.8rem;
+  color:var(--brown);margin-bottom:1.5rem;text-align:center;
+}
+.attire-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+  margin-top:1.5rem;
+}
+.attire-col{
+  background:rgba(255,255,255,.7);padding:1.5rem;border-radius:12px;
+  backdrop-filter:blur(5px);
+}
+.attire-col h4{
+  font-family:'Playfair Display',serif;font-size:1.3rem;
+  color:var(--dark);margin-bottom:1rem;display:flex;
+  align-items:center;gap:.5rem;
+}
+.attire-col h4 i{color:var(--gold)}
+.attire-desc{
+  color:var(--dark);font-size:1.1rem;margin-bottom:.8rem;
+}
+.color-swatch{
+  display:inline-block;padding:.4rem 1rem;
+  background:var(--brown);color:#fff;border-radius:20px;
+  font-size:.9rem;margin:.3rem;font-weight:500;
+}
+.color-swatch.gold{background:var(--gold);color:var(--dark);}
+.color-swatch.beige{background:#e8d8c9;color:var(--dark);}
+.attire-note{
+  margin-top:1rem;font-style:italic;color:var(--muted);
+  font-size:.95rem;display:flex;align-items:center;gap:.5rem;
+}
+.attire-note i{color:var(--gold)}
+
+/* Cronograma */
+.schedule-item{
+  display:flex;gap:1rem;padding:1rem;
+  border-bottom:1px solid rgba(201,168,122,.1);
+}
+.schedule-item:last-child{border-bottom:none}
+.schedule-time{
+  font-family:'Jost',sans-serif;font-size:.8rem;
+  font-weight:600;color:var(--gold);min-width:70px;
+}
+.schedule-desc h5{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dark);}
+.schedule-desc p{color:var(--muted);font-size:.9rem;margin:0;}
+
+/* Avisos */
+.warning-box{
+  background:rgba(231,76,60,.05);border:1px solid rgba(231,76,60,.2);
+  border-radius:12px;padding:1.5rem;margin-top:2rem;
+}
+.warning-box h4{
+  color:#e74c3c;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;
+}
+.warning-box ul{padding-left:1.5rem;color:var(--dark);}
+.warning-box li{margin-bottom:.5rem;}
+
+/* Toast */
+.toast-notif{
+  position:fixed;top:20px;right:20px;background:#fff;border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);padding:1rem 1.4rem;
+  transform:translateX(150%);opacity:0;transition:all .4s;z-index:9999;
+  border-left:4px solid;max-width:320px;
+}
+.toast-notif.show{transform:translateX(0);opacity:1}
+.toast-notif.success{border-left-color:#27ae60;background:#f0fff4}
+.toast-notif.error{border-left-color:#e74c3c;background:#fff5f5}
+.toast-notif .tn-inner{display:flex;align-items:center;gap:.8rem}
+.toast-notif .tn-icon{font-size:1.1rem}
+.toast-notif .tn-text{font-family:'Cormorant Garamond',serif;font-size:.95rem}
+
+@media(max-width:768px){
+  .container{padding:1rem}
+  .invite-card{padding:2rem 1.5rem}
+  .invite-names{font-size:2.5rem}
+  .invite-couple{font-size:1.5rem}
+  .invite-message{font-size:1.1rem}
+  .invite-question{font-size:1.3rem}
+  .radio-group{flex-direction:column;align-items:center}
+  .radio-option{width:100%;max-width:100%}
+  .attire-grid{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <!-- CONVITE PERSONALIZADO (será preenchido com o nome do casal via URL) -->
+  <div class="invite-card" id="invite-card">
+    <div class="invite-hearts">
+      <span>❤️</span><span>💕</span><span>❤️</span>
+    </div>
+    <h1 class="invite-names">Natan & Izadora</h1>
+    <div class="invite-couple" id="invite-couple-name"></div>
+    
+    <div class="invite-message" id="invite-message-content">
+      <!-- Mensagem será inserida dinamicamente -->
+    </div>
+    
+    <div class="invite-question" id="invite-question">
+      <!-- Pergunta será inserida dinamicamente -->
+    </div>
+    
+    <div class="invite-signature">
+      Com amor, <span>Iza e Nata</span> ❤️
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO DE RESPOSTA -->
+  <div class="form-wrap" id="form-section">
+    <h2 class="form-title" id="form-title">Respondam ao Convite</h2>
+    <p class="form-sub" id="form-sub">Queridos <span id="form-couple-name"></span>, preencham seus dados abaixo</p>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome da Madrinha *</label>
+        <input type="text" id="madrinha-name" class="form-input" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <label>Email da Madrinha *</label>
+        <input type="email" id="madrinha-email" class="form-input" placeholder="email@exemplo.com">
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome do Padrinho *</label>
+        <input type="text" id="padrinho-name" class="form-input" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <label>Email do Padrinho *</label>
+        <input type="email" id="padrinho-email" class="form-input" placeholder="email@exemplo.com">
+      </div>
+    </div>
+    
+    <input type="hidden" id="selected-couple" value="">
+    
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" name="godparent-response" id="accept-yes" value="Sim">
+        <label for="accept-yes" class="radio-label">
+          <i class="fas fa-check-circle"></i>
+          <span>Sim, aceitamos!</span>
+        </label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" name="godparent-response" id="accept-no" value="Não">
+        <label for="accept-no" class="radio-label">
+          <i class="fas fa-times-circle"></i>
+          <span>Não poderemos</span>
+        </label>
+      </div>
+    </div>
+    
+    <button class="submit-btn" onclick="submitGodparentResponse()">
+      <i class="fas fa-heart"></i> Enviar Resposta
+    </button>
+  </div>
+
+  <!-- ÁREA EXCLUSIVA DOS PADRINHOS (aparece após confirmação) -->
+  <div class="godparent-area" id="godparent-area">
+    <div class="area-header">
+      <h2>Bem-vindos, <span id="godparent-names-display"></span>!</h2>
+      <p>Área exclusiva para padrinhos</p>
+    </div>
+    
+    <div class="welcome-message">
+      <i class="fas fa-heart" style="color:var(--gold);margin-right:.8rem;"></i>
+      É com imensa alegria que confirmamos sua presença como padrinhos. Preparamos todas as informações para este dia especial.
+    </div>
+    
+    <!-- Informações do Casamento -->
+    <h3 style="font-family:'Playfair Display';margin-bottom:1.5rem;">
+      <i class="fas fa-ring" style="color:var(--gold);margin-right:.5rem;"></i>
+      Informações do Casamento
+    </h3>
+    
+    <div class="info-grid">
+      <div class="info-card">
+        <h3><i class="fas fa-church"></i> Cerimónia</h3>
+        <div class="info-row"><i class="fas fa-calendar"></i><span class="label">Data:</span><span class="value">07 de Junho de 2026</span></div>
+        <div class="info-row"><i class="fas fa-clock"></i><span class="label">Horário:</span><span class="value">16h00</span></div>
+        <div class="info-row"><i class="fas fa-map-marker-alt"></i><span class="label">Local:</span><span class="value">R. da Águia 3, Albufeira</span></div>
+        <a href="https://maps.app.goo.gl/8D5mZzLu3rz635i79" target="_blank" style="display:inline-block;margin-top:1rem;color:var(--gold);">Ver no Maps →</a>
+      </div>
+      
+      <div class="info-card">
+        <h3><i class="fas fa-glass-cheers"></i> Recepção</h3>
+        <div class="info-row"><i class="fas fa-calendar"></i><span class="label">Data:</span><span class="value">07 de Junho de 2026</span></div>
+        <div class="info-row"><i class="fas fa-clock"></i><span class="label">Horário:</span><span class="value">20h30 (até 03h00)</span></div>
+        <div class="info-row"><i class="fas fa-map-marker-alt"></i><span class="label">Local:</span><span class="value">Restaurante A Grelha do Ti Manel</span></div>
+        <a href="https://maps.app.goo.gl/VFcoYoj2G4scPTpB7" target="_blank" style="display:inline-block;margin-top:1rem;color:var(--gold);">Ver no Maps →</a>
+      </div>
+    </div>
+    
+    <!-- TRAJE DOS PADRINHOS -->
+    <div class="godparent-attire">
+      <h3 class="attire-title">✨ Traje dos Padrinhos ✨</h3>
+      
+      <div class="attire-grid">
+        <!-- Madrinhas -->
+        <div class="attire-col">
+          <h4><i class="fas fa-female"></i> Para as Madrinhas</h4>
+          <div class="attire-desc">
+            Vestido longo ou midi em tons pastéis ou terrosos, seguindo a paleta do casamento.
+          </div>
+          <div style="margin:.8rem 0;">
+            <span class="color-swatch beige">Bege</span>
+            <span class="color-swatch" style="background:#d4bda1;">Caramelo</span>
+            <span class="color-swatch" style="background:#e8b4b8;">Blush</span>
+            <span class="color-swatch" style="background:#c5b9d0;">Lavanda</span>
+          </div>
+          <div class="attire-note">
+            <i class="fas fa-info-circle"></i>
+            <span>Evite branco total (reservado para a noiva) e azul vibrante</span>
+          </div>
+        </div>
+        
+        <!-- Padrinhos -->
+        <div class="attire-col">
+          <h4><i class="fas fa-male"></i> Para os Padrinhos</h4>
+          <div class="attire-desc">
+            Traje social completo: terno ou blazer em tons de cinza, azul marinho ou bege.
+          </div>
+          <div style="margin:.8rem 0;">
+            <span class="color-swatch" style="background:#6c757d;">Cinza</span>
+            <span class="color-swatch" style="background:#2c3e50;">Azul Marinho</span>
+            <span class="color-swatch beige">Bege</span>
+          </div>
+          <div class="attire-note">
+            <i class="fas fa-info-circle"></i>
+            <span>Gravata e acessórios podem seguir a paleta de cores</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="text-align:center;margin-top:2rem;font-style:italic;color:var(--muted);">
+        <i class="fas fa-heart" style="color:var(--gold);"></i>
+        O traje dos padrinhos será diferenciado para destacar o papel especial de cada um
+        <i class="fas fa-heart" style="color:var(--gold);"></i>
+      </div>
+    </div>
+    
+    <!-- Cronograma do Dia -->
+    <div class="info-card" style="margin-top:1.5rem;">
+      <h3><i class="fas fa-clock"></i> Cronograma para Padrinhos</h3>
+      <div class="schedule-item">
+        <div class="schedule-time">14h30</div>
+        <div class="schedule-desc">
+          <h5>Chegada dos Padrinhos</h5>
+          <p>Chegada ao local da cerimónia para fotos e preparativos</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">15h30</div>
+        <div class="schedule-desc">
+          <h5>Recepção aos Convidados</h5>
+          <p>Padrinhos auxiliam na recepção dos demais convidados</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">16h00</div>
+        <div class="schedule-desc">
+          <h5>Cerimónia</h5>
+          <p>Entrada dos padrinhos antes dos noivos</p>
+        </div>
+      </div>
+      <div class="schedule-item">
+        <div class="schedule-time">18h00</div>
+        <div class="schedule-desc">
+          <h5>Cocktail e Fotos</h5>
+          <p>Fotos oficiais com os noivos e cocktail</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Avisos Importantes -->
+    <div class="warning-box">
+      <h4><i class="fas fa-exclamation-triangle"></i> Informações Importantes</h4>
+      <ul>
+        <li>Chegada com antecedência mínima de 1h30 para fotos e orientações</li>
+        <li>Traje conforme especificado acima — sua roupa faz parte da identidade visual do casamento</li>
+        <li>Confirmar presença até 30 de Abril para organização das mesas</li>
+        <li>Qualquer dúvida, contacte os noivos pelo WhatsApp</li>
+      </ul>
+    </div>
+    
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="https://wa.me/351932589259" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;">
+        <i class="fab fa-whatsapp"></i> Falar com os Noivos
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// SUPABASE CONFIG
+const SUPABASE_URL = 'https://yihqeaqjatwnekhdqcju.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+function showToast(msg, type = 'success') {
+  const t = document.createElement('div');
+  t.className = `toast-notif ${type}`;
+  t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type === 'success' ? '✅' : '❌'}</span><span class="tn-text">${msg}</span></div>`;
+  document.body.appendChild(t);
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+}
+
+// Mapeamento dos casais/indivíduos
+const coupleMapping = {
+  // Casais (padrinhos)
+  'jane-e-rogerio': { nome: 'Jane e Rogerio', tipo: 'casal' },
+  'izabella-e-tiago': { nome: 'Izabella e Tiago', tipo: 'casal' },
+  'alexandro-e-lauranne': { nome: 'Alexandro e Lauranne', tipo: 'casal' },
+  'sandra-e-andre': { nome: 'Sandra e André', tipo: 'casal' },
+  'raquel-e-elton': { nome: 'Raquel e Elton', tipo: 'casal' },
+  'bruna-e-heber': { nome: 'Bruna e Heber', tipo: 'casal' },
+  // Madrinhas individuais
+  'lorena': { nome: 'Lorena', tipo: 'madrinha' },
+  'nicole': { nome: 'Nicole', tipo: 'madrinha' }
+};
+
+// Extrair nome do casal da URL
+function getCoupleFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  let coupleParam = '';
+  
+  if (urlParams.has('casal')) {
+    coupleParam = urlParams.get('casal');
+  } else {
+    // Pega o primeiro parâmetro disponível
+    for (let [key, value] of urlParams.entries()) {
+      if (value) {
+        coupleParam = key + '=' + value;
+      } else {
+        coupleParam = key;
+      }
+      break;
+    }
+  }
+  
+  if (coupleParam && coupleMapping[coupleParam]) {
+    return coupleMapping[coupleParam];
+  }
+  
+  // Fallback (caso não encontre)
+  return { nome: 'Bruna & Marcos', tipo: 'casal' };
+}
+
+// Mensagens personalizadas
+function getMessageByType(tipo, nome) {
+  if (tipo === 'casal') {
+    return {
+      mensagem: `
+        <p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
+        <p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
+        <p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>
+      `,
+      pergunta: `❤️ ${nome}, aceitam ser nossos padrinhos de casamento? ❤️`
+    };
+  } else {
+    return {
+      mensagem: `
+        <p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
+        <p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
+        <p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>
+      `,
+      pergunta: `❤️ ${nome}, aceita ser nossa madrinha de casamento? ❤️`
+    };
+  }
+}
+
+// Carregar nome do casal e mensagem personalizada
+const coupleData = getCoupleFromUrl();
+const coupleName = coupleData.nome;
+const coupleType = coupleData.tipo;
+const messages = getMessageByType(coupleType, coupleName);
+
+// Atualizar a página com as informações
+document.getElementById('invite-couple-name').textContent = coupleName;
+document.getElementById('invite-message-content').innerHTML = messages.mensagem;
+document.getElementById('invite-question').innerHTML = messages.pergunta;
+document.getElementById('form-couple-name').textContent = coupleName;
+document.getElementById('selected-couple').value = coupleName;
+
+// Ajustar o formulário para madrinhas individuais (remover campos do padrinho se for madrinha individual)
+if (coupleType === 'madrinha') {
+  // Esconder campos do padrinho
+  document.querySelector('.form-row:nth-child(2)').style.display = 'none';
+  
+  // Ajustar título do formulário
+  document.getElementById('form-title').textContent = 'Responda ao Convite';
+  document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
+}
+
+async function submitGodparentResponse() {
+  const madrinhaNome = document.getElementById('madrinha-name').value.trim();
+  const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
+  const padrinhoNome = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
+  const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
+  const couple = document.getElementById('selected-couple').value;
+  const responseEl = document.querySelector('input[name="godparent-response"]:checked');
+  
+  if (!madrinhaNome) return showToast('Por favor, digite o nome da madrinha.', 'error');
+  if (!madrinhaEmail) return showToast('Por favor, digite o email da madrinha.', 'error');
+  if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
+  if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
+  if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
+  
+  const resposta = responseEl.value;
+  
+  // Gerar couple_id a partir do nome do casal
+  const couple_id = couple.toLowerCase()
+    .replace(/\s+&\s+/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+  
+  try {
+    // Inserir madrinha
+    const { error: error1 } = await sb
+      .from('godparents')
+      .insert([{ 
+        nome: madrinhaNome, 
+        email: madrinhaEmail, 
+        resposta,
+        couple: couple,
+        couple_id: couple_id,
+        tipo: 'madrinha'
+      }]);
+    
+    if (error1) throw error1;
+    
+    // Se for casal, inserir padrinho também
+    if (coupleType === 'casal') {
+      const { error: error2 } = await sb
+        .from('godparents')
+        .insert([{ 
+          nome: padrinhoNome, 
+          email: padrinhoEmail, 
+          resposta,
+          couple: couple,
+          couple_id: couple_id,
+          tipo: 'padrinho'
+        }]);
+      
+      if (error2) throw error2;
+    }
+    
+    showToast('Resposta enviada com sucesso! 💌');
+    
+    // Se aceitou, mostrar área dos padrinhos
+    if (resposta === 'Sim') {
+      document.getElementById('invite-card').style.display = 'none';
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('godparent-area').style.display = 'block';
+      document.getElementById('godparent-names-display').textContent = couple;
+    } else {
+      // Se não aceitou, apenas agradecer
+      document.getElementById('form-section').innerHTML = `
+        <div style="text-align:center;padding:2rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">💌</div>
+          <h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2>
+          <p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p>
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error(error);
+    if (error.code === '23505') {
+      showToast('Um dos emails já foi registado.', 'error');
+    } else {
+      showToast('Erro ao salvar. Tente novamente.', 'error');
+    }
+  }
+}
+</script>
+
+<!-- SQL para criar a tabela godparents no Supabase -->
+<!--
+CREATE TABLE godparents (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    resposta TEXT CHECK (resposta IN ('Sim', 'Não')) NOT NULL,
+    couple TEXT NOT NULL,
+    couple_id TEXT NOT NULL,
+    tipo TEXT CHECK (tipo IN ('madrinha', 'padrinho')) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+);
+
+ALTER TABLE godparents ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Permitir inserção pública" ON godparents
+    FOR INSERT TO public WITH CHECK (true);
+
+CREATE POLICY "Permitir leitura pública" ON godparents
+    FOR SELECT TO public USING (true);
+-->
+</body>
+</html>

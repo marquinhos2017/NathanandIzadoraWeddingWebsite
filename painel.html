@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Natan & Izadora</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --dark:#1c1714;--brown:#5d4c40;--gold:#c9a87a;--gold2:#e8d5a3;
+  --ivory:#faf7f2;--muted:#8a7060;--white:#fff;
+  --green:#27ae60;--red:#e74c3c;--yellow:#f39c12;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#f0ebe4;font-family:'Jost',sans-serif;color:var(--dark);min-height:100vh}
+
+/* ── LOGIN ── */
+#login-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--dark),var(--brown));
+  position:fixed;inset:0;z-index:999;transition:opacity .5s,visibility .5s
+}
+#login-screen.hidden{opacity:0;visibility:hidden}
+.login-card{background:var(--white);border-radius:16apx;padding:3rem;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-logo{font-family:'Playfair Display',serif;font-size:2.5rem;font-style:italic;color:var(--gold);margin-bottom:.5rem}
+.login-sub{font-size:.8rem;color:var(--muted);margin-bottom:2rem;letter-spacing:.05em}
+.login-card label{display:block;font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;text-align:left}
+.login-card input{width:100%;padding:.85rem 1rem;border:2px solid rgba(201,168,122,.3);border-radius:8px;font-family:'Jost',sans-serif;font-size:1rem;color:var(--dark);outline:none;margin-bottom:1rem;transition:border-color .3s}
+.login-card input:focus{border-color:var(--gold)}
+.login-btn{width:100%;padding:1rem;background:linear-gradient(135deg,var(--brown),var(--dark));color:#fff;border:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.login-btn:hover{background:linear-gradient(135deg,#7a6050,#3a2e28);transform:translateY(-2px)}
+.login-error{color:var(--red);font-size:.85rem;margin-top:.5rem;display:none}
+
+/* ── ADMIN LAYOUT ── */
+#admin-panel{display:none}
+#admin-panel.show{display:block}
+.admin-header{background:linear-gradient(135deg,var(--dark),var(--brown));color:#fff;padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.admin-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:var(--gold)}
+.admin-header-right{display:flex;align-items:center;gap:1rem}
+.admin-user{font-size:.75rem;color:rgba(255,255,255,.5);letter-spacing:.05em}
+.logout-btn{padding:.5rem 1.2rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:6px;font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.logout-btn:hover{background:rgba(255,255,255,.2)}
+
+.admin-body{max-width:1400px;margin:0 auto;padding:2rem}
+
+/* ── STATS CARDS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin-bottom:2rem}
+.stat-card{background:var(--white);border-radius:12px;padding:1.5rem;box-shadow:0 3px 15px rgba(0,0,0,.06);border-left:4px solid;transition:transform .3s}
+.stat-card:hover{transform:translateY(-3px)}
+.stat-card.total{border-left-color:var(--gold)}
+.stat-card.confirmados{border-left-color:var(--green)}
+.stat-card.declinados{border-left-color:var(--red)}
+.stat-card.pendentes{border-left-color:var(--yellow)}
+.stat-card.pessoas{border-left-color:#9b59b6}
+.stat-icon{font-size:1.8rem;margin-bottom:.8rem}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:300;color:var(--dark);line-height:1}
+.stat-label{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+/* ── TOOLBAR ── */
+.toolbar{background:var(--white);border-radius:12px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;box-shadow:0 3px 15px rgba(0,0,0,.06);display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.search-wrap{flex:1;min-width:200px;position:relative}
+.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem}
+.search-input{width:100%;padding:.7rem .7rem .7rem 2.4rem;border:2px solid rgba(201,168,122,.25);border-radius:8px;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--dark);outline:none;transition:border-color .3s}
+.search-input:focus{border-color:var(--gold)}
+.filter-btns{display:flex;gap:.5rem;flex-wrap:wrap}
+.filter-btn{padding:.5rem 1rem;border-radius:20px;border:2px solid rgba(201,168,122,.3);background:transparent;font-family:'Jost',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s;color:var(--muted)}
+.filter-btn:hover{border-color:var(--gold);color:var(--brown)}
+.filter-btn.active{background:var(--gold);border-color:var(--gold);color:#fff}
+.action-btns{display:flex;gap:.5rem}
+.action-btn{padding:.6rem 1.2rem;border:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .3s}
+.action-btn.export{background:linear-gradient(135deg,var(--green),#219a52);color:#fff}
+.action-btn.export:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(39,174,96,.3)}
+.action-btn.refresh{background:rgba(201,168,122,.15);color:var(--brown)}
+.action-btn.refresh:hover{background:rgba(201,168,122,.3)}
+
+/* ── TABLE ── */
+.table-wrap{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 3px 15px rgba(0,0,0,.06)}
+.table-header{padding:1.2rem 1.5rem;border-bottom:1px solid rgba(201,168,122,.15);display:flex;justify-content:space-between;align-items:center}
+.table-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:400;color:var(--dark)}
+.table-count{font-size:.7rem;color:var(--muted);letter-spacing:.05em}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+thead{background:linear-gradient(135deg,var(--dark),var(--brown))}
+th{padding:.9rem 1rem;text-align:left;font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+th:first-child{border-radius:0}
+tbody tr{border-bottom:1px solid rgba(201,168,122,.1);transition:background .2s}
+tbody tr:hover{background:rgba(201,168,122,.05)}
+tbody tr:last-child{border-bottom:none}
+td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
+.td-nome strong{font-weight:600}
+.td-nome small{display:block;font-size:.75rem;color:var(--muted);margin-top:.1rem}
+.td-contact{font-size:.8rem;color:var(--muted)}
+.presenca-badge{padding:.25rem .7rem;border-radius:20px;font-size:.65rem;font-weight:600;letter-spacing:.05em;display:inline-block}
+.badge-sim{background:#e8f5e9;color:var(--green)}
+.badge-nao{background:#fce4ec;color:var(--red)}
+.td-date{font-size:.75rem;color:var(--muted)}
+.td-msg{font-size:.8rem;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.td-msg:hover{color:var(--brown);text-decoration:underline}
+.td-actions{display:flex;gap:.4rem}
+.row-btn{width:30px;height:30px;border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .3s}
+.row-btn.del{background:rgba(231,76,60,.1);color:var(--red)}
+.row-btn.del:hover{background:var(--red);color:#fff}
+.row-btn.view{background:rgba(201,168,122,.1);color:var(--brown)}
+.row-btn.view:hover{background:var(--gold);color:#fff}
+
+/* ── EMPTY STATE ── */
+.empty-state{padding:4rem;text-align:center;color:var(--muted)}
+.empty-state i{font-size:3rem;margin-bottom:1rem;display:block;opacity:.3}
+.empty-state p{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic}
+
+/* ── LOADING ── */
+.loading-row td{text-align:center;padding:3rem;color:var(--muted)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(26,23,20,.8);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal{background:var(--white);border-radius:16px;padding:2.5rem;max-width:520px;width:90%;transform:translateY(20px);transition:transform .3s;max-height:90vh;overflow-y:auto}
+.modal-overlay.active .modal{transform:translateY(0)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);transition:color .3s}
+.modal-close:hover{color:var(--dark)}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;color:var(--dark);margin-bottom:1.5rem}
+.modal-field{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(201,168,122,.1)}
+.modal-field:last-child{border-bottom:none;margin-bottom:0}
+.modal-field .lbl{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;display:block}
+.modal-field .val{font-size:1rem;color:var(--dark);line-height:1.6}
+
+/* ── TOAST ── */
+.toast-notif{position:fixed;top:20px;right:20px;background:var(--white);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.15);padding:1rem 1.4rem;transform:translateX(150%);opacity:0;transition:all .4s cubic-bezier(.68,-.55,.265,1.55);z-index:9999;border-left:4px solid;max-width:320px}
+.toast-notif.show{transform:translateX(0);opacity:1}
+.toast-notif.success{border-left-color:var(--green);background:#f0fff4}
+.toast-notif.error{border-left-color:var(--red);background:#fff5f5}
+.toast-notif .tn-inner{display:flex;align-items:center;gap:.8rem}
+.toast-notif .tn-icon{font-size:1.1rem}
+.toast-notif .tn-text{font-family:'Jost',sans-serif;font-size:.9rem;color:var(--dark)}
+
+/* ── REALTIME BADGE ── */
+.realtime-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.25);border-radius:20px;font-size:.6rem;font-weight:600;color:var(--green);letter-spacing:.1em}
+.realtime-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:rtPulse 2s ease infinite}
+@keyframes rtPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+@media(max-width:768px){
+  .admin-body{padding:1rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .filter-btns,.action-btns{justify-content:flex-start}
+  th,td{padding:.6rem .7rem;font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Natan & Izadora</div>
+    <p class="login-sub">PAINEL DE ADMINISTRAÇÃO</p>
+    <div style="margin-bottom:1.2rem">
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="admin@seuemail.com">
+    </div>
+    <div style="margin-bottom:1.2rem">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()"><i class="fas fa-lock" style="margin-right:.5rem"></i>Entrar</button>
+    <p class="login-error" id="login-error">Email ou password incorrectos.</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <div class="admin-logo">N&I — Admin</div>
+    <div class="admin-header-right">
+      <div class="realtime-badge"><div class="realtime-dot"></div>TEMPO REAL</div>
+      <span class="admin-user" id="admin-email-display"></span>
+      <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt" style="margin-right:.3rem"></i>Sair</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- STATS -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card total"><div class="stat-icon">📋</div><div class="stat-num" id="s-total">--</div><div class="stat-label">Total Respostas</div></div>
+      <div class="stat-card confirmados"><div class="stat-icon">✅</div><div class="stat-num" id="s-sim">--</div><div class="stat-label">Confirmados</div></div>
+      <div class="stat-card declinados"><div class="stat-icon">❌</div><div class="stat-num" id="s-nao">--</div><div class="stat-label">Declinaram</div></div>
+      <div class="stat-card pessoas"><div class="stat-icon">👥</div><div class="stat-num" id="s-pessoas">--</div><div class="stat-label">Total Pessoas</div></div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <i class="fas fa-search"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar por nome ou email..." oninput="filterTable()">
+      </div>
+      <div class="filter-btns">
+        <button class="filter-btn active" data-filter="todos" onclick="setFilter(this,'todos')">Todos</button>
+        <button class="filter-btn" data-filter="Sim" onclick="setFilter(this,'Sim')">✅ Confirmados</button>
+        <button class="filter-btn" data-filter="Não" onclick="setFilter(this,'Não')">❌ Declinaram</button>
+      </div>
+      <div class="action-btns">
+        <button class="action-btn refresh" onclick="loadData()"><i class="fas fa-sync-alt"></i> Actualizar</button>
+        <button class="action-btn export" onclick="exportXLSX()"><i class="fas fa-file-excel"></i> Excel</button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="table-title">Lista de Convidados</div>
+        <div class="table-count" id="tableCount">— registos</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome & Email</th>
+              <th>Telefone</th>
+              
+              <th>Presença</th>
+              
+              <th>Mensagem</th>
+              <th>Data</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="rsvpTableBody">
+            <tr class="loading-row"><td colspan="9"><i class="fas fa-spinner fa-spin" style="margin-right:.5rem"></i>A carregar dados...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL DETALHE -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modal-title">Detalhe</h3>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════╗
+// ║  SUPABASE CONFIG — mesmos valores do index.html     ║
+// ╚══════════════════════════════════════════════════════╝
+// Update these values in your HTML file
+const SUPABASE_URL = 'https://yihqeaqjatwnekhdqcju.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
+
+// ── PASSWORD DO ADMIN (muda aqui) ──
+const ADMIN_PASSWORD = 'casamento2026';  // ← MUDA ESTA SENHA
+
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let allData      = [];
+let currentFilter = 'todos';
+
+// ════════════════
+// LOGIN
+// ════════════════
+async function doLogin(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+
+  if(!email || !pass){ errEl.textContent = 'Preencha email e password.'; errEl.style.display = 'block'; return; }
+
+  // Autenticar via Supabase Auth
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+  if(error){
+    // Fallback: login local por password simples (sem Supabase Auth)
+    if(pass === ADMIN_PASSWORD){
+      showAdminPanel(email);
+    } else {
+      errEl.textContent = 'Email ou password incorrectos.';
+      errEl.style.display = 'block';
+    }
+    return;
+  }
+  showAdminPanel(data.user.email);
+}
+
+function showAdminPanel(email){
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('admin-panel').classList.add('show');
+  document.getElementById('admin-email-display').textContent = email;
+  loadData();
+  subscribeRealtime();
+}
+
+async function doLogout(){
+  await sb.auth.signOut();
+  location.reload();
+}
+
+// Verificar sessão existente ao carregar
+sb.auth.getSession().then(({ data: { session } }) => {
+  if(session) showAdminPanel(session.user.email);
+});
+
+// ════════════════
+// LOAD DATA
+// ════════════════
+async function loadData(){
+  const tbody = document.getElementById('rsvpTableBody');
+ tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin" style="margin-right:.5rem"></i>A carregar...</td></tr>';
+
+  const { data, error } = await sb
+    .from('rsvp')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if(error){ showToast('Erro ao carregar dados: '+error.message, 'error'); return; }
+
+  allData = data || [];
+  updateStats();
+  renderTable();
+  showToast(`${allData.length} registos carregados`, 'success');
+}
+
+// ════════════════
+// REALTIME
+// ════════════════
+function subscribeRealtime(){
+  sb.channel('rsvp-changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'rsvp' }, payload => {
+      if(payload.eventType === 'INSERT'){
+        allData.unshift(payload.new);
+        updateStats();
+        renderTable();
+        showToast(`🎉 Nova resposta de ${payload.new.nome}!`);
+      } else if(payload.eventType === 'DELETE'){
+        allData = allData.filter(r => r.id !== payload.old.id);
+        updateStats();
+        renderTable();
+      }
+    })
+    .subscribe();
+}
+
+// ════════════════
+// STATS
+// ════════════════
+function updateStats(){
+  const total   = allData.length;
+  const sim     = allData.filter(r => r.presenca === 'Sim').length;
+  const nao     = allData.filter(r => r.presenca === 'Não').length;
+  const pessoas = sim; // Cada confirmação = 1 pessoa
+
+  document.getElementById('s-total').textContent  = total;
+  document.getElementById('s-sim').textContent    = sim;
+  document.getElementById('s-nao').textContent    = nao;
+  document.getElementById('s-pessoas').textContent = pessoas;
+}
+
+// ════════════════
+// RENDER TABLE
+// ════════════════
+function renderTable(){
+  const q       = document.getElementById('searchInput').value.toLowerCase();
+  let filtered  = allData;
+
+  if(currentFilter !== 'todos') filtered = filtered.filter(r => r.presenca === currentFilter);
+  if(q) filtered = filtered.filter(r =>
+    (r.nome||'').toLowerCase().includes(q) ||
+    (r.email||'').toLowerCase().includes(q)
+  );
+
+  document.getElementById('tableCount').textContent = `${filtered.length} de ${allData.length} registos`;
+
+  const tbody = document.getElementById('rsvpTableBody');
+  if(!filtered.length){
+    tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo encontrado.</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((r, i) => {
+    const dt = r.created_at ? new Date(r.created_at).toLocaleString('pt-PT', {day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+    const badge = r.presenca === 'Sim'
+      ? '<span class="presenca-badge badge-sim">✓ Sim</span>'
+      : '<span class="presenca-badge badge-nao">✗ Não</span>';
+    const msgTxt = r.mensagem ? r.mensagem.substring(0,50)+(r.mensagem.length>50?'…':'') : '<span style="color:#ccc">—</span>';
+
+    return `<tr>
+      <td style="color:var(--muted);font-size:.8rem">${i+1}</td>
+      <td class="td-nome"><strong>${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small></td>
+      <td class="td-contact">${escHtml(r.telefone||'—')}</td>
+     
+      <td>${badge}</td>
+     
+      <td class="td-msg" onclick="viewDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" title="${escHtml(r.mensagem||'')}">${msgTxt}</td>
+      <td class="td-date">${dt}</td>
+      <td><div class="td-actions">
+        <button class="row-btn view" onclick="viewDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" title="Ver detalhe"><i class="fas fa-eye"></i></button>
+        <button class="row-btn del" onclick="deleteRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ════════════════
+// FILTERS
+// ════════════════
+function setFilter(btn, filter){
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+function filterTable(){ renderTable(); }
+
+// ════════════════
+// DETAIL MODAL
+// ════════════════
+function viewDetail(r){
+  if(typeof r === 'string') r = JSON.parse(r);
+  const dt = r.created_at ? new Date(r.created_at).toLocaleString('pt-PT') : '—';
+  document.getElementById('modal-title').textContent = r.nome || 'Detalhe';
+ document.getElementById('modal-body').innerHTML = `
+  <div class="modal-field"><span class="lbl">Nome</span><div class="val">${escHtml(r.nome||'—')}</div></div>
+  <div class="modal-field"><span class="lbl">Email</span><div class="val">${escHtml(r.email||'—')}</div></div>
+  <div class="modal-field"><span class="lbl">Telefone</span><div class="val">${escHtml(r.telefone||'—')}</div></div>
+  <div class="modal-field"><span class="lbl">Presença</span><div class="val">${r.presenca==='Sim'?'✅ Confirmado':'❌ Declinado'}</div></div>
+  <div class="modal-field"><span class="lbl">Mensagem para os Noivos</span><div class="val" style="font-style:italic;color:var(--muted)">"${escHtml(r.mensagem||'Sem mensagem.')}"</div></div>
+  <div class="modal-field"><span class="lbl">Data de Submissão</span><div class="val">${dt}</div></div>
+`;
+  document.getElementById('detailModal').classList.add('active');
+}
+function closeModal(){
+  document.getElementById('detailModal').classList.remove('active');
+}
+document.getElementById('detailModal').addEventListener('click', e=>{
+  if(e.target === document.getElementById('detailModal')) closeModal();
+});
+
+// ════════════════
+// DELETE
+// ════════════════
+async function deleteRow(id, nome){
+  if(!confirm(`Apagar a resposta de "${nome}"? Esta acção não pode ser desfeita.`)) return;
+  const { error } = await sb.from('rsvp').delete().eq('id', id);
+  if(error){ showToast('Erro ao apagar: '+error.message, 'error'); return; }
+  allData = allData.filter(r => r.id !== id);
+  updateStats(); renderTable();
+  showToast(`Resposta de ${nome} apagada.`);
+}
+
+// ════════════════
+// EXPORT XLSX
+// ════════════════
+function exportXLSX(){
+  if(!allData.length){ showToast('Não há dados para exportar.', 'error'); return; }
+
+  const rows = allData.map((r,i) => ({
+    '#'              : i+1,
+    'Nome'           : r.nome        || '',
+    'Email'          : r.email       || '',
+    'Telefone'       : r.telefone    || '',
+    'Presença'       : r.presenca    || '',
+    'Mensagem'       : r.mensagem    || '',
+    'Data Submissão' : r.created_at ? new Date(r.created_at).toLocaleString('pt-PT') : ''
+  }));
+
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1 — Todos
+  const wsAll = XLSX.utils.json_to_sheet(rows);
+  wsAll['!cols'] = [4,25,28,15,8,40,18].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb, wsAll, 'Todos os Convidados');
+
+  // Sheet 2 — Confirmados
+  const conf = rows.filter(r => r['Presença'] === 'Sim');
+  if(conf.length){
+    const wsConf = XLSX.utils.json_to_sheet(conf);
+    wsConf['!cols'] = [4,25,28,15,8,40,18].map(w=>({wch:w}));
+    XLSX.utils.book_append_sheet(wb, wsConf, 'Confirmados');
+  }
+
+  // Sheet 3 — Resumo
+  const wsRes = XLSX.utils.aoa_to_sheet([
+    ['Resumo — Casamento Natan & Izadora'],
+    [],
+    ['Exportado em', new Date().toLocaleString('pt-PT')],
+    [],
+    ['Total de respostas',  allData.length],
+    ['✅ Confirmados',      allData.filter(r=>r.presenca==='Sim').length],
+    ['❌ Declinaram',       allData.filter(r=>r.presenca==='Não').length],
+    ['👥 Total de pessoas', allData.filter(r=>r.presenca==='Sim').length],
+  ]);
+  wsRes['!cols'] = [{wch:30},{wch:20}];
+  XLSX.utils.book_append_sheet(wb, wsRes, 'Resumo');
+
+  XLSX.writeFile(wb, `rsvp_natan_izadora_${new Date().toISOString().slice(0,10)}.xlsx`);
+  showToast('📥 Excel exportado com sucesso!');
+}
+// ════════════════
+// UTILS
+// ════════════════
+function escHtml(str){
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function showToast(msg, type='success'){
+  const t = document.createElement('div');
+  t.className = `toast-notif ${type}`;
+  t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type==='success'?'✅':'❌'}</span><span class="tn-text">${msg}</span></div>`;
+  document.body.appendChild(t);
+  setTimeout(()=> t.classList.add('show'), 10);
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=> t.remove(), 400); }, 3500);
+}
+</script>
+</body>
+</html>
