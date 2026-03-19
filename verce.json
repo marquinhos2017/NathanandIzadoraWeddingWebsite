@@ -1,12 +1,9 @@
 {
   "rewrites": [
-    {
-      "source": "/casal/:name",
-      "destination": "/padrinhos.html"
-    },
-    {
-      "source": "/madrinha/:name",
-      "destination": "/padrinhos.html"
-    }
+    { "source": "/casal/:slug", "destination": "/padrinhos.html" },
+    { "source": "/madrinha/:slug", "destination": "/padrinhos.html" },
+    { "source": "/padrinhos/casal/:slug", "destination": "/padrinhos.html" },
+    { "source": "/padrinhos/madrinha/:slug", "destination": "/padrinhos.html" },
+    { "source": "/:slug.html", "destination": "/:slug.html" }
   ]
 }
