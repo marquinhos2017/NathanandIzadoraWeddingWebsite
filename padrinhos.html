@@ -931,10 +931,20 @@ const coupleMapping = {
 };
 
 function getCoupleFromUrl() {
-  const p = new URLSearchParams(window.location.search);
-  if (!p.has('casal')) return null;
-  const key = p.get('casal');
-  return coupleMapping[key] || null;
+  // Primeiro tenta pegar dos parâmetros normais
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('casal')) {
+    return coupleMapping[urlParams.get('casal')] || null;
+  }
+  
+  // Depois tenta pegar da URL amigável (ex: /casal/jane-e-rogerio)
+  const pathParts = window.location.pathname.split('/');
+  if (pathParts.length >= 3 && (pathParts[1] === 'casal' || pathParts[1] === 'madrinha')) {
+    const coupleKey = pathParts[2];
+    return coupleMapping[coupleKey] || null;
+  }
+  
+  return null;
 }
 
 function checkAuthorization() {
