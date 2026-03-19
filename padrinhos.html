@@ -889,6 +889,19 @@ body{
 </div>
 
 <script>
+  // ADICIONE ISSO NO INÍCIO DO SCRIPT PARA DEBUG
+console.log('=== DEBUG INFO ===');
+console.log('URL completa:', window.location.href);
+console.log('Hostname:', window.location.hostname);
+console.log('Pathname:', window.location.pathname);
+console.log('Parâmetros:', window.location.search);
+console.log('Parâmetro casal:', new URLSearchParams(window.location.search).get('casal'));
+
+// Mostrar alerta com informações
+window.addEventListener('load', function() {
+  const casal = new URLSearchParams(window.location.search).get('casal');
+  alert(`URL atual: ${window.location.href}\nParâmetro casal: ${casal || 'NÃO ENCONTRADO'}`);
+});
   /* ── SUPABASE ──────────────────────────────────────── */
 const SUPABASE_URL  = 'https://yihqeaqjatwnekhdqcju.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
