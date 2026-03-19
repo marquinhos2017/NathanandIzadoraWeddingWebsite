@@ -1,16 +1,12 @@
 {
-  "name": "padrinhos-convite",
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
+      "source": "/casal/:name",
+      "destination": "/padrinhos.html"
+    },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/madrinha/:name",
+      "destination": "/padrinhos.html"
     }
   ]
 }
