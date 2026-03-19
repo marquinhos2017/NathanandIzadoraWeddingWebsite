@@ -889,73 +889,131 @@ body{
 </div>
 
 <script>
-  // ADICIONE ISSO NO INÍCIO DO SCRIPT PARA DEBUG
-console.log('=== DEBUG INFO ===');
-console.log('URL completa:', window.location.href);
-console.log('Hostname:', window.location.hostname);
-console.log('Pathname:', window.location.pathname);
-console.log('Parâmetros:', window.location.search);
-console.log('Parâmetro casal:', new URLSearchParams(window.location.search).get('casal'));
+  // AGUARDAR O DOM CARREGAR COMPLETAMENTE
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== DOM CARREGADO ===');
+    console.log('URL completa:', window.location.href);
+    console.log('Hostname:', window.location.hostname);
+    console.log('Pathname:', window.location.pathname);
+    console.log('Parâmetros:', window.location.search);
+    
+    // Mostrar alerta com informações (opcional, pode remover em produção)
+    const casalParam = new URLSearchParams(window.location.search).get('casal');
+    console.log('Parâmetro casal:', casalParam);
+    
+    // Inicializar a aplicação
+    initializeApp();
+  });
 
-// Mostrar alerta com informações
-window.addEventListener('load', function() {
-  const casal = new URLSearchParams(window.location.search).get('casal');
-  alert(`URL atual: ${window.location.href}\nParâmetro casal: ${casal || 'NÃO ENCONTRADO'}`);
-});
   /* ── SUPABASE ──────────────────────────────────────── */
-const SUPABASE_URL  = 'https://yihqeaqjatwnekhdqcju.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+  const SUPABASE_URL = 'https://yihqeaqjatwnekhdqcju.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-/* ── TOAST ─────────────────────────────────────────── */
-function showToast(msg, type = 'success') {
-  const t = document.createElement('div');
-  t.className = `toast-notif ${type}`;
-  t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type==='success'?'✅':'❌'}</span><span class="tn-text">${msg}</span></div>`;
-  document.body.appendChild(t);
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
-}
-
-/* ── COUPLE MAPPING ────────────────────────────────── */
-const coupleMapping = {
-  'jane-e-rogerio':        { nome:'Jane e Rogerio',        tipo:'casal' },
-  'izabella-e-tiago':      { nome:'Izabella e Tiago',      tipo:'casal' },
-  'alexandro-e-lauranne':  { nome:'Alexandro e Lauranne',  tipo:'casal' },
-  'sandra-e-andre':        { nome:'Sandra e André',        tipo:'casal' },
-  'raquel-e-elton':        { nome:'Raquel e Elton',        tipo:'casal' },
-  'bruna-e-heber':         { nome:'Bruna e Heber',         tipo:'casal' },
-  'lorena':                { nome:'Lorena',                tipo:'madrinha' },
-  'nicole':                { nome:'Nicole',                tipo:'madrinha' },
-};
-
-function getCoupleFromUrl() {
-  // Primeiro tenta pegar dos parâmetros normais
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('casal')) {
-    return coupleMapping[urlParams.get('casal')] || null;
+  /* ── TOAST ─────────────────────────────────────────── */
+  function showToast(msg, type = 'success') {
+    const t = document.createElement('div');
+    t.className = `toast-notif ${type}`;
+    t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type === 'success' ? '✅' : '❌'}</span><span class="tn-text">${msg}</span></div>`;
+    document.body.appendChild(t);
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
   }
-  
-  // Depois tenta pegar da URL amigável (ex: /casal/jane-e-rogerio)
-  const pathParts = window.location.pathname.split('/');
-  if (pathParts.length >= 3 && (pathParts[1] === 'casal' || pathParts[1] === 'madrinha')) {
-    const coupleKey = pathParts[2];
-    return coupleMapping[coupleKey] || null;
+
+  /* ── COUPLE MAPPING ────────────────────────────────── */
+  const coupleMapping = {
+    'jane-e-rogerio': { nome: 'Jane e Rogerio', tipo: 'casal' },
+    'izabella-e-tiago': { nome: 'Izabella e Tiago', tipo: 'casal' },
+    'alexandro-e-lauranne': { nome: 'Alexandro e Lauranne', tipo: 'casal' },
+    'sandra-e-andre': { nome: 'Sandra e André', tipo: 'casal' },
+    'raquel-e-elton': { nome: 'Raquel e Elton', tipo: 'casal' },
+    'bruna-e-heber': { nome: 'Bruna e Heber', tipo: 'casal' },
+    'lorena': { nome: 'Lorena', tipo: 'madrinha' },
+    'nicole': { nome: 'Nicole', tipo: 'madrinha' },
+  };
+
+  function getCoupleFromUrl() {
+    // Primeiro tenta pegar dos parâmetros normais
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('casal')) {
+      const coupleKey = urlParams.get('casal');
+      console.log('Couple key from query param:', coupleKey);
+      return coupleMapping[coupleKey] || null;
+    }
+
+    // Depois tenta pegar da URL amigável (ex: /casal/jane-e-rogerio)
+    const pathParts = window.location.pathname.split('/').filter(part => part !== '');
+    console.log('Path parts:', pathParts);
+
+    // Verifica se o path tem formato /casal/nome ou /madrinha/nome
+    if (pathParts.length >= 2) {
+      if (pathParts[0] === 'casal' || pathParts[0] === 'madrinha') {
+        const coupleKey = pathParts[1];
+        console.log('Couple key from path with prefix:', coupleKey);
+        return coupleMapping[coupleKey] || null;
+      }
+    }
+
+    // Tenta pegar diretamente do path (se for só o nome do casal)
+    if (pathParts.length === 1) {
+      const coupleKey = pathParts[0];
+      console.log('Couple key from direct path:', coupleKey);
+      return coupleMapping[coupleKey] || null;
+    }
+
+    return null;
   }
-  
-  return null;
-}
 
-function checkAuthorization() {
-  const coupleData = getCoupleFromUrl();
+  function getMessageByType(tipo, nome) {
+    if (tipo === 'casal') {
+      return {
+        mensagem: `<p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
+          <p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
+          <p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>`,
+        pergunta: `❤️ ${nome}, aceitam ser nossos padrinhos de casamento? ❤️`
+      };
+    } else {
+      return {
+        mensagem: `<p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
+          <p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
+          <p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>`,
+        pergunta: `❤️ ${nome}, aceita ser nossa madrinha de casamento? ❤️`
+      };
+    }
+  }
 
-  if (!coupleData) {
-    document.getElementById('invite-card').style.display = 'none';
-    document.getElementById('form-section').style.display = 'none';
-    document.getElementById('godparent-area').style.display = 'none';
+  function applyFormCustomizations(coupleType, coupleName, messages) {
+    document.getElementById('invite-couple-name').textContent = coupleName;
+    document.getElementById('invite-message-content').innerHTML = messages.mensagem;
+    document.getElementById('invite-question').innerHTML = messages.pergunta;
+    document.getElementById('form-couple-name').textContent = coupleName;
+    document.getElementById('selected-couple').value = coupleName;
 
+    if (coupleType === 'madrinha') {
+      const padrinhoRow = document.getElementById('padrinho-fields-row');
+      if (padrinhoRow) padrinhoRow.style.display = 'none';
+
+      document.getElementById('form-title').textContent = 'Responda ao Convite';
+      document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
+      document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
+      document.getElementById('accept-no-text').textContent = 'Não poderei';
+
+      const tabPadrinhos = document.getElementById('tab-padrinhos');
+      if (tabPadrinhos) tabPadrinhos.style.display = 'none';
+
+      const tabsEl = document.getElementById('attire-tabs');
+      if (tabsEl) {
+        tabsEl.style.maxWidth = '220px';
+        tabsEl.style.margin = '0 auto 2rem';
+      }
+    }
+  }
+
+  function showUnauthorizedMessage() {
     const container = document.querySelector('.container');
+    if (!container) return;
+    
     container.innerHTML = `
       <div style="text-align:center;padding:4rem 2rem;background:var(--white);border-radius:24px;box-shadow:0 20px 50px rgba(93,76,64,.15);">
         <div style="font-size:5rem;margin-bottom:1rem;">🔒</div>
@@ -969,99 +1027,20 @@ function checkAuthorization() {
         </div>
       </div>
     `;
-    return null;
   }
 
-  return coupleData;
-}
-
-function getMessageByType(tipo, nome) {
-  if (tipo === 'casal') {
-    return {
-      mensagem:`<p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
-        <p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
-        <p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>`,
-      pergunta:`❤️ ${nome}, aceitam ser nossos padrinhos de casamento? ❤️`
-    };
-  } else {
-    return {
-      mensagem:`<p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
-        <p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
-        <p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>`,
-      pergunta:`❤️ ${nome}, aceita ser nossa madrinha de casamento? ❤️`
-    };
-  }
-}
-
-/* ── APPLY FORM CUSTOMIZATIONS ─────────────────────── */
-function applyFormCustomizations(coupleType, coupleName, messages) {
-  document.getElementById('invite-couple-name').textContent = coupleName;
-  document.getElementById('invite-message-content').innerHTML = messages.mensagem;
-  document.getElementById('invite-question').innerHTML = messages.pergunta;
-  document.getElementById('form-couple-name').textContent = coupleName;
-  document.getElementById('selected-couple').value = coupleName;
-
-  if (coupleType === 'madrinha') {
-    const padrinhoRow = document.getElementById('padrinho-fields-row');
-    if (padrinhoRow) padrinhoRow.style.display = 'none';
-
-    document.getElementById('form-title').textContent = 'Responda ao Convite';
-    document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
-    document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
-    document.getElementById('accept-no-text').textContent = 'Não poderei';
-
-    const tabPadrinhos = document.getElementById('tab-padrinhos');
-    if (tabPadrinhos) tabPadrinhos.style.display = 'none';
-
-    const tabsEl = document.getElementById('attire-tabs');
-    if (tabsEl) {
-      tabsEl.style.maxWidth = '220px';
-      tabsEl.style.margin = '0 auto 2rem';
-    }
-  }
-}
-
-/* ── HIDE LOADER & SHOW CONTENT ────────────────────── */
-function hideLoaderAndShow(contentType, coupleType, coupleName, messages) {
-  setTimeout(() => {
-    document.getElementById('loader').style.display = 'none';
-
-    if (contentType === 'authorized') {
-      applyFormCustomizations(coupleType, coupleName, messages);
-      document.getElementById('invite-card').style.display = 'block';
-      document.getElementById('form-section').style.display = 'block';
-    } else if (contentType === 'alreadyAccepted') {
-      document.getElementById('godparent-names-display').textContent = coupleName;
-      document.getElementById('godparent-area').style.display = 'block';
-    }
-  }, 800);
-}
-
-/* ── INIT ──────────────────────────────────────────── */
-
-// Mostrar loader inicialmente, esconder o resto
-document.getElementById('loader').style.display = 'flex';
-document.getElementById('invite-card').style.display = 'none';
-document.getElementById('form-section').style.display = 'none';
-document.getElementById('godparent-area').style.display = 'none';
-
-// Verificar autorização
-const coupleData = checkAuthorization();
-
-if (!coupleData) {
-  document.getElementById('loader').style.display = 'none';
-} else {
-  const coupleName = coupleData.nome;
-  const coupleType = coupleData.tipo;
-  const messages   = getMessageByType(coupleType, coupleName);
-
-  // Verificar se o casal já aceitou — UMA única função, sem duplicata
-  async function checkIfAlreadyAccepted() {
+  async function checkIfAlreadyAccepted(coupleData) {
     try {
+      const coupleName = coupleData.nome;
+      const coupleType = coupleData.tipo;
+      const messages = getMessageByType(coupleType, coupleName);
+
       const couple_id = coupleName.toLowerCase()
         .replace(/\s+&\s+/g, '-')
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '');
+
+      console.log('Checking couple_id:', couple_id);
 
       const { data, error } = await sb
         .from('godparents')
@@ -1071,56 +1050,121 @@ if (!coupleData) {
 
       if (error) throw error;
 
+      // Esconder loader
+      document.getElementById('loader').style.display = 'none';
+
       if (data && data.length > 0) {
-        hideLoaderAndShow('alreadyAccepted', coupleType, coupleName, messages);
+        // Já aceitou - mostrar área de padrinhos
+        document.getElementById('godparent-names-display').textContent = coupleName;
+        document.getElementById('godparent-area').style.display = 'block';
       } else {
-        hideLoaderAndShow('authorized', coupleType, coupleName, messages);
+        // Ainda não respondeu - mostrar formulário
+        applyFormCustomizations(coupleType, coupleName, messages);
+        document.getElementById('invite-card').style.display = 'block';
+        document.getElementById('form-section').style.display = 'block';
       }
     } catch (err) {
       console.error('Erro ao verificar status:', err);
-      hideLoaderAndShow('authorized', coupleType, coupleName, messages);
+      
+      // Em caso de erro, mostrar o formulário mesmo assim
+      document.getElementById('loader').style.display = 'none';
+      
+      const coupleName = coupleData.nome;
+      const coupleType = coupleData.tipo;
+      const messages = getMessageByType(coupleType, coupleName);
+      
+      applyFormCustomizations(coupleType, coupleName, messages);
+      document.getElementById('invite-card').style.display = 'block';
+      document.getElementById('form-section').style.display = 'block';
+      
+      showToast('Erro ao verificar status, mas você pode responder normalmente.', 'error');
     }
   }
 
-  checkIfAlreadyAccepted();
+  function initializeApp() {
+    // Esconder loader inicialmente? Não, vamos mostrar e depois esconder
+    document.getElementById('loader').style.display = 'flex';
+    document.getElementById('invite-card').style.display = 'none';
+    document.getElementById('form-section').style.display = 'none';
+    document.getElementById('godparent-area').style.display = 'none';
+
+    // Verificar autorização
+    const coupleData = getCoupleFromUrl();
+    console.log('Couple data:', coupleData);
+
+    if (!coupleData) {
+      console.log('Acesso não autorizado - nenhum casal encontrado');
+      document.getElementById('loader').style.display = 'none';
+      showUnauthorizedMessage();
+      return;
+    }
+
+    // Verificar se já aceitou
+    checkIfAlreadyAccepted(coupleData);
+  }
 
   /* ── FORM SUBMIT ─────────────────────────────────── */
   window.submitGodparentResponse = async function() {
-    const madrinhaNome  = document.getElementById('madrinha-name').value.trim();
+    // Pegar o coupleData novamente
+    const coupleData = getCoupleFromUrl();
+    if (!coupleData) {
+      showToast('Erro ao identificar o casal', 'error');
+      return;
+    }
+
+    const coupleType = coupleData.tipo;
+    const madrinhaNome = document.getElementById('madrinha-name').value.trim();
     const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
-    const padrinhoNome  = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim()  : null;
+    const padrinhoNome = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
     const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
-    const couple        = document.getElementById('selected-couple').value;
-    const responseEl    = document.querySelector('input[name="godparent-response"]:checked');
+    const couple = document.getElementById('selected-couple').value;
+    const responseEl = document.querySelector('input[name="godparent-response"]:checked');
 
-    if (!madrinhaNome)                               return showToast('Por favor, digite o nome da madrinha.','error');
-    if (!madrinhaEmail)                              return showToast('Por favor, digite o email da madrinha.','error');
-    if (coupleType === 'casal' && !padrinhoNome)     return showToast('Por favor, digite o nome do padrinho.','error');
-    if (coupleType === 'casal' && !padrinhoEmail)    return showToast('Por favor, digite o email do padrinho.','error');
-    if (!responseEl)                                 return showToast('Por favor, selecione se aceita ou não.','error');
+    // Validações
+    if (!madrinhaNome) return showToast('Por favor, digite o nome da madrinha.', 'error');
+    if (!madrinhaEmail) return showToast('Por favor, digite o email da madrinha.', 'error');
+    if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
+    if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
+    if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
 
-    const resposta  = responseEl.value;
+    const resposta = responseEl.value;
     const couple_id = couple.toLowerCase()
       .replace(/\s+&\s+/g, '-')
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '');
 
     try {
+      // Inserir madrinha
       const { error: e1 } = await sb.from('godparents')
-        .insert([{ nome: madrinhaNome, email: madrinhaEmail, resposta, couple, couple_id, tipo: 'madrinha' }]);
+        .insert([{ 
+          nome: madrinhaNome, 
+          email: madrinhaEmail, 
+          resposta, 
+          couple, 
+          couple_id, 
+          tipo: 'madrinha' 
+        }]);
       if (e1) throw e1;
 
+      // Inserir padrinho se for casal
       if (coupleType === 'casal') {
         const { error: e2 } = await sb.from('godparents')
-          .insert([{ nome: padrinhoNome, email: padrinhoEmail, resposta, couple, couple_id, tipo: 'padrinho' }]);
+          .insert([{ 
+            nome: padrinhoNome, 
+            email: padrinhoEmail, 
+            resposta, 
+            couple, 
+            couple_id, 
+            tipo: 'padrinho' 
+          }]);
         if (e2) throw e2;
       }
 
       showToast('Resposta enviada com sucesso! 💌');
 
       if (resposta === 'Sim') {
-        document.getElementById('invite-card').style.display    = 'none';
-        document.getElementById('form-section').style.display   = 'none';
+        document.getElementById('invite-card').style.display = 'none';
+        document.getElementById('form-section').style.display = 'none';
         document.getElementById('godparent-area').style.display = 'block';
         document.getElementById('godparent-names-display').textContent = couple;
       } else {
@@ -1132,39 +1176,44 @@ if (!coupleData) {
           </div>`;
       }
     } catch (err) {
-      console.error(err);
-      showToast(err.code === '23505' ? 'Um dos emails já foi registado.' : 'Erro ao salvar. Tente novamente.', 'error');
+      console.error('Erro ao salvar:', err);
+      if (err.code === '23505') {
+        showToast('Um dos emails já foi registado.', 'error');
+      } else {
+        showToast('Erro ao salvar. Tente novamente.', 'error');
+      }
     }
   };
-}
 
-/* ── LIGHTBOX ──────────────────────────────────────── */
-function openLightbox(src, caption) {
-  const lb  = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  const cap = document.getElementById('lightbox-caption');
-  img.src = src;
-  img.alt = caption;
-  cap.textContent = caption;
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox(e) {
-  if (!e || e.target === document.getElementById('lightbox') || e.target.closest('.lightbox-close')) {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-}
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
-});
+  /* ── LIGHTBOX ──────────────────────────────────────── */
+  window.openLightbox = function(src, caption) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const cap = document.getElementById('lightbox-caption');
+    img.src = src;
+    img.alt = caption;
+    cap.textContent = caption;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
 
-function switchTab(tab) {
-  document.querySelectorAll('.attire-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.attire-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('panel-' + tab).classList.add('active');
-  document.getElementById('tab-' + tab).classList.add('active');
-}
+  window.closeLightbox = function(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.target.closest('.lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
+  });
+
+  window.switchTab = function(tab) {
+    document.querySelectorAll('.attire-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.attire-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + tab).classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  };
 </script>
 
 <script>
