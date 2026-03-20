@@ -783,7 +783,7 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
         <div class="detail-header"><div class="detail-icon-wrap"><i class="fas fa-glass-cheers"></i></div><h3>Recepção</h3></div>
         <div class="detail-rows">
           <div class="detail-row"><i class="far fa-calendar"></i><div><span class="d-label">Data</span><p class="d-value">07 de Junho de 2026</p></div></div>
-          <div class="detail-row"><i class="far fa-clock"></i><div><span class="d-label">Horário</span><p class="d-value">20h30 · Festa até às 03h00</p></div></div>
+          <div class="detail-row"><i class="far fa-clock"></i><div><span class="d-label">Horário</span><p class="d-value">20h30 · Festa até às 00h00</p></div></div>
           <div class="detail-row"><i class="fas fa-map-marker-alt"></i><div><span class="d-label">Local</span><p class="d-value">Restaurante A Grelha do Ti Manel</p><p class="d-addr">Estrada de, 8200-416 Albufeira</p></div></div>
         </div>
         <a href="https://maps.app.goo.gl/VFcoYoj2G4scPTpB7" target="_blank" class="map-btn"><i class="fas fa-map-marked-alt"></i> Ver no Maps</a>
@@ -969,11 +969,52 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
       <div class="s-label">Formas de Envio</div>
       <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:300;text-align:center;color:var(--dark);margin-bottom:2rem">Transferência & <em style="color:var(--gold);font-style:italic">Pagamento</em></h3>
       <div class="registry-grid">
-        <div class="reg-card featured"><div class="reg-badge">Recomendado</div><div class="reg-icon"><i class="fas fa-globe-europe"></i></div><h3>Wise</h3><p class="reg-desc">Transferência internacional sem taxas</p><div class="reg-info"><div class="reg-row hl"><i class="fas fa-user-circle"></i><div><span class="reg-lbl">Perfil</span><p class="reg-val">Natanael & Izadora</p></div></div><div class="reg-row"><i class="fas fa-envelope"></i><div><span class="reg-lbl">Email Wise</span><p class="reg-val">SEU_EMAIL_WISE@email.com</p></div></div></div><div class="reg-actions"><button class="reg-btn primary" onclick="copyText('SEU_EMAIL_WISE@email.com','Email Wise')"><i class="fas fa-copy"></i> Copiar Email</button><a href="https://wise.com" target="_blank" class="reg-btn secondary"><i class="fas fa-external-link-alt"></i> Wise</a></div></div>
-        <div class="reg-card"><div class="reg-icon"><i class="fas fa-university"></i></div><h3>IBAN</h3><p class="reg-desc">Transferência bancária internacional</p><div class="reg-info"><div class="reg-row hl"><i class="fas fa-id-card"></i><div><span class="reg-lbl">Titular</span><p class="reg-val">NATANAEL & IZADORA</p></div></div><div class="reg-row"><i class="fas fa-hashtag"></i><div><span class="reg-lbl">IBAN</span><p class="reg-val" style="font-family:monospace;font-size:.85rem">SEU_IBAN_AQUI</p></div></div></div><div class="reg-actions"><button class="reg-btn primary" onclick="copyText('SEU_IBAN_AQUI','IBAN')"><i class="fas fa-copy"></i> Copiar IBAN</button></div></div>
-        <div class="reg-card"><div class="reg-icon"><i class="fas fa-mobile"></i></div><h3>MB Way</h3><p class="reg-desc">Transferências em Portugal</p><div class="reg-info"><div class="reg-row hl"><i class="fas fa-phone-alt"></i><div><span class="reg-lbl">Número MB Way</span><p class="reg-val" style="font-family:monospace">SEU_NUMERO_MBWAY</p></div></div></div><div class="qr-section"><div class="qr-box"><i class="fas fa-qrcode"></i></div><div class="qr-info"><p><strong>Escaneie com MB Way</strong></p><p class="note">QR code facilita a transferência</p></div></div><div class="reg-actions"><button class="reg-btn primary" onclick="copyText('SEU_NUMERO_MBWAY','Número MB Way')"><i class="fas fa-copy"></i> Copiar Nº</button></div></div>
+     <div class="reg-card featured"><div class="reg-badge">Recomendado</div><div class="reg-icon"><i class="fas fa-globe-europe"></i></div><h3>Wise</h3><p class="reg-desc">Transferência internacional sem taxas</p><div class="reg-info"><div class="reg-row hl"><i class="fas fa-user-circle"></i><div><span class="reg-lbl">Perfil</span><p class="reg-val">Natanael & Izadora</p></div></div><div class="reg-row"><i class="fas fa-hashtag"></i><div><span class="reg-lbl">IBAN Wise</span><p class="reg-val" style="font-family:monospace;font-size:.85rem">BE32967525190702</p></div></div></div><div class="reg-actions"><button class="reg-btn primary" onclick="copyText('BE32967525190702','IBAN Wise')"><i class="fas fa-copy"></i> Copiar IBAN</button><a href="https://wise.com" target="_blank" class="reg-btn secondary"><i class="fas fa-external-link-alt"></i> Wise</a></div></div>  <div class="reg-card">
+  <div class="reg-icon"><i class="fas fa-university"></i></div>
+  <h3>IBAN</h3>
+  <p class="reg-desc">Transferência bancária internacional</p>
+  <div class="reg-info">
+    <div class="reg-row hl">
+      <i class="fas fa-id-card"></i>
+      <div>
+        <span class="reg-lbl">Titular</span>
+        <p class="reg-val">NATANAEL & IZADORA</p>
       </div>
-      <div class="transfer-notes"><h3><i class="fas fa-info-circle"></i> Informações Importantes</h3><div class="tnotes-grid"><div class="tnote-item"><i class="fas fa-euro-sign"></i><h4>Moeda</h4><p>Envie em Euro (EUR). Para melhores taxas use o Wise.</p></div><div class="tnote-item"><i class="fas fa-user-tag"></i><h4>Referência</h4><p>Inclua "Casamento Natan & Izadora" na descrição.</p></div><div class="tnote-item"><i class="fas fa-clock"></i><h4>Prazo</h4><p>Não há problema se chegar após a data do casamento.</p></div><div class="tnote-item"><i class="fas fa-heart"></i><h4>Confirmação</h4><p>A vossa presença é o maior presente! 🙏</p></div></div></div>
+    </div>
+    <div class="reg-row">
+      <i class="fas fa-hashtag"></i>
+      <div>
+        <span class="reg-lbl">IBAN</span>
+        <p class="reg-val" style="font-family:monospace;font-size:.85rem">PT50003502050001619553089</p>
+      </div>
+    </div>
+    <div class="reg-row">
+      <i class="fas fa-building"></i>
+      <div>
+        <span class="reg-lbl">BIC / SWIFT</span>
+        <p class="reg-val" style="font-family:monospace">CGDIPTPL</p>
+      </div>
+    </div>
+    <div class="reg-row">
+      <i class="fas fa-credit-card"></i>
+      <div>
+        <span class="reg-lbl">Nº de Conta</span>
+        <p class="reg-val" style="font-family:monospace">0205016195530</p>
+      </div>
+    </div>
+  </div>
+  <div class="reg-actions">
+    <button class="reg-btn primary" onclick="copyText('PT50003502050001619553089','IBAN')">
+      <i class="fas fa-copy"></i> Copiar IBAN
+    </button>
+    <button class="reg-btn secondary" onclick="copyText('CGDIPTPL','BIC')">
+      <i class="fas fa-copy"></i> Copiar BIC
+    </button>
+  </div>
+</div>  
+<div class="reg-card"><div class="reg-icon"><i class="fas fa-mobile"></i></div><h3>MB Way</h3><p class="reg-desc">Transferências em Portugal</p><div class="reg-info"><div class="reg-row hl"><i class="fas fa-phone-alt"></i><div><span class="reg-lbl">Número MB Way</span><p class="reg-val" style="font-family:monospace">+351 963 121 254</p></div></div></div><div class="qr-section"><div class="qr-box"><i class="fas fa-qrcode"></i></div><div class="qr-info"><p><strong>Escaneie com MB Way</strong></p><p class="note">QR code facilita a transferência</p></div></div><div class="reg-actions"><button class="reg-btn primary" onclick="copyText('SEU_NUMERO_MBWAY','Número MB Way')"><i class="fas fa-copy"></i> Copiar Nº</button></div></div>
+      </div>
+      <div class="transfer-notes"><h3><i class="fas fa-info-circle"></i> Informações Importantes</h3><div class="tnotes-grid"><div class="tnote-item"><i class="fas fa-euro-sign"></i><h4>Moeda</h4><p>Envie em Euro (EUR). Para melhores taxas use o Wise.</p></div><div class="tnote-item"><i class="fas fa-user-tag"></i><h4>Referência</h4><p>Inclua "Casamento Natanael & Izadora" na descrição.</p></div><div class="tnote-item"><i class="fas fa-clock"></i><h4>Prazo</h4><p>Não há problema se chegar após a data do casamento.</p></div><div class="tnote-item"><i class="fas fa-heart"></i><h4>Confirmação</h4><p>A vossa presença é o maior presente! 🙏</p></div></div></div>
     </div>
     <div class="registry-msg"><i class="fas fa-heart"></i><p>A vossa presença é o nosso maior presente! Qualquer contribuição será investida na nossa lua de mel ❤️</p></div>
   </div>
@@ -1015,7 +1056,7 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
     </div>
   </div>
 </div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><div class="faq-q-left"><span class="faq-num">02</span><div class="faq-q-text"><h3>Como será o jantar?</h3><p>Informações sobre o cardápio</p></div></div><div class="faq-icon"><i class="fas fa-chevron-down"></i></div></button><div class="faq-a"><div class="faq-a-inner"><p>Teremos um <strong>buffet livre</strong> com diversas opções, incluindo opções vegetarianas e sem glúten. Indique restrições alimentares no formulário de confirmação.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><div class="faq-q-left"><span class="faq-num">02</span><div class="faq-q-text"><h3>Como será o jantar?</h3><p>Informações sobre o cardápio</p></div></div><div class="faq-icon"><i class="fas fa-chevron-down"></i></div></button><div class="faq-a"><div class="faq-a-inner"><p>Teremos um <strong>jantar</strong> mista de carne vermelha</p></div></div></div>
       
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><div class="faq-q-left"><span class="faq-num">03</span><div class="faq-q-text"><h3>Crianças estão incluídas?</h3><p>Sobre convidados com filhos</p></div></div><div class="faq-icon"><i class="fas fa-chevron-down"></i></div></button><div class="faq-a"><div class="faq-a-inner"><p>As crianças das famílias convidadas já estão contabilizadas no número de convidados. Teremos um menu especial para os mais pequenos. 💛</p></div></div></div>
       
@@ -1124,7 +1165,7 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
     <div class="footer-main">
       <span class="footer-logo">Natanael & Izadora</span>
       <div class="footer-date-badge"><i class="fas fa-calendar-heart"></i><span>07 de Junho de 2026 · Albufeira</span></div>
-      <p class="footer-tagline">Com amor, Natan e Izadora</p>
+      <p class="footer-tagline">Com amor, Natanael e Izadora</p>
       <div class="social-links">
         <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -1138,7 +1179,7 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
     </div>
     <div class="footer-divider"><div class="fdiv-line"></div><div class="fdiv-heart"><i class="fas fa-heart"></i></div><div class="fdiv-line"></div></div>
     <div class="footer-copy">
-      <p>© 2026 Casamento Natan & Izadora. Todos os direitos reservados.</p>
+      <p>© 2026 Casamento Natanael & Izadora. Todos os direitos reservados.</p>
       <p class="made">Feito com <span class="made-heart">♥</span> para o nosso dia especial</p>
     </div>
   </div>
@@ -1167,12 +1208,12 @@ const WEDDING_DATE = new Date('2026-06-07T16:00:00');
 // LANDING SCREEN
 // ════════════════
 (function(){
-  const vLines = [
-    '"O amor é paciente, o amor é bondoso,',
-    'não inveja, não se vangloria,',
-    'não se orgulha. Tudo suporta,',
-    'tudo crê, tudo espera, tudo tolera."'
-  ];
+const vLines = [
+  'para que o povo veja e saiba,',
+  'e todos vejam e saibam,',
+  'que a mão do Senhor fez isso,',
+  'que o Santo de Israel o criou.'
+];
   ['vl1','vl2','vl3','vl4'].forEach((id,i)=>{
     setTimeout(()=>{ document.getElementById(id).textContent = vLines[i]; }, 1200+(i*1900));
   });
