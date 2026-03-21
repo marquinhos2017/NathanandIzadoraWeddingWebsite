@@ -903,6 +903,14 @@ body{
     initializeApp();
   });
 
+
+  const specialMapping = {
+  'anedina': { nome: 'Anedina', tipo: 'dama-honra', titulo: 'Dama de Honra' },
+  'laura': { nome: 'Laura', tipo: 'florista', titulo: 'Florista' },
+  'esther': { nome: 'Esther', tipo: 'florista', titulo: 'Florista' },
+};
+
+
   /* ── SUPABASE ──────────────────────────────────────── */
   const SUPABASE_URL = 'https://yihqeaqjatwnekhdqcju.supabase.co';
   const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
@@ -984,6 +992,27 @@ body{
     return null;
   }
 
+  function getSpecialFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('convidado')) {
+    const key = urlParams.get('convidado');
+    return specialMapping[key] || null;
+  }
+
+  const pathParts = window.location.pathname.split('/').filter(part => part !== '');
+  if (pathParts.length >= 2 && pathParts[0] === 'padrinhos') {
+    const key = pathParts[1];
+    return specialMapping[key] || null;
+  }
+  
+  if (pathParts.length === 1) {
+    return specialMapping[pathParts[0]] || null;
+  }
+  
+  return null;
+}
+
+
   function getMessageByType(tipo, nome) {
     if (tipo === 'casal') {
       return {
@@ -1001,6 +1030,28 @@ body{
       };
     }
   }
+
+
+  function getSpecialMessage(tipo, nome, titulo) {
+  if (tipo === 'dama-honra') {
+    return {
+      mensagem: `<p>Querida <strong>${nome}</strong>, hoje queremos fazer um convite muito especial para alguém que ocupa um lugar muito importante em nossos corações.</p>
+        <p>Em um dia tão único e cheio de significado para nós, não poderíamos imaginar esse momento sem a sua presença e alegria.</p>
+        <p>Será uma grande felicidade ter você ao nosso lado, participando desse momento tão especial e tornando nosso casamento ainda mais bonito.</p>`,
+      pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
+    };
+  } else {
+    return {
+      mensagem: `<p>Querida <strong>${nome}</strong>, em um dia tão especial para nós, queremos que pessoas muito queridas façam parte desse momento inesquecível.</p>
+        <p>Por isso, temos um convite muito especial para você!</p>
+        <p>No nosso casamento, precisamos de alguém que leve beleza, alegria e muitas flores pelo caminho até o altar. E pensamos em você para essa missão tão importante.</p>
+        <p>Você aceita ser nossa <strong>${titulo}</strong> e espalhar flores no nosso grande dia?</p>
+        <p>Ficaremos muito felizes em ter você participando desse momento tão lindo conosco.</p>`,
+      pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
+    };
+  }
+}
+
 
   function applyFormCustomizations(coupleType, coupleName, messages) {
     document.getElementById('invite-couple-name').textContent = coupleName;
@@ -1028,6 +1079,40 @@ body{
       }
     }
   }
+
+
+  function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
+  document.getElementById('invite-couple-name').textContent = nome;
+  document.getElementById('invite-message-content').innerHTML = messages.mensagem;
+  document.getElementById('invite-question').innerHTML = messages.pergunta;
+  document.getElementById('form-couple-name').textContent = nome;
+  document.getElementById('selected-couple').value = nome;
+  
+  // Ocultar campo do padrinho
+  const padrinhoRow = document.getElementById('padrinho-fields-row');
+  if (padrinhoRow) padrinhoRow.style.display = 'none';
+  
+  // Ajustar títulos
+  document.getElementById('form-title').textContent = 'Responda ao Convite';
+  document.getElementById('form-sub').innerHTML = `Querida <span>${nome}</span>, preencha seus dados abaixo`;
+  document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
+  document.getElementById('accept-no-text').textContent = 'Não poderei';
+  
+  // Ocultar aba de padrinhos
+  const tabPadrinhos = document.getElementById('tab-padrinhos');
+  if (tabPadrinhos) tabPadrinhos.style.display = 'none';
+  
+  const tabsEl = document.getElementById('attire-tabs');
+  if (tabsEl) {
+    tabsEl.style.maxWidth = '220px';
+    tabsEl.style.margin = '0 auto 2rem';
+  }
+  
+  // Ajustar texto do header na área de confirmação
+  const areaHeader = document.querySelector('.area-header h2 span');
+  if (areaHeader) areaHeader.textContent = nome;
+}
+
 
   function showUnauthorizedMessage() {
     const loader = document.getElementById('loader');
@@ -1108,6 +1193,53 @@ body{
     }
   }
 
+
+  async function checkSpecialAlreadyAccepted(specialData) {
+  try {
+    const nome = specialData.nome;
+    const tipo = specialData.tipo;
+    const titulo = specialData.titulo;
+    const messages = getSpecialMessage(tipo, nome, titulo);
+    
+    const convite_id = `special_${nome.toLowerCase()}`;
+
+    console.log('Checking special convite_id:', convite_id);
+
+    const { data, error } = await sb
+      .from('godparents')
+      .select('*')
+      .eq('couple_id', convite_id)
+      .eq('resposta', 'Sim');
+
+    if (error) throw error;
+
+    document.getElementById('loader').style.display = 'none';
+
+    if (data && data.length > 0) {
+      document.getElementById('godparent-names-display').textContent = nome;
+      document.getElementById('godparent-area').style.display = 'block';
+    } else {
+      applySpecialFormCustomizations(tipo, nome, titulo, messages);
+      document.getElementById('invite-card').style.display = 'block';
+      document.getElementById('form-section').style.display = 'block';
+    }
+  } catch (err) {
+    console.error('Erro ao verificar status especial:', err);
+    
+    document.getElementById('loader').style.display = 'none';
+    
+    const nome = specialData.nome;
+    const tipo = specialData.tipo;
+    const titulo = specialData.titulo;
+    const messages = getSpecialMessage(tipo, nome, titulo);
+    
+    applySpecialFormCustomizations(tipo, nome, titulo, messages);
+    document.getElementById('invite-card').style.display = 'block';
+    document.getElementById('form-section').style.display = 'block';
+    
+    showToast('Erro ao verificar status, mas você pode responder normalmente.', 'error');
+  }
+}
   function initializeApp() {
     // Mostrar loader inicialmente
     const loader = document.getElementById('loader');
@@ -1131,88 +1263,176 @@ body{
     checkIfAlreadyAccepted(coupleData);
   }
 
+
+  function initializeApp() {
+  const loader = document.getElementById('loader');
+  if (loader) loader.style.display = 'flex';
+  
+  document.getElementById('invite-card').style.display = 'none';
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('godparent-area').style.display = 'none';
+
+  // Verificar primeiro convidados especiais
+  const specialData = getSpecialFromUrl();
+  console.log('Special data:', specialData);
+  
+  if (specialData) {
+    checkSpecialAlreadyAccepted(specialData);
+    return;
+  }
+
+  // Depois padrinhos tradicionais
+  const coupleData = getCoupleFromUrl();
+  console.log('Couple data:', coupleData);
+
+  if (!coupleData) {
+    showUnauthorizedMessage();
+    return;
+  }
+
+  checkIfAlreadyAccepted(coupleData);
+}
+
+
   /* ── FORM SUBMIT ─────────────────────────────────── */
-  window.submitGodparentResponse = async function() {
-    // Pegar o coupleData novamente
-    const coupleData = getCoupleFromUrl();
-    if (!coupleData) {
-      showToast('Erro ao identificar o casal', 'error');
-      return;
+  async function submitSpecialResponse(specialData) {
+  const nomeConvidado = specialData.nome;
+  const tipo = specialData.tipo;
+  const titulo = specialData.titulo;
+  
+  const madrinhaNome = document.getElementById('madrinha-name').value.trim();
+  const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
+  const responseEl = document.querySelector('input[name="godparent-response"]:checked');
+
+  if (!madrinhaNome) return showToast('Por favor, digite seu nome.', 'error');
+  if (!madrinhaEmail) return showToast('Por favor, digite seu email.', 'error');
+  if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
+
+  const resposta = responseEl.value;
+  const convite_id = `special_${nomeConvidado.toLowerCase()}`;
+
+  try {
+    const { error } = await sb.from('godparents')
+      .insert([{ 
+        nome: madrinhaNome, 
+        email: madrinhaEmail, 
+        resposta, 
+        couple: nomeConvidado, 
+        couple_id: convite_id, 
+        tipo: tipo 
+      }]);
+    if (error) throw error;
+
+    showToast('Resposta enviada com sucesso! 💌');
+
+    if (resposta === 'Sim') {
+      document.getElementById('invite-card').style.display = 'none';
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('godparent-area').style.display = 'block';
+      document.getElementById('godparent-names-display').textContent = nomeConvidado;
+    } else {
+      document.getElementById('form-section').innerHTML = `
+        <div style="text-align:center;padding:2rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">💌</div>
+          <h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${nomeConvidado}</h2>
+          <p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p>
+        </div>`;
     }
+  } catch (err) {
+    console.error('Erro ao salvar:', err);
+    if (err.code === '23505') {
+      showToast('Este email já foi registado.', 'error');
+    } else {
+      showToast('Erro ao salvar. Tente novamente.', 'error');
+    }
+  }
+}
 
-    const coupleType = coupleData.tipo;
-    const madrinhaNome = document.getElementById('madrinha-name').value.trim();
-    const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
-    const padrinhoNome = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
-    const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
-    const couple = document.getElementById('selected-couple').value;
-    const responseEl = document.querySelector('input[name="godparent-response"]:checked');
 
-    // Validações
-    if (!madrinhaNome) return showToast('Por favor, digite o nome da madrinha.', 'error');
-    if (!madrinhaEmail) return showToast('Por favor, digite o email da madrinha.', 'error');
-    if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
-    if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
-    if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
+window.submitGodparentResponse = async function() {
+  // Verificar primeiro se é convidado especial
+  const specialData = getSpecialFromUrl();
+  const coupleData = getCoupleFromUrl();
+  
+  if (specialData) {
+    await submitSpecialResponse(specialData);
+    return;
+  }
+  
+  if (!coupleData) {
+    showToast('Erro ao identificar o casal', 'error');
+    return;
+  }
 
-    const resposta = responseEl.value;
-    const couple_id = couple.toLowerCase()
-      .replace(/\s+&\s+/g, '-')
-      .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '');
+  const coupleType = coupleData.tipo;
+  const madrinhaNome = document.getElementById('madrinha-name').value.trim();
+  const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
+  const padrinhoNome = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
+  const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
+  const couple = document.getElementById('selected-couple').value;
+  const responseEl = document.querySelector('input[name="godparent-response"]:checked');
 
-    try {
-      // Inserir madrinha
-      const { error: e1 } = await sb.from('godparents')
+  if (!madrinhaNome) return showToast('Por favor, digite o nome.', 'error');
+  if (!madrinhaEmail) return showToast('Por favor, digite o email.', 'error');
+  if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
+  if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
+  if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
+
+  const resposta = responseEl.value;
+  const couple_id = couple.toLowerCase()
+    .replace(/\s+&\s+/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+
+  try {
+    const { error: e1 } = await sb.from('godparents')
+      .insert([{ 
+        nome: madrinhaNome, 
+        email: madrinhaEmail, 
+        resposta, 
+        couple, 
+        couple_id, 
+        tipo: 'madrinha' 
+      }]);
+    if (e1) throw e1;
+
+    if (coupleType === 'casal') {
+      const { error: e2 } = await sb.from('godparents')
         .insert([{ 
-          nome: madrinhaNome, 
-          email: madrinhaEmail, 
+          nome: padrinhoNome, 
+          email: padrinhoEmail, 
           resposta, 
           couple, 
           couple_id, 
-          tipo: 'madrinha' 
+          tipo: 'padrinho' 
         }]);
-      if (e1) throw e1;
-
-      // Inserir padrinho se for casal
-      if (coupleType === 'casal') {
-        const { error: e2 } = await sb.from('godparents')
-          .insert([{ 
-            nome: padrinhoNome, 
-            email: padrinhoEmail, 
-            resposta, 
-            couple, 
-            couple_id, 
-            tipo: 'padrinho' 
-          }]);
-        if (e2) throw e2;
-      }
-
-      showToast('Resposta enviada com sucesso! 💌');
-
-      if (resposta === 'Sim') {
-        document.getElementById('invite-card').style.display = 'none';
-        document.getElementById('form-section').style.display = 'none';
-        document.getElementById('godparent-area').style.display = 'block';
-        document.getElementById('godparent-names-display').textContent = couple;
-      } else {
-        document.getElementById('form-section').innerHTML = `
-          <div style="text-align:center;padding:2rem;">
-            <div style="font-size:3rem;margin-bottom:1rem;">💌</div>
-            <h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2>
-            <p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p>
-          </div>`;
-      }
-    } catch (err) {
-      console.error('Erro ao salvar:', err);
-      if (err.code === '23505') {
-        showToast('Um dos emails já foi registado.', 'error');
-      } else {
-        showToast('Erro ao salvar. Tente novamente.', 'error');
-      }
+      if (e2) throw e2;
     }
-  };
 
+    showToast('Resposta enviada com sucesso! 💌');
+
+    if (resposta === 'Sim') {
+      document.getElementById('invite-card').style.display = 'none';
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('godparent-area').style.display = 'block';
+      document.getElementById('godparent-names-display').textContent = couple;
+    } else {
+      document.getElementById('form-section').innerHTML = `
+        <div style="text-align:center;padding:2rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">💌</div>
+          <h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2>
+          <p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p>
+        </div>`;
+    }
+  } catch (err) {
+    console.error('Erro ao salvar:', err);
+    if (err.code === '23505') {
+      showToast('Um dos emails já foi registado.', 'error');
+    } else {
+      showToast('Erro ao salvar. Tente novamente.', 'error');
+    }
+  }
+};
   /* ── LIGHTBOX ──────────────────────────────────────── */
   window.openLightbox = function(src, caption) {
     const lb = document.getElementById('lightbox');
