@@ -1098,10 +1098,15 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
   document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
   document.getElementById('accept-no-text').textContent = 'Não poderei';
   
-  // Ocultar aba de padrinhos
+  // Ocultar a ABA de padrinhos (não o conteúdo, a aba inteira)
   const tabPadrinhos = document.getElementById('tab-padrinhos');
   if (tabPadrinhos) tabPadrinhos.style.display = 'none';
   
+  // Ocultar o PANEL de padrinhos também
+  const panelPadrinhos = document.getElementById('panel-padrinhos');
+  if (panelPadrinhos) panelPadrinhos.style.display = 'none';
+  
+  // Ajustar largura das tabs
   const tabsEl = document.getElementById('attire-tabs');
   if (tabsEl) {
     tabsEl.style.maxWidth = '220px';
@@ -1112,111 +1117,107 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
   const areaHeader = document.querySelector('.area-header h2 span');
   if (areaHeader) areaHeader.textContent = nome;
   
-  // ========== ALTERAR GALERIA DE TRAJE CONFORME O TIPO ==========
+  // ========== ALTERAR A GALERIA DE TRAJE CONFORME O TIPO ==========
   const panelMadrinhas = document.getElementById('panel-madrinhas');
-  const panelPadrinhos = document.getElementById('panel-padrinhos');
   
+  if (!panelMadrinhas) return;
+  
+  // Limpar e recriar o conteúdo do painel de madrinhas
   if (tipo === 'dama-honra') {
     // Dama de Honra - usar imagem dama.jpeg
-    if (panelMadrinhas) {
-      panelMadrinhas.innerHTML = `
-        <div class="attire-gallery">
-          <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
-            <img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Dama de Honra
-            </div>
-            <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Dama de Honra
-              <span>Traje especial</span>
-            </div>
+    panelMadrinhas.innerHTML = `
+      <div class="attire-gallery">
+        <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
+          <img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none">
+            <i class="fas fa-image"></i>
+            Dama de Honra
+          </div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">
+            Dama de Honra
+            <span>Traje especial</span>
           </div>
         </div>
-        
-        <div class="attire-palette">
-          <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
-          <div class="palette-swatches">
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#e8d8c9;"></div>
-              <span class="swatch-name">Bege</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#d4bda1;"></div>
-              <span class="swatch-name">Caramelo</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#e8b4b8;"></div>
-              <span class="swatch-name">Blush</span>
-            </div>
+      </div>
+      
+      <div class="attire-palette">
+        <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
+        <div class="palette-swatches">
+          <div class="palette-swatch">
+            <div class="swatch-circle" style="background:#e8d8c9;"></div>
+            <span class="swatch-name">Bege</span>
           </div>
-          <ul class="attire-notes-list">
-            <li><i class="fas fa-check"></i> Vestido longo em tons pasteis ou terrosos</li>
-            <li><i class="fas fa-check"></i> Acessórios discretos em dourado</li>
-            <li><i class="fas fa-times" style="color:var(--red)"></i> Evite branco total — reservado para a noiva</li>
-          </ul>
+          <div class="palette-swatch">
+            <div class="swatch-circle" style="background:#d4bda1;"></div>
+            <span class="swatch-name">Caramelo</span>
+          </div>
+          <div class="palette-swatch">
+            <div class="swatch-circle" style="background:#e8b4b8;"></div>
+            <span class="swatch-name">Blush</span>
+          </div>
         </div>
-      `;
-    }
-    if (panelPadrinhos) panelPadrinhos.style.display = 'none';
+        <ul class="attire-notes-list">
+          <li><i class="fas fa-check"></i> Vestido longo em tons pasteis ou terrosos</li>
+          <li><i class="fas fa-check"></i> Acessórios discretos em dourado</li>
+          <li><i class="fas fa-times" style="color:var(--red)"></i> Evite branco total — reservado para a noiva</li>
+        </ul>
+      </div>
+    `;
   } 
   else if (tipo === 'florista') {
     // Floristas - usar florista1.jpeg e florista2.jpeg
-    if (panelMadrinhas) {
-      panelMadrinhas.innerHTML = `
-        <div class="attire-gallery">
-          <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
-            <img src="florista1.jpeg" alt="Florista inspiração 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Florista
-            </div>
-            <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Florista
-              <span>Inspiração 1</span>
-            </div>
+    panelMadrinhas.innerHTML = `
+      <div class="attire-gallery">
+        <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
+          <img src="florista1.jpeg" alt="Florista inspiração 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none">
+            <i class="fas fa-image"></i>
+            Florista
           </div>
-          <div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')">
-            <img src="florista2.jpeg" alt="Florista inspiração 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Florista
-            </div>
-            <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Florista
-              <span>Inspiração 2</span>
-            </div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">
+            Florista
+            <span>Inspiração 1</span>
           </div>
         </div>
-        
-        <div class="attire-palette">
-          <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
-          <div class="palette-swatches">
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#f9e5d6;"></div>
-              <span class="swatch-name">Creme</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#e8b4b8;"></div>
-              <span class="swatch-name">Blush</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#ccd5ae;"></div>
-              <span class="swatch-name">Sage</span>
-            </div>
+        <div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')">
+          <img src="florista2.jpeg" alt="Florista inspiração 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none">
+            <i class="fas fa-image"></i>
+            Florista
           </div>
-          <ul class="attire-notes-list">
-            <li><i class="fas fa-check"></i> Vestido leve e fluido em tons claros</li>
-            <li><i class="fas fa-check"></i> Acessórios florais para compor</li>
-            <li><i class="fas fa-check"></i> Calçado confortável para espalhar flores</li>
-          </ul>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">
+            Florista
+            <span>Inspiração 2</span>
+          </div>
         </div>
-      `;
-    }
-    if (panelPadrinhos) panelPadrinhos.style.display = 'none';
+      </div>
+      
+      <div class="attire-palette">
+        <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
+        <div class="palette-swatches">
+          <div class="palette-swatch">
+            <div class="swatch-circle" style="background:#f9e5d6;"></div>
+            <span class="swatch-name">Creme</span>
+          </div>
+          <div class="palette-swatch">
+            <div class="swatch-circle" style="background:#e8b4b8;"></div>
+            <span class="swatch-name">Blush</span>
+          </div>
+          <div class="palette-swatch">
+            <div class="swatch-circle" style="background:#ccd5ae;"></div>
+            <span class="swatch-name">Sage</span>
+          </div>
+        </div>
+        <ul class="attire-notes-list">
+          <li><i class="fas fa-check"></i> Vestido leve e fluido em tons claros</li>
+          <li><i class="fas fa-check"></i> Acessórios florais para compor</li>
+          <li><i class="fas fa-check"></i> Calçado confortável para espalhar flores</li>
+        </ul>
+      </div>
+    `;
   }
   
   // Atualizar título da seção de traje
@@ -1231,8 +1232,16 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
     if (tipo === 'dama-honra') attireSubtitle.textContent = 'Vista-se para brilhar ao nosso lado';
     else if (tipo === 'florista') attireSubtitle.textContent = 'Espalhe flores com elegância';
   }
+  
+  // Garantir que o painel de madrinhas está ativo e visível
+  panelMadrinhas.classList.add('active');
+  
+  // Forçar que a aba de madrinhas esteja ativa
+  const tabMadrinhas = document.getElementById('tab-madrinhas');
+  if (tabMadrinhas) {
+    tabMadrinhas.classList.add('active');
+  }
 }
-
   function showUnauthorizedMessage() {
     const loader = document.getElementById('loader');
     if (loader) loader.style.display = 'none';
@@ -1359,28 +1368,6 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
     showToast('Erro ao verificar status, mas você pode responder normalmente.', 'error');
   }
 }
-  function initializeApp() {
-    // Mostrar loader inicialmente
-    const loader = document.getElementById('loader');
-    if (loader) loader.style.display = 'flex';
-    
-    document.getElementById('invite-card').style.display = 'none';
-    document.getElementById('form-section').style.display = 'none';
-    document.getElementById('godparent-area').style.display = 'none';
-
-    // Verificar autorização
-    const coupleData = getCoupleFromUrl();
-    console.log('Couple data:', coupleData);
-
-    if (!coupleData) {
-      console.log('Acesso não autorizado - nenhum casal encontrado');
-      showUnauthorizedMessage();
-      return;
-    }
-
-    // Verificar se já aceitou
-    checkIfAlreadyAccepted(coupleData);
-  }
 
 
   function initializeApp() {
@@ -1414,31 +1401,32 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
 
 
   /* ── FORM SUBMIT ─────────────────────────────────── */
-  async function submitSpecialResponse(specialData) {
+async function submitSpecialResponse(specialData) {
   const nomeConvidado = specialData.nome;
-  const tipo = specialData.tipo;
+  const tipo = specialData.tipo;  // 'dama-honra' ou 'florista'
   const titulo = specialData.titulo;
   
-  const madrinhaNome = document.getElementById('madrinha-name').value.trim();
-  const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
+  const nome = document.getElementById('madrinha-name').value.trim();
+  const email = document.getElementById('madrinha-email').value.trim();
   const responseEl = document.querySelector('input[name="godparent-response"]:checked');
 
-  if (!madrinhaNome) return showToast('Por favor, digite seu nome.', 'error');
-  if (!madrinhaEmail) return showToast('Por favor, digite seu email.', 'error');
+  if (!nome) return showToast('Por favor, digite seu nome.', 'error');
+  if (!email) return showToast('Por favor, digite seu email.', 'error');
   if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
 
   const resposta = responseEl.value;
   const convite_id = `special_${nomeConvidado.toLowerCase()}`;
 
   try {
+    // Usar o tipo correto (dama-honra ou florista) - seu banco já aceita esses valores
     const { error } = await sb.from('godparents')
       .insert([{ 
-        nome: madrinhaNome, 
-        email: madrinhaEmail, 
-        resposta, 
+        nome: nome, 
+        email: email, 
+        resposta: resposta, 
         couple: nomeConvidado, 
         couple_id: convite_id, 
-        tipo: tipo 
+        tipo: tipo  // 'dama-honra' ou 'florista'
       }]);
     if (error) throw error;
 
@@ -1448,7 +1436,7 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
       document.getElementById('invite-card').style.display = 'none';
       document.getElementById('form-section').style.display = 'none';
       document.getElementById('godparent-area').style.display = 'block';
-      document.getElementById('godparent-names-display').textContent = nomeConvidado;
+      document.getElementById('godparent-names-display').textContent = `${titulo}: ${nomeConvidado}`;
     } else {
       document.getElementById('form-section').innerHTML = `
         <div style="text-align:center;padding:2rem;">
@@ -1466,7 +1454,6 @@ function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
     }
   }
 }
-
 
 window.submitGodparentResponse = async function() {
   // Verificar primeiro se é convidado especial
