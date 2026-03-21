@@ -4,6 +4,10 @@
     { "source": "/madrinha/:slug", "destination": "/padrinhos.html" },
     { "source": "/padrinhos/casal/:slug", "destination": "/padrinhos.html" },
     { "source": "/padrinhos/madrinha/:slug", "destination": "/padrinhos.html" },
+    { "source": "/dama-honra/:slug", "destination": "/padrinhos.html" },
+    { "source": "/florista/:slug", "destination": "/padrinhos.html" },
+    { "source": "/padrinhos/dama-honra/:slug", "destination": "/padrinhos.html" },
+    { "source": "/padrinhos/florista/:slug", "destination": "/padrinhos.html" },
     { "source": "/:slug.html", "destination": "/:slug.html" }
   ]
 }
