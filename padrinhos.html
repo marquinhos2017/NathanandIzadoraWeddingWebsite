@@ -1081,7 +1081,7 @@ body{
   }
 
 
-  function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
+function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
   document.getElementById('invite-couple-name').textContent = nome;
   document.getElementById('invite-message-content').innerHTML = messages.mensagem;
   document.getElementById('invite-question').innerHTML = messages.pergunta;
@@ -1111,8 +1111,127 @@ body{
   // Ajustar texto do header na área de confirmação
   const areaHeader = document.querySelector('.area-header h2 span');
   if (areaHeader) areaHeader.textContent = nome;
+  
+  // ========== ALTERAR GALERIA DE TRAJE CONFORME O TIPO ==========
+  const panelMadrinhas = document.getElementById('panel-madrinhas');
+  const panelPadrinhos = document.getElementById('panel-padrinhos');
+  
+  if (tipo === 'dama-honra') {
+    // Dama de Honra - usar imagem dama.jpeg
+    if (panelMadrinhas) {
+      panelMadrinhas.innerHTML = `
+        <div class="attire-gallery">
+          <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
+            <img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="attire-img-placeholder" style="display:none">
+              <i class="fas fa-image"></i>
+              Dama de Honra
+            </div>
+            <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+            <div class="attire-img-label">
+              Dama de Honra
+              <span>Traje especial</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="attire-palette">
+          <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
+          <div class="palette-swatches">
+            <div class="palette-swatch">
+              <div class="swatch-circle" style="background:#e8d8c9;"></div>
+              <span class="swatch-name">Bege</span>
+            </div>
+            <div class="palette-swatch">
+              <div class="swatch-circle" style="background:#d4bda1;"></div>
+              <span class="swatch-name">Caramelo</span>
+            </div>
+            <div class="palette-swatch">
+              <div class="swatch-circle" style="background:#e8b4b8;"></div>
+              <span class="swatch-name">Blush</span>
+            </div>
+          </div>
+          <ul class="attire-notes-list">
+            <li><i class="fas fa-check"></i> Vestido longo em tons pasteis ou terrosos</li>
+            <li><i class="fas fa-check"></i> Acessórios discretos em dourado</li>
+            <li><i class="fas fa-times" style="color:var(--red)"></i> Evite branco total — reservado para a noiva</li>
+          </ul>
+        </div>
+      `;
+    }
+    if (panelPadrinhos) panelPadrinhos.style.display = 'none';
+  } 
+  else if (tipo === 'florista') {
+    // Floristas - usar florista1.jpeg e florista2.jpeg
+    if (panelMadrinhas) {
+      panelMadrinhas.innerHTML = `
+        <div class="attire-gallery">
+          <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
+            <img src="florista1.jpeg" alt="Florista inspiração 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="attire-img-placeholder" style="display:none">
+              <i class="fas fa-image"></i>
+              Florista
+            </div>
+            <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+            <div class="attire-img-label">
+              Florista
+              <span>Inspiração 1</span>
+            </div>
+          </div>
+          <div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')">
+            <img src="florista2.jpeg" alt="Florista inspiração 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="attire-img-placeholder" style="display:none">
+              <i class="fas fa-image"></i>
+              Florista
+            </div>
+            <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+            <div class="attire-img-label">
+              Florista
+              <span>Inspiração 2</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="attire-palette">
+          <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
+          <div class="palette-swatches">
+            <div class="palette-swatch">
+              <div class="swatch-circle" style="background:#f9e5d6;"></div>
+              <span class="swatch-name">Creme</span>
+            </div>
+            <div class="palette-swatch">
+              <div class="swatch-circle" style="background:#e8b4b8;"></div>
+              <span class="swatch-name">Blush</span>
+            </div>
+            <div class="palette-swatch">
+              <div class="swatch-circle" style="background:#ccd5ae;"></div>
+              <span class="swatch-name">Sage</span>
+            </div>
+          </div>
+          <ul class="attire-notes-list">
+            <li><i class="fas fa-check"></i> Vestido leve e fluido em tons claros</li>
+            <li><i class="fas fa-check"></i> Acessórios florais para compor</li>
+            <li><i class="fas fa-check"></i> Calçado confortável para espalhar flores</li>
+          </ul>
+        </div>
+      `;
+    }
+    if (panelPadrinhos) panelPadrinhos.style.display = 'none';
+  }
+  
+  // Atualizar título da seção de traje
+  const attireTitle = document.querySelector('.attire-section-title em');
+  if (attireTitle) {
+    if (tipo === 'dama-honra') attireTitle.textContent = 'Traje da Dama de Honra';
+    else if (tipo === 'florista') attireTitle.textContent = 'Traje das Floristas';
+  }
+  
+  const attireSubtitle = document.querySelector('.attire-section-subtitle');
+  if (attireSubtitle) {
+    if (tipo === 'dama-honra') attireSubtitle.textContent = 'Vista-se para brilhar ao nosso lado';
+    else if (tipo === 'florista') attireSubtitle.textContent = 'Espalhe flores com elegância';
+  }
 }
-
 
   function showUnauthorizedMessage() {
     const loader = document.getElementById('loader');
