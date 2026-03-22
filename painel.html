@@ -131,12 +131,14 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
 .couple-card-header{padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,168,122,.1)}
 .couple-card-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--dark)}
 .couple-card-type{font-size:.6rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:.2rem .6rem;border-radius:20px;background:rgba(201,168,122,.12);color:var(--brown)}
+.couple-card-type.type-special{background:rgba(155,89,182,.12);color:var(--purple)}
 .couple-card-body{padding:1rem 1.2rem}
 .couple-member{display:flex;align-items:center;gap:.8rem;padding:.6rem 0;border-bottom:1px solid rgba(201,168,122,.08)}
 .couple-member:last-child{border-bottom:none;padding-bottom:0}
 .member-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
 .avatar-madrinha{background:rgba(232,180,184,.2);color:#c0616a}
 .avatar-padrinho{background:rgba(59,139,212,.15);color:#2a7aad}
+.avatar-special{background:rgba(155,89,182,.15);color:var(--purple)}
 .member-info{flex:1;min-width:0}
 .member-name{font-weight:600;font-size:.9rem;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .member-email{font-size:.75rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -144,11 +146,13 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
 .couple-card-footer{padding:.8rem 1.2rem;background:rgba(250,247,242,.6);display:flex;justify-content:space-between;align-items:center}
 .couple-response{display:flex;align-items:center;gap:.5rem;font-size:.8rem}
 .couple-date{font-size:.7rem;color:var(--muted)}
-
-/* Casal pendente (sem resposta) */
 .couple-card.pending .couple-card-header{background:rgba(255,248,225,.4)}
 .couple-card.accepted .couple-card-header{background:rgba(232,245,233,.4)}
 .couple-card.declined .couple-card-header{background:rgba(252,228,236,.3)}
+
+/* ── SECTION GROUPS ── */
+.section-group-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:400;color:var(--dark);margin:2rem 0 1rem;padding-bottom:.6rem;border-bottom:2px solid rgba(201,168,122,.2);display:flex;align-items:center;gap:.6rem}
+.section-group-title i{color:var(--gold)}
 
 /* ── EMPTY STATE ── */
 .empty-state{padding:4rem;text-align:center;color:var(--muted)}
@@ -246,7 +250,7 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
 
   <div class="admin-body">
 
-    <!-- TABS NAVEGAÇÃO -->
+    <!-- TABS -->
     <div class="nav-tabs">
       <button class="nav-tab active" onclick="switchTab('convidados')" id="tab-convidados">
         <i class="fas fa-users"></i> Convidados RSVP
@@ -256,37 +260,31 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
       </button>
     </div>
 
-    <!-- ═══════════════════════════════
-         TAB 1 — CONVIDADOS RSVP
-    ═══════════════════════════════ -->
+    <!-- ═══════════════════
+         TAB 1 — CONVIDADOS
+    ═══════════════════ -->
     <div class="tab-section active" id="section-convidados">
-
-      <!-- STATS -->
       <div class="stats-grid" id="statsGrid">
         <div class="stat-card total"><div class="stat-icon">📋</div><div class="stat-num" id="s-total">--</div><div class="stat-label">Total Respostas</div></div>
         <div class="stat-card confirmados"><div class="stat-icon">✅</div><div class="stat-num" id="s-sim">--</div><div class="stat-label">Confirmados</div></div>
         <div class="stat-card declinados"><div class="stat-icon">❌</div><div class="stat-num" id="s-nao">--</div><div class="stat-label">Declinaram</div></div>
         <div class="stat-card pessoas"><div class="stat-icon">👥</div><div class="stat-num" id="s-pessoas">--</div><div class="stat-label">Total Pessoas</div></div>
       </div>
-
-      <!-- TOOLBAR -->
       <div class="toolbar">
         <div class="search-wrap">
           <i class="fas fa-search"></i>
           <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar por nome ou email..." oninput="filterTable()">
         </div>
         <div class="filter-btns">
-          <button class="filter-btn active" data-filter="todos" onclick="setFilter(this,'todos')">Todos</button>
-          <button class="filter-btn" data-filter="Sim" onclick="setFilter(this,'Sim')">✅ Confirmados</button>
-          <button class="filter-btn" data-filter="Não" onclick="setFilter(this,'Não')">❌ Declinaram</button>
+          <button class="filter-btn active" onclick="setFilter(this,'todos')">Todos</button>
+          <button class="filter-btn" onclick="setFilter(this,'Sim')">✅ Confirmados</button>
+          <button class="filter-btn" onclick="setFilter(this,'Não')">❌ Declinaram</button>
         </div>
         <div class="action-btns">
-          <button class="action-btn refresh" onclick="loadData()"><i class="fas fa-sync-alt"></i> Actualizar</button>
+          <button class="action-btn refresh" onclick="loadData()"><i class="fas fa-sync-alt"></i> Atualizar</button>
           <button class="action-btn export" onclick="exportXLSX()"><i class="fas fa-file-excel"></i> Excel</button>
         </div>
       </div>
-
-      <!-- TABLE -->
       <div class="table-wrap">
         <div class="table-header">
           <div class="table-title">Lista de Convidados</div>
@@ -296,13 +294,8 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
           <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Nome & Email</th>
-                <th>Telefone</th>
-                <th>Presença</th>
-                <th>Mensagem</th>
-                <th>Data</th>
-                <th></th>
+                <th>#</th><th>Nome & Email</th><th>Telefone</th>
+                <th>Presença</th><th>Mensagem</th><th>Data</th><th></th>
               </tr>
             </thead>
             <tbody id="rsvpTableBody">
@@ -311,16 +304,14 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
           </table>
         </div>
       </div>
-    </div><!-- /section-convidados -->
+    </div>
 
-
-    <!-- ═══════════════════════════════
-         TAB 2 — PADRINHOS & MADRINHAS
-    ═══════════════════════════════ -->
+    <!-- ═══════════════════
+         TAB 2 — PADRINHOS
+    ═══════════════════ -->
     <div class="tab-section" id="section-padrinhos">
 
-      <!-- STATS PADRINHOS -->
-      <div class="godparents-stats" id="gp-stats-grid">
+      <div class="godparents-stats">
         <div class="gp-stat"><div class="gp-stat-num" id="gp-s-total">--</div><div class="gp-stat-label">Total Convites</div></div>
         <div class="gp-stat" style="border-top-color:var(--green)"><div class="gp-stat-num" id="gp-s-sim">--</div><div class="gp-stat-label">Confirmados</div></div>
         <div class="gp-stat" style="border-top-color:var(--red)"><div class="gp-stat-num" id="gp-s-nao">--</div><div class="gp-stat-label">Declinaram</div></div>
@@ -328,17 +319,16 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
         <div class="gp-stat" style="border-top-color:var(--purple)"><div class="gp-stat-num" id="gp-s-pessoas">--</div><div class="gp-stat-label">Pessoas Confirmadas</div></div>
       </div>
 
-      <!-- TOOLBAR PADRINHOS -->
       <div class="toolbar" style="margin-bottom:1.5rem">
         <div class="search-wrap">
           <i class="fas fa-search"></i>
-          <input type="text" class="search-input" id="gpSearchInput" placeholder="Pesquisar por nome, email ou casal..." oninput="renderGodparents()">
+          <input type="text" class="search-input" id="gpSearchInput" placeholder="Pesquisar por nome, email ou grupo..." oninput="renderGodparents()">
         </div>
         <div class="filter-btns">
-          <button class="filter-btn active" data-filter="todos" onclick="setGpFilter(this,'todos')">Todos</button>
-          <button class="filter-btn" data-filter="Sim" onclick="setGpFilter(this,'Sim')">✅ Confirmados</button>
-          <button class="filter-btn" data-filter="Não" onclick="setGpFilter(this,'Não')">❌ Declinaram</button>
-          <button class="filter-btn" data-filter="pendente" onclick="setGpFilter(this,'pendente')">⏳ Pendentes</button>
+          <button class="filter-btn active" onclick="setGpFilter(this,'todos')">Todos</button>
+          <button class="filter-btn" onclick="setGpFilter(this,'Sim')">✅ Confirmados</button>
+          <button class="filter-btn" onclick="setGpFilter(this,'Não')">❌ Declinaram</button>
+          <button class="filter-btn" onclick="setGpFilter(this,'pendente')">⏳ Pendentes</button>
         </div>
         <div class="action-btns">
           <button class="action-btn refresh" onclick="loadGodparents()"><i class="fas fa-sync-alt"></i> Actualizar</button>
@@ -346,44 +336,27 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
         </div>
       </div>
 
-      <!-- PENDENTES (sem resposta) -->
+      <!-- Pendentes -->
       <div class="pending-list" id="pending-couples-wrap" style="display:none">
         <h4><i class="fas fa-clock"></i> Aguardando Resposta</h4>
         <div id="pending-couples-list"></div>
       </div>
 
-      <!-- CARDS DOS CASAIS -->
-      <div class="section-header">
-        <div>
-          <div class="section-title">Casais & Madrinhas Individuais</div>
-          <div class="section-subtitle" id="gp-couples-count">— grupos</div>
-        </div>
-      </div>
+      <!-- Cards agrupados por categoria -->
+      <div id="godparents-cards-container"></div>
 
-      <div class="couples-grid" id="couplesGrid">
-        <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">
-          <i class="fas fa-spinner fa-spin" style="font-size:2rem;margin-bottom:1rem;display:block;opacity:.4"></i>
-          A carregar padrinhos...
-        </div>
-      </div>
-
-      <!-- TABELA COMPLETA PADRINHOS -->
+      <!-- Tabela completa -->
       <div class="table-wrap" style="margin-top:1.5rem">
         <div class="table-header">
-          <div class="table-title">Todos os Registos de Padrinhos</div>
+          <div class="table-title">Todos os Registos</div>
           <div class="table-count" id="gp-tableCount">— registos</div>
         </div>
         <div class="table-scroll">
           <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Nome & Email</th>
-                <th>Tipo</th>
-                <th>Casal / Grupo</th>
-                <th>Resposta</th>
-                <th>Data</th>
-                <th></th>
+                <th>#</th><th>Nome & Email</th><th>Tipo</th>
+                <th>Grupo</th><th>Resposta</th><th>Data</th><th></th>
               </tr>
             </thead>
             <tbody id="gpTableBody">
@@ -393,12 +366,11 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
         </div>
       </div>
 
-    </div><!-- /section-padrinhos -->
+    </div>
+  </div>
+</div>
 
-  </div><!-- /admin-body -->
-</div><!-- /admin-panel -->
-
-<!-- MODAL DETALHE -->
+<!-- MODAL -->
 <div class="modal-overlay" id="detailModal">
   <div class="modal" style="position:relative">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -408,53 +380,80 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
 </div>
 
 <script>
-// ══════════════════════════════════════════════════
-// SUPABASE CONFIG
-// ══════════════════════════════════════════════════
+// ══════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════
 const SUPABASE_URL  = 'https://yihqeaqjatwnekhdqcju.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
 const ADMIN_PASSWORD = 'casamento2026';
+const BASE_URL = 'https://nathanand-izadora-wedding-website.vercel.app';
 
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
-let allData        = [];
-let currentFilter  = 'todos';
-let allGodparents  = [];
-let gpFilter       = 'todos';
+let allData       = [];
+let currentFilter = 'todos';
+let allGodparents = [];
+let gpFilter      = 'todos';
 
-// ── Mapeamento completo de casais (igual ao padrinhos.html) ──
-const coupleMapping = {
-  'jane-e-rogerio':        { nome:'Jane e Rogerio',        tipo:'casal',    slug:'jane-e-rogerio' },
-  'izabella-e-tiago':      { nome:'Izabella e Tiago',      tipo:'casal',    slug:'izabella-e-tiago' },
-  'alexandro-e-lauranne':  { nome:'Alexandro e Lauranne',  tipo:'casal',    slug:'alexandro-e-lauranne' },
-  'sandra-e-andre':        { nome:'Sandra e André',        tipo:'casal',    slug:'sandra-e-andre' },
-  'raquel-e-elton':        { nome:'Raquel e Elton',        tipo:'casal',    slug:'raquel-e-elton' },
-  'bruna-e-heber':         { nome:'Bruna e Heber',         tipo:'casal',    slug:'bruna-e-heber' },
-  'lorena':                { nome:'Lorena',                tipo:'madrinha', slug:'lorena' },
-  'nicole':                { nome:'Nicole',                tipo:'madrinha', slug:'nicole' },
+// ══════════════════════════════════════
+// MAPEAMENTO COMPLETO
+// Cada entrada tem: nome, tipo, categoria, paramType, paramKey
+// paramType: 'casal' ou 'convidado'
+// ══════════════════════════════════════
+const allInvites = {
+  // ── CASAIS DE PADRINHOS ──
+  'jane-e-rogerio':       { nome:'Jane e Rogerio',       tipo:'casal',     categoria:'padrinhos',   paramType:'casal',     paramKey:'jane-e-rogerio' },
+  'izabella-e-tiago':     { nome:'Izabella e Tiago',     tipo:'casal',     categoria:'padrinhos',   paramType:'casal',     paramKey:'izabella-e-tiago' },
+  'alexandro-e-lauranne': { nome:'Alexandro e Lauranne', tipo:'casal',     categoria:'padrinhos',   paramType:'casal',     paramKey:'alexandro-e-lauranne' },
+  'sandra-e-andre':       { nome:'Sandra e André',       tipo:'casal',     categoria:'padrinhos',   paramType:'casal',     paramKey:'sandra-e-andre' },
+  'raquel-e-elton':       { nome:'Raquel e Elton',       tipo:'casal',     categoria:'padrinhos',   paramType:'casal',     paramKey:'raquel-e-elton' },
+  'bruna-e-heber':        { nome:'Bruna e Heber',        tipo:'casal',     categoria:'padrinhos',   paramType:'casal',     paramKey:'bruna-e-heber' },
+  // ── MADRINHAS INDIVIDUAIS ──
+  'lorena':               { nome:'Lorena',               tipo:'madrinha',  categoria:'padrinhos',   paramType:'casal',     paramKey:'lorena' },
+  'nicole':               { nome:'Nicole',               tipo:'madrinha',  categoria:'padrinhos',   paramType:'casal',     paramKey:'nicole' },
+  // ── DAMA DE HONRA ──
+  'special_anedina':      { nome:'Anedina',              tipo:'dama-honra',categoria:'especiais',   paramType:'convidado', paramKey:'anedina' },
+  // ── FLORISTAS ──
+  'special_laura':        { nome:'Laura',                tipo:'florista',  categoria:'especiais',   paramType:'convidado', paramKey:'laura' },
+  'special_esther':       { nome:'Esther',               tipo:'florista',  categoria:'especiais',   paramType:'convidado', paramKey:'esther' },
 };
 
-// ════════════════
+// Labels amigáveis por tipo
+const tipoLabel = {
+  'casal':     'Casal de Padrinhos',
+  'madrinha':  'Madrinha Individual',
+  'dama-honra':'Dama de Honra',
+  'florista':  'Florista',
+};
+const tipoIcon = {
+  'casal':     '💍',
+  'madrinha':  '👰',
+  'dama-honra':'👑',
+  'florista':  '🌸',
+};
+
+function buildLink(invite) {
+  return `${BASE_URL}/padrinhos.html?${invite.paramType}=${invite.paramKey}`;
+}
+
+// ══════════════════════════════════════
 // LOGIN
-// ════════════════
+// ══════════════════════════════════════
 async function doLogin(){
   const email = document.getElementById('login-email').value.trim();
   const pass  = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-error');
   errEl.style.display = 'none';
-
-  if(!email || !pass){ errEl.textContent = 'Preencha email e password.'; errEl.style.display = 'block'; return; }
-
+  if(!email || !pass){ errEl.textContent='Preencha email e password.'; errEl.style.display='block'; return; }
   const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
   if(error){
     if(pass === ADMIN_PASSWORD){ showAdminPanel(email); }
-    else { errEl.textContent = 'Email ou password incorrectos.'; errEl.style.display = 'block'; }
+    else { errEl.textContent='Email ou password incorrectos.'; errEl.style.display='block'; }
     return;
   }
   showAdminPanel(data.user.email);
 }
-
 function showAdminPanel(email){
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('admin-panel').classList.add('show');
@@ -463,117 +462,78 @@ function showAdminPanel(email){
   loadGodparents();
   subscribeRealtime();
 }
+async function doLogout(){ await sb.auth.signOut(); location.reload(); }
+sb.auth.getSession().then(({ data:{ session }}) => { if(session) showAdminPanel(session.user.email); });
 
-async function doLogout(){
-  await sb.auth.signOut();
-  location.reload();
-}
-
-sb.auth.getSession().then(({ data: { session } }) => {
-  if(session) showAdminPanel(session.user.email);
-});
-
-// ════════════════
+// ══════════════════════════════════════
 // TABS
-// ════════════════
+// ══════════════════════════════════════
 function switchTab(tab){
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.getElementById('section-' + tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.getElementById('section-'+tab).classList.add('active');
 }
 
-// ════════════════
-// LOAD RSVP DATA
-// ════════════════
+// ══════════════════════════════════════
+// LOAD RSVP
+// ══════════════════════════════════════
 async function loadData(){
   const tbody = document.getElementById('rsvpTableBody');
   tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin" style="margin-right:.5rem"></i>A carregar...</td></tr>';
-
-  const { data, error } = await sb
-    .from('rsvp')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if(error){ showToast('Erro ao carregar dados: '+error.message, 'error'); return; }
-
+  const { data, error } = await sb.from('rsvp').select('*').order('created_at',{ascending:false});
+  if(error){ showToast('Erro: '+error.message,'error'); return; }
   allData = data || [];
-  updateStats();
-  renderTable();
-  showToast(`${allData.length} registos carregados`, 'success');
+  updateStats(); renderTable();
+  showToast(`${allData.length} registos carregados`);
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // REALTIME
-// ════════════════
+// ══════════════════════════════════════
 function subscribeRealtime(){
-  // RSVP
   sb.channel('rsvp-changes')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'rsvp' }, payload => {
-      if(payload.eventType === 'INSERT'){
-        allData.unshift(payload.new);
-        updateStats(); renderTable();
-        showToast(`🎉 Nova resposta de ${payload.new.nome}!`);
-      } else if(payload.eventType === 'DELETE'){
-        allData = allData.filter(r => r.id !== payload.old.id);
-        updateStats(); renderTable();
-      }
+    .on('postgres_changes',{event:'*',schema:'public',table:'rsvp'}, payload => {
+      if(payload.eventType==='INSERT'){ allData.unshift(payload.new); updateStats(); renderTable(); showToast(`🎉 Nova resposta de ${payload.new.nome}!`); }
+      else if(payload.eventType==='DELETE'){ allData=allData.filter(r=>r.id!==payload.old.id); updateStats(); renderTable(); }
     }).subscribe();
-
-  // Godparents
   sb.channel('godparents-changes')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'godparents' }, payload => {
-      if(payload.eventType === 'INSERT'){
-        allGodparents.unshift(payload.new);
-        updateGpStats(); renderGodparents();
-        showToast(`💍 Novo padrinho/madrinha: ${payload.new.nome}!`);
-      } else if(payload.eventType === 'DELETE'){
-        allGodparents = allGodparents.filter(r => r.id !== payload.old.id);
-        updateGpStats(); renderGodparents();
-      }
+    .on('postgres_changes',{event:'*',schema:'public',table:'godparents'}, payload => {
+      if(payload.eventType==='INSERT'){ allGodparents.unshift(payload.new); updateGpStats(); renderGodparents(); showToast(`💍 Novo registo: ${payload.new.nome}!`); }
+      else if(payload.eventType==='DELETE'){ allGodparents=allGodparents.filter(r=>r.id!==payload.old.id); updateGpStats(); renderGodparents(); }
     }).subscribe();
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // STATS RSVP
-// ════════════════
+// ══════════════════════════════════════
 function updateStats(){
-  const sim   = allData.filter(r => r.presenca === 'Sim').length;
-  const nao   = allData.filter(r => r.presenca === 'Não').length;
+  const sim = allData.filter(r=>r.presenca==='Sim').length;
+  const nao = allData.filter(r=>r.presenca==='Não').length;
   document.getElementById('s-total').textContent   = allData.length;
   document.getElementById('s-sim').textContent     = sim;
   document.getElementById('s-nao').textContent     = nao;
   document.getElementById('s-pessoas').textContent = sim;
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // RENDER RSVP TABLE
-// ════════════════
+// ══════════════════════════════════════
 function renderTable(){
-  const q      = document.getElementById('searchInput').value.toLowerCase();
+  const q = document.getElementById('searchInput').value.toLowerCase();
   let filtered = allData;
-
   if(currentFilter !== 'todos') filtered = filtered.filter(r => r.presenca === currentFilter);
-  if(q) filtered = filtered.filter(r =>
-    (r.nome||'').toLowerCase().includes(q) ||
-    (r.email||'').toLowerCase().includes(q)
-  );
-
+  if(q) filtered = filtered.filter(r => (r.nome||'').toLowerCase().includes(q)||(r.email||'').toLowerCase().includes(q));
   document.getElementById('tableCount').textContent = `${filtered.length} de ${allData.length} registos`;
-
   const tbody = document.getElementById('rsvpTableBody');
   if(!filtered.length){
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo encontrado.</p></div></td></tr>`;
     return;
   }
-
-  tbody.innerHTML = filtered.map((r, i) => {
+  tbody.innerHTML = filtered.map((r,i) => {
     const dt    = r.created_at ? new Date(r.created_at).toLocaleString('pt-PT',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
-    const badge = r.presenca === 'Sim'
-      ? '<span class="presenca-badge badge-sim">✓ Sim</span>'
-      : '<span class="presenca-badge badge-nao">✗ Não</span>';
+    const badge = r.presenca==='Sim' ? '<span class="presenca-badge badge-sim">✓ Sim</span>' : '<span class="presenca-badge badge-nao">✗ Não</span>';
     const msgTxt = r.mensagem ? r.mensagem.substring(0,50)+(r.mensagem.length>50?'…':'') : '<span style="color:#ccc">—</span>';
-
     return `<tr>
       <td style="color:var(--muted);font-size:.8rem">${i+1}</td>
       <td class="td-nome"><strong>${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small></td>
@@ -588,7 +548,6 @@ function renderTable(){
     </tr>`;
   }).join('');
 }
-
 function setFilter(btn, filter){
   currentFilter = filter;
   document.querySelectorAll('#section-convidados .filter-btn').forEach(b => b.classList.remove('active'));
@@ -597,50 +556,38 @@ function setFilter(btn, filter){
 }
 function filterTable(){ renderTable(); }
 
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // LOAD GODPARENTS
-// ════════════════════════════════════
+// ══════════════════════════════════════
 async function loadGodparents(){
-  const grid = document.getElementById('couplesGrid');
-  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:2rem;margin-bottom:1rem;display:block;opacity:.4"></i>A carregar padrinhos...</div>';
-
-  const { data, error } = await sb
-    .from('godparents')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if(error){ showToast('Erro ao carregar padrinhos: '+error.message, 'error'); return; }
-
+  document.getElementById('godparents-cards-container').innerHTML =
+    '<div style="text-align:center;padding:3rem;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:2rem;margin-bottom:1rem;display:block;opacity:.4"></i>A carregar...</div>';
+  const { data, error } = await sb.from('godparents').select('*').order('created_at',{ascending:false});
+  if(error){ showToast('Erro: '+error.message,'error'); return; }
   allGodparents = data || [];
-  updateGpStats();
-  renderGodparents();
-  showToast(`${allGodparents.length} registos de padrinhos carregados`, 'success');
+  updateGpStats(); renderGodparents();
+  showToast(`${allGodparents.length} registos de padrinhos carregados`);
 }
 
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // STATS PADRINHOS
-// ════════════════════════════════════
+// ══════════════════════════════════════
 function updateGpStats(){
-  // Grupos (casais/madrinhas) que responderam
-  const coupleIds = [...new Set(allGodparents.map(r => r.couple_id))];
-  const respondedCouples = coupleIds.length;
-  const totalCouples = Object.keys(coupleMapping).length;
-  const pendentes = totalCouples - respondedCouples;
-
-  // Por resposta individual
-  const sim = allGodparents.filter(r => r.resposta === 'Sim').length;
-  const nao = allGodparents.filter(r => r.resposta === 'Não').length;
-
-  document.getElementById('gp-s-total').textContent   = totalCouples;
-  document.getElementById('gp-s-sim').textContent     = coupleIds.filter(id => allGodparents.find(r => r.couple_id === id && r.resposta === 'Sim')).length;
-  document.getElementById('gp-s-nao').textContent     = coupleIds.filter(id => allGodparents.find(r => r.couple_id === id && r.resposta === 'Não') && !allGodparents.find(r => r.couple_id === id && r.resposta === 'Sim')).length;
-  document.getElementById('gp-s-pendente').textContent = pendentes;
-  document.getElementById('gp-s-pessoas').textContent  = sim;
+  const respondedIds  = [...new Set(allGodparents.map(r => r.couple_id))];
+  const totalInvites  = Object.keys(allInvites).length;
+  const pendentes     = totalInvites - respondedIds.length;
+  const sim           = respondedIds.filter(id => allGodparents.some(r => r.couple_id===id && r.resposta==='Sim')).length;
+  const nao           = respondedIds.filter(id => allGodparents.every(r => r.couple_id!==id || r.resposta==='Não')).length;
+  document.getElementById('gp-s-total').textContent   = totalInvites;
+  document.getElementById('gp-s-sim').textContent     = sim;
+  document.getElementById('gp-s-nao').textContent     = nao;
+  document.getElementById('gp-s-pendente').textContent= pendentes;
+  document.getElementById('gp-s-pessoas').textContent = allGodparents.filter(r=>r.resposta==='Sim').length;
 }
 
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // RENDER GODPARENTS
-// ════════════════════════════════════
+// ══════════════════════════════════════
 function setGpFilter(btn, filter){
   gpFilter = filter;
   document.querySelectorAll('#section-padrinhos .filter-btn').forEach(b => b.classList.remove('active'));
@@ -651,197 +598,217 @@ function setGpFilter(btn, filter){
 function renderGodparents(){
   const q = document.getElementById('gpSearchInput').value.toLowerCase();
 
-  // ── Agrupar por couple_id ──
-  const groupedByCouple = {};
+  // Agrupar respostas por couple_id
+  const grouped = {};
   allGodparents.forEach(r => {
-    if(!groupedByCouple[r.couple_id]) groupedByCouple[r.couple_id] = [];
-    groupedByCouple[r.couple_id].push(r);
+    if(!grouped[r.couple_id]) grouped[r.couple_id] = [];
+    grouped[r.couple_id].push(r);
   });
 
-  // ── Determinar quais casais responderam e quais não ──
-  const respondedIds = new Set(Object.keys(groupedByCouple));
-  const allIds       = Object.keys(coupleMapping);
-  const pendingIds   = allIds.filter(id => !respondedIds.has(id));
+  const respondedIds = new Set(Object.keys(grouped));
+  const pendingIds   = Object.keys(allInvites).filter(id => !respondedIds.has(id));
 
-  // ── Pending section ──
+  // ── Pendentes ──
   const pendingWrap = document.getElementById('pending-couples-wrap');
   const pendingList = document.getElementById('pending-couples-list');
 
-  if(pendingIds.length > 0 && (gpFilter === 'todos' || gpFilter === 'pendente')){
-    pendingWrap.style.display = 'block';
+  const showPending = pendingIds.length > 0 && (gpFilter === 'todos' || gpFilter === 'pendente');
+  pendingWrap.style.display = showPending ? 'block' : 'none';
+
+  if(showPending){
     pendingList.innerHTML = pendingIds.map(id => {
-      const c = coupleMapping[id];
-      const baseUrl = window.location.origin + window.location.pathname.replace('admin.html','') + 'padrinhos.html';
-      const link = `${baseUrl}?casal=${id}`;
+      const inv  = allInvites[id];
+      const link = buildLink(inv);
       return `<div class="pending-item">
         <div>
-          <div class="pending-nome">${c.nome}</div>
-          <div class="pending-tipo">${c.tipo === 'casal' ? 'Casal de Padrinhos' : 'Madrinha Individual'}</div>
+          <div class="pending-nome">${tipoIcon[inv.tipo] || '👤'} ${escHtml(inv.nome)}</div>
+          <div class="pending-tipo">${tipoLabel[inv.tipo] || inv.tipo}</div>
         </div>
-        <button class="copy-link-btn" onclick="copyLink('${escHtml(link)}','${escHtml(c.nome)}')">
-          <i class="fas fa-copy"></i> Copiar Link
-        </button>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <button class="copy-link-btn" onclick="copyLink('${escHtml(link)}','${escHtml(inv.nome)}')">
+            <i class="fas fa-copy"></i> Copiar Link
+          </button>
+          <a href="${escHtml(link)}" target="_blank" style="padding:.3rem .8rem;background:rgba(201,168,122,.12);border:1px solid rgba(201,168,122,.3);border-radius:6px;color:var(--brown);font-size:.65rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;">
+            <i class="fas fa-external-link-alt"></i> Abrir
+          </a>
+        </div>
       </div>`;
     }).join('');
-  } else {
-    pendingWrap.style.display = 'none';
   }
 
-  // ── Filtrar grupos para os cards ──
-  let visibleGroups = Object.entries(groupedByCouple);
-
-  if(gpFilter === 'pendente'){
-    visibleGroups = []; // pendentes não têm registo no DB
-  } else if(gpFilter === 'Sim'){
-    visibleGroups = visibleGroups.filter(([, members]) => members.some(m => m.resposta === 'Sim'));
-  } else if(gpFilter === 'Não'){
-    visibleGroups = visibleGroups.filter(([, members]) => members.every(m => m.resposta === 'Não'));
-  }
+  // ── Cards ──
+  // Filtrar grupos
+  let visibleEntries = Object.entries(grouped);
+  if(gpFilter === 'pendente') visibleEntries = [];
+  else if(gpFilter === 'Sim') visibleEntries = visibleEntries.filter(([,m]) => m.some(r => r.resposta==='Sim'));
+  else if(gpFilter === 'Não') visibleEntries = visibleEntries.filter(([,m]) => m.every(r => r.resposta==='Não'));
 
   if(q){
-    visibleGroups = visibleGroups.filter(([id, members]) =>
-      (coupleMapping[id]?.nome || id).toLowerCase().includes(q) ||
-      members.some(m => (m.nome||'').toLowerCase().includes(q) || (m.email||'').toLowerCase().includes(q))
+    visibleEntries = visibleEntries.filter(([id, members]) =>
+      (allInvites[id]?.nome||id).toLowerCase().includes(q) ||
+      members.some(m => (m.nome||'').toLowerCase().includes(q)||(m.email||'').toLowerCase().includes(q))
     );
   }
 
-  document.getElementById('gp-couples-count').textContent = `${visibleGroups.length} grupos com resposta`;
+  // Separar por categoria
+  const padrinhosEntries = visibleEntries.filter(([id]) => allInvites[id]?.categoria === 'padrinhos');
+  const especiaisEntries = visibleEntries.filter(([id]) => allInvites[id]?.categoria === 'especiais');
+  const unknownEntries   = visibleEntries.filter(([id]) => !allInvites[id]);
 
-  const grid = document.getElementById('couplesGrid');
+  const container = document.getElementById('godparents-cards-container');
+  let html = '';
 
-  if(!visibleGroups.length && gpFilter !== 'pendente'){
-    grid.innerHTML = `<div style="grid-column:1/-1"><div class="empty-state"><i class="fas fa-heart-broken"></i><p>Nenhum grupo encontrado.</p></div></div>`;
-  } else if(gpFilter === 'pendente'){
-    grid.innerHTML = '';
-  } else {
-    grid.innerHTML = visibleGroups.map(([coupleId, members]) => {
-      const info    = coupleMapping[coupleId];
-      const nomeCasal = info ? info.nome : coupleId;
-      const tipo    = info ? info.tipo : 'casal';
-
-      // Determinar status do grupo
-      const hasSim = members.some(m => m.resposta === 'Sim');
-      const hasNao = members.every(m => m.resposta === 'Não');
-      const statusClass = hasSim ? 'accepted' : hasNao ? 'declined' : 'pending';
-      const statusBadge = hasSim
-        ? '<span class="presenca-badge badge-sim">✓ Confirmado</span>'
-        : '<span class="presenca-badge badge-nao">✗ Declinado</span>';
-
-      // Membros
-      const membersHtml = members.map(m => {
-        const isM = m.tipo === 'madrinha';
-        return `<div class="couple-member">
-          <div class="member-avatar ${isM ? 'avatar-madrinha' : 'avatar-padrinho'}">${isM ? '👰' : '🤵'}</div>
-          <div class="member-info">
-            <div class="member-name">${escHtml(m.nome||'—')}</div>
-            <div class="member-email">${escHtml(m.email||'—')}</div>
-          </div>
-          <div class="member-tipo">${m.tipo || ''}</div>
-        </div>`;
-      }).join('');
-
-      const latestDate = members.reduce((acc, m) => {
-        if(!m.created_at) return acc;
-        const d = new Date(m.created_at);
-        return (!acc || d > acc) ? d : acc;
-      }, null);
-      const dateStr = latestDate ? latestDate.toLocaleDateString('pt-PT') : '—';
-
-      return `<div class="couple-card ${statusClass}">
-        <div class="couple-card-header">
-          <div class="couple-card-name">${escHtml(nomeCasal)}</div>
-          <div class="couple-card-type">${tipo === 'casal' ? 'Casal' : 'Madrinha'}</div>
-        </div>
-        <div class="couple-card-body">${membersHtml}</div>
-        <div class="couple-card-footer">
-          <div class="couple-response">${statusBadge}</div>
-          <div class="couple-date"><i class="fas fa-calendar" style="margin-right:.3rem;color:var(--gold)"></i>${dateStr}</div>
-        </div>
-      </div>`;
-    }).join('');
+  if(padrinhosEntries.length){
+    html += `<div class="section-group-title"><i class="fas fa-ring"></i> Padrinhos & Madrinhas (${padrinhosEntries.length})</div>`;
+    html += `<div class="couples-grid">${padrinhosEntries.map(([id,m]) => buildCard(id,m)).join('')}</div>`;
+  }
+  if(especiaisEntries.length){
+    html += `<div class="section-group-title"><i class="fas fa-star"></i> Convidadas Especiais (${especiaisEntries.length})</div>`;
+    html += `<div class="couples-grid">${especiaisEntries.map(([id,m]) => buildCard(id,m)).join('')}</div>`;
+  }
+  if(unknownEntries.length){
+    html += `<div class="section-group-title"><i class="fas fa-question-circle"></i> Outros (${unknownEntries.length})</div>`;
+    html += `<div class="couples-grid">${unknownEntries.map(([id,m]) => buildCard(id,m)).join('')}</div>`;
   }
 
-  // ── Tabela detalhada ──
+  if(!html && gpFilter !== 'pendente'){
+    html = `<div style="grid-column:1/-1"><div class="empty-state"><i class="fas fa-heart-broken"></i><p>Nenhum grupo encontrado.</p></div></div>`;
+  }
+
+  container.innerHTML = html;
+
+  // Stats dos grupos
+  document.getElementById('gp-couples-count') && (document.getElementById('gp-couples-count').textContent = `${visibleEntries.length} grupos com resposta`);
+
   renderGpTable(q);
+}
+
+function buildCard(coupleId, members){
+  const inv  = allInvites[coupleId];
+  const nome = inv ? inv.nome : coupleId;
+  const tipo = inv ? inv.tipo : 'desconhecido';
+
+  const hasSim = members.some(m => m.resposta==='Sim');
+  const hasNao = members.every(m => m.resposta==='Não');
+  const statusClass = hasSim ? 'accepted' : hasNao ? 'declined' : 'pending';
+  const statusBadge = hasSim
+    ? '<span class="presenca-badge badge-sim">✓ Confirmado</span>'
+    : '<span class="presenca-badge badge-nao">✗ Declinado</span>';
+
+  const isSpecial = ['dama-honra','florista'].includes(tipo);
+  const typeLabel = tipoLabel[tipo] || tipo;
+  const typeClass = isSpecial ? 'couple-card-type type-special' : 'couple-card-type';
+
+  const membersHtml = members.map(m => {
+    const isM  = m.tipo === 'madrinha' || isSpecial;
+    const avatarClass = isSpecial ? 'avatar-special' : (isM ? 'avatar-madrinha' : 'avatar-padrinho');
+    const icon = tipoIcon[m.tipo] || (isM ? '👰' : '🤵');
+    return `<div class="couple-member">
+      <div class="member-avatar ${avatarClass}">${icon}</div>
+      <div class="member-info">
+        <div class="member-name">${escHtml(m.nome||'—')}</div>
+        <div class="member-email">${escHtml(m.email||'—')}</div>
+      </div>
+      <div class="member-tipo">${m.tipo||''}</div>
+    </div>`;
+  }).join('');
+
+  const latestDate = members.reduce((acc,m) => {
+    if(!m.created_at) return acc;
+    const d = new Date(m.created_at);
+    return (!acc || d > acc) ? d : acc;
+  }, null);
+  const dateStr = latestDate ? latestDate.toLocaleDateString('pt-PT') : '—';
+
+  // Link
+  const link = inv ? buildLink(inv) : '#';
+
+  return `<div class="couple-card ${statusClass}">
+    <div class="couple-card-header">
+      <div class="couple-card-name">${tipoIcon[tipo]||'👤'} ${escHtml(nome)}</div>
+      <div class="${typeClass}">${typeLabel}</div>
+    </div>
+    <div class="couple-card-body">${membersHtml}</div>
+    <div class="couple-card-footer">
+      <div class="couple-response">${statusBadge}</div>
+      <div style="display:flex;align-items:center;gap:.5rem">
+        <button class="copy-link-btn" onclick="copyLink('${escHtml(link)}','${escHtml(nome)}')" title="Copiar link">
+          <i class="fas fa-link"></i>
+        </button>
+        <span class="couple-date"><i class="fas fa-calendar" style="margin-right:.3rem;color:var(--gold)"></i>${dateStr}</span>
+      </div>
+    </div>
+  </div>`;
 }
 
 function renderGpTable(q = ''){
   let filtered = allGodparents;
-
-  if(gpFilter === 'Sim')      filtered = filtered.filter(r => r.resposta === 'Sim');
-  else if(gpFilter === 'Não') filtered = filtered.filter(r => r.resposta === 'Não');
+  if(gpFilter === 'Sim')      filtered = filtered.filter(r => r.resposta==='Sim');
+  else if(gpFilter === 'Não') filtered = filtered.filter(r => r.resposta==='Não');
   else if(gpFilter === 'pendente') filtered = [];
 
   if(q) filtered = filtered.filter(r =>
-    (r.nome||'').toLowerCase().includes(q) ||
-    (r.email||'').toLowerCase().includes(q) ||
+    (r.nome||'').toLowerCase().includes(q)||
+    (r.email||'').toLowerCase().includes(q)||
     (r.couple||'').toLowerCase().includes(q)
   );
 
   document.getElementById('gp-tableCount').textContent = `${filtered.length} de ${allGodparents.length} registos`;
-
   const tbody = document.getElementById('gpTableBody');
   if(!filtered.length){
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo.</p></div></td></tr>`;
     return;
   }
-
-  tbody.innerHTML = filtered.map((r, i) => {
-    const dt = r.created_at ? new Date(r.created_at).toLocaleString('pt-PT',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
-    const badge = r.resposta === 'Sim'
+  tbody.innerHTML = filtered.map((r,i) => {
+    const dt    = r.created_at ? new Date(r.created_at).toLocaleString('pt-PT',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+    const badge = r.resposta==='Sim'
       ? '<span class="presenca-badge badge-sim">✓ Sim</span>'
       : '<span class="presenca-badge badge-nao">✗ Não</span>';
-    const tipoIcon = r.tipo === 'madrinha' ? '👰' : '🤵';
-
+    const icon  = tipoIcon[r.tipo] || '👤';
     return `<tr>
       <td style="color:var(--muted);font-size:.8rem">${i+1}</td>
-      <td class="td-nome"><strong>${tipoIcon} ${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small></td>
+      <td class="td-nome"><strong>${icon} ${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small></td>
       <td><span style="font-size:.75rem;text-transform:capitalize;color:var(--brown)">${escHtml(r.tipo||'—')}</span></td>
       <td style="font-size:.82rem;color:var(--muted)">${escHtml(r.couple||'—')}</td>
       <td>${badge}</td>
       <td class="td-date">${dt}</td>
-      <td><div class="td-actions">
-        <button class="row-btn del" onclick="deleteGpRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button>
-      </div></td>
+      <td><button class="row-btn del" onclick="deleteGpRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button></td>
     </tr>`;
   }).join('');
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // COPY LINK
-// ════════════════
+// ══════════════════════════════════════
 function copyLink(link, nome){
-  navigator.clipboard.writeText(link).then(() => {
-    showToast(`Link de ${nome} copiado! 📋`);
-  }).catch(() => {
-    prompt('Copie o link:', link);
-  });
+  navigator.clipboard.writeText(link)
+    .then(()  => showToast(`Link de ${nome} copiado! 📋`))
+    .catch(()  => { prompt('Copie o link:', link); });
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // DELETE
-// ════════════════
+// ══════════════════════════════════════
 async function deleteRsvpRow(id, nome){
-  if(!confirm(`Apagar a resposta de "${nome}"? Esta acção não pode ser desfeita.`)) return;
-  const { error } = await sb.from('rsvp').delete().eq('id', id);
-  if(error){ showToast('Erro ao apagar: '+error.message, 'error'); return; }
+  if(!confirm(`Apagar a resposta de "${nome}"?`)) return;
+  const { error } = await sb.from('rsvp').delete().eq('id',id);
+  if(error){ showToast('Erro: '+error.message,'error'); return; }
   allData = allData.filter(r => r.id !== id);
   updateStats(); renderTable();
   showToast(`Resposta de ${nome} apagada.`);
 }
-
 async function deleteGpRow(id, nome){
-  if(!confirm(`Apagar o registo de "${nome}"? Esta acção não pode ser desfeita.`)) return;
-  const { error } = await sb.from('godparents').delete().eq('id', id);
-  if(error){ showToast('Erro ao apagar: '+error.message, 'error'); return; }
+  if(!confirm(`Apagar o registo de "${nome}"?`)) return;
+  const { error } = await sb.from('godparents').delete().eq('id',id);
+  if(error){ showToast('Erro: '+error.message,'error'); return; }
   allGodparents = allGodparents.filter(r => r.id !== id);
   updateGpStats(); renderGodparents();
   showToast(`Registo de ${nome} apagado.`);
 }
 
-// ════════════════
-// DETAIL MODAL (RSVP)
-// ════════════════
+// ══════════════════════════════════════
+// DETAIL MODAL
+// ══════════════════════════════════════
 function viewDetail(r){
   if(typeof r === 'string') r = JSON.parse(r);
   const dt = r.created_at ? new Date(r.created_at).toLocaleString('pt-PT') : '—';
@@ -851,12 +818,11 @@ function viewDetail(r){
     <div class="modal-field"><span class="lbl">Email</span><div class="val">${escHtml(r.email||'—')}</div></div>
     <div class="modal-field"><span class="lbl">Telefone</span><div class="val">${escHtml(r.telefone||'—')}</div></div>
     <div class="modal-field"><span class="lbl">Presença</span><div class="val">${r.presenca==='Sim'?'✅ Confirmado':'❌ Declinado'}</div></div>
-    <div class="modal-field"><span class="lbl">Mensagem para os Noivos</span><div class="val" style="font-style:italic;color:var(--muted)">"${escHtml(r.mensagem||'Sem mensagem.')}"</div></div>
-    <div class="modal-field"><span class="lbl">Data de Submissão</span><div class="val">${dt}</div></div>
+    <div class="modal-field"><span class="lbl">Mensagem</span><div class="val" style="font-style:italic;color:var(--muted)">"${escHtml(r.mensagem||'Sem mensagem.')}"</div></div>
+    <div class="modal-field"><span class="lbl">Data</span><div class="val">${dt}</div></div>
   `;
   document.getElementById('detailModal').classList.add('active');
 }
-
 function closeModal(){
   document.getElementById('detailModal').classList.remove('active');
 }
@@ -864,143 +830,80 @@ document.getElementById('detailModal').addEventListener('click', e => {
   if(e.target === document.getElementById('detailModal')) closeModal();
 });
 
-// ════════════════
+// ══════════════════════════════════════
 // EXPORT RSVP XLSX
-// ════════════════
+// ══════════════════════════════════════
 function exportXLSX(){
-  if(!allData.length){ showToast('Não há dados para exportar.', 'error'); return; }
-
+  if(!allData.length){ showToast('Não há dados para exportar.','error'); return; }
   const rows = allData.map((r,i) => ({
-    '#'              : i+1,
-    'Nome'           : r.nome        || '',
-    'Email'          : r.email       || '',
-    'Telefone'       : r.telefone    || '',
-    'Presença'       : r.presenca    || '',
-    'Mensagem'       : r.mensagem    || '',
-    'Data Submissão' : r.created_at  ? new Date(r.created_at).toLocaleString('pt-PT') : ''
+    '#': i+1, 'Nome': r.nome||'', 'Email': r.email||'',
+    'Telefone': r.telefone||'', 'Presença': r.presenca||'',
+    'Mensagem': r.mensagem||'', 'Data': r.created_at ? new Date(r.created_at).toLocaleString('pt-PT') : ''
   }));
-
   const wb = XLSX.utils.book_new();
-  const wsAll = XLSX.utils.json_to_sheet(rows);
-  wsAll['!cols'] = [4,25,28,15,8,40,18].map(w=>({wch:w}));
-  XLSX.utils.book_append_sheet(wb, wsAll, 'Todos os Convidados');
-
-  const conf = rows.filter(r => r['Presença'] === 'Sim');
-  if(conf.length){
-    const wsConf = XLSX.utils.json_to_sheet(conf);
-    wsConf['!cols'] = [4,25,28,15,8,40,18].map(w=>({wch:w}));
-    XLSX.utils.book_append_sheet(wb, wsConf, 'Confirmados');
-  }
-
-  const wsRes = XLSX.utils.aoa_to_sheet([
-    ['Resumo — Casamento Natan & Izadora'],
-    [],
-    ['Exportado em', new Date().toLocaleString('pt-PT')],
-    [],
-    ['Total de respostas',  allData.length],
-    ['✅ Confirmados',      allData.filter(r=>r.presenca==='Sim').length],
-    ['❌ Declinaram',       allData.filter(r=>r.presenca==='Não').length],
-  ]);
-  wsRes['!cols'] = [{wch:30},{wch:20}];
-  XLSX.utils.book_append_sheet(wb, wsRes, 'Resumo');
-
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [4,25,28,15,8,40,18].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb, ws, 'Convidados');
   XLSX.writeFile(wb, `rsvp_natan_izadora_${new Date().toISOString().slice(0,10)}.xlsx`);
-  showToast('📥 Excel exportado com sucesso!');
+  showToast('📥 Excel exportado!');
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // EXPORT GODPARENTS XLSX
-// ════════════════
+// ══════════════════════════════════════
 function exportGodparentsXLSX(){
-  // Criar lista com todos os casais (incluindo pendentes)
-  const allCouplesRows = [];
-
-  Object.entries(coupleMapping).forEach(([id, info]) => {
+  const rows = [];
+  Object.entries(allInvites).forEach(([id, inv]) => {
     const members = allGodparents.filter(r => r.couple_id === id);
-    if(members.length > 0){
+    if(members.length){
       members.forEach(m => {
-        allCouplesRows.push({
-          'Grupo / Casal'  : info.nome,
-          'Tipo de Grupo'  : info.tipo === 'casal' ? 'Casal de Padrinhos' : 'Madrinha Individual',
-          'Nome'           : m.nome     || '',
-          'Email'          : m.email    || '',
-          'Tipo'           : m.tipo     || '',
-          'Resposta'       : m.resposta || '',
-          'Data Resposta'  : m.created_at ? new Date(m.created_at).toLocaleString('pt-PT') : '',
-          'Status'         : m.resposta === 'Sim' ? 'CONFIRMADO' : m.resposta === 'Não' ? 'DECLINADO' : 'PENDENTE',
+        rows.push({
+          'Grupo': inv.nome, 'Categoria': tipoLabel[inv.tipo]||inv.tipo,
+          'Nome': m.nome||'', 'Email': m.email||'', 'Tipo': m.tipo||'',
+          'Resposta': m.resposta||'',
+          'Data': m.created_at ? new Date(m.created_at).toLocaleString('pt-PT') : '',
+          'Status': m.resposta==='Sim'?'CONFIRMADO':m.resposta==='Não'?'DECLINADO':'PENDENTE',
+          'Link': buildLink(inv),
         });
       });
     } else {
-      allCouplesRows.push({
-        'Grupo / Casal'  : info.nome,
-        'Tipo de Grupo'  : info.tipo === 'casal' ? 'Casal de Padrinhos' : 'Madrinha Individual',
-        'Nome'           : '—',
-        'Email'          : '—',
-        'Tipo'           : '—',
-        'Resposta'       : '—',
-        'Data Resposta'  : '—',
-        'Status'         : 'PENDENTE (SEM RESPOSTA)',
+      rows.push({
+        'Grupo': inv.nome, 'Categoria': tipoLabel[inv.tipo]||inv.tipo,
+        'Nome':'—','Email':'—','Tipo':'—','Resposta':'—','Data':'—',
+        'Status':'PENDENTE (SEM RESPOSTA)', 'Link': buildLink(inv),
       });
     }
   });
 
-  const wb = XLSX.utils.book_new();
+  const wb   = XLSX.utils.book_new();
+  const wsAll = XLSX.utils.json_to_sheet(rows);
+  wsAll['!cols'] = [22,20,25,28,12,8,18,18,60].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb, wsAll, 'Todos');
 
-  // Sheet 1 — Todos
-  const wsAll = XLSX.utils.json_to_sheet(allCouplesRows);
-  wsAll['!cols'] = [22,22,25,28,10,8,18,18].map(w=>({wch:w}));
-  XLSX.utils.book_append_sheet(wb, wsAll, 'Todos os Padrinhos');
-
-  // Sheet 2 — Confirmados
-  const confirmed = allGodparents.filter(r => r.resposta === 'Sim').map((m,i) => ({
-    '#'    : i+1,
-    'Nome' : m.nome  || '',
-    'Email': m.email || '',
-    'Tipo' : m.tipo  || '',
-    'Casal': m.couple|| '',
-  }));
+  const confirmed = allGodparents.filter(r=>r.resposta==='Sim').map((m,i)=>({'#':i+1,'Nome':m.nome||'','Email':m.email||'','Tipo':m.tipo||'','Grupo':m.couple||''}));
   if(confirmed.length){
-    const wsConf = XLSX.utils.json_to_sheet(confirmed);
-    wsConf['!cols'] = [4,25,28,12,22].map(w=>({wch:w}));
-    XLSX.utils.book_append_sheet(wb, wsConf, 'Confirmados');
+    const wsC = XLSX.utils.json_to_sheet(confirmed);
+    wsC['!cols'] = [4,25,28,12,22].map(w=>({wch:w}));
+    XLSX.utils.book_append_sheet(wb, wsC, 'Confirmados');
   }
 
-  // Sheet 3 — Pendentes
-  const pendingIds = Object.keys(coupleMapping).filter(id => !allGodparents.find(r => r.couple_id === id));
+  const pendingIds = Object.keys(allInvites).filter(id => !allGodparents.find(r=>r.couple_id===id));
   if(pendingIds.length){
-    const wsPend = XLSX.utils.json_to_sheet(pendingIds.map(id => ({
-      'Nome'     : coupleMapping[id].nome,
-      'Tipo'     : coupleMapping[id].tipo === 'casal' ? 'Casal' : 'Madrinha',
-      'Link'     : `${window.location.origin}${window.location.pathname.replace('admin.html','')}padrinhos.html?casal=${id}`,
+    const wsP = XLSX.utils.json_to_sheet(pendingIds.map(id=>({
+      'Nome': allInvites[id].nome, 'Categoria': tipoLabel[allInvites[id].tipo]||allInvites[id].tipo,
+      'Link': buildLink(allInvites[id]),
     })));
-    wsPend['!cols'] = [{wch:25},{wch:10},{wch:60}];
-    XLSX.utils.book_append_sheet(wb, wsPend, 'Pendentes');
+    wsP['!cols'] = [{wch:25},{wch:20},{wch:70}];
+    XLSX.utils.book_append_sheet(wb, wsP, 'Pendentes');
   }
-
-  // Sheet 4 — Resumo
-  const respondedIds = [...new Set(allGodparents.map(r => r.couple_id))];
-  const wsRes = XLSX.utils.aoa_to_sheet([
-    ['Resumo — Padrinhos & Madrinhas'],
-    [],
-    ['Exportado em', new Date().toLocaleString('pt-PT')],
-    [],
-    ['Total convites enviados',  Object.keys(coupleMapping).length],
-    ['Grupos com resposta',      respondedIds.length],
-    ['Grupos pendentes',         Object.keys(coupleMapping).length - respondedIds.length],
-    [],
-    ['Pessoas confirmadas',      allGodparents.filter(r=>r.resposta==='Sim').length],
-    ['Pessoas que declinaram',   allGodparents.filter(r=>r.resposta==='Não').length],
-  ]);
-  wsRes['!cols'] = [{wch:30},{wch:20}];
-  XLSX.utils.book_append_sheet(wb, wsRes, 'Resumo');
 
   XLSX.writeFile(wb, `padrinhos_natan_izadora_${new Date().toISOString().slice(0,10)}.xlsx`);
   showToast('📥 Excel dos Padrinhos exportado!');
 }
 
-// ════════════════
+// ══════════════════════════════════════
 // UTILS
-// ════════════════
+// ══════════════════════════════════════
 function escHtml(str){
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -1009,8 +912,8 @@ function showToast(msg, type='success'){
   t.className = `toast-notif ${type}`;
   t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type==='success'?'✅':'❌'}</span><span class="tn-text">${msg}</span></div>`;
   document.body.appendChild(t);
-  setTimeout(() => t.classList.add('show'), 10);
-  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+  setTimeout(()=>t.classList.add('show'),10);
+  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400);},3500);
 }
 </script>
 </body>
