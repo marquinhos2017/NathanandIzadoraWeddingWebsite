@@ -531,13 +531,36 @@ function setupAttireForMadrinha() {
 }
 
 /* ── CONFIGURAR ÁREA DE TRAJE para ESPECIAL ── */
+/* ── CONFIGURAR ÁREA DE TRAJE para ESPECIAL ── */
 function setupAttireForSpecial(tipo, nome) {
   hideTab('tab-padrinhos');
   hidePanel('panel-padrinhos');
+  
+  // Esconder também o botão de padrinhos
+  const tabPadrinhos = document.getElementById('tab-padrinhos');
+  if (tabPadrinhos) tabPadrinhos.style.display = 'none';
+  
+  // Ocultar o painel de padrinhos completamente
+  const panelPadrinhos = document.getElementById('panel-padrinhos');
+  if (panelPadrinhos) panelPadrinhos.style.display = 'none';
 
   const panelMadrinhas = document.getElementById('panel-madrinhas');
+  const attireTitleEm = document.getElementById('attire-title-em');
+  const attireSubtitle = document.getElementById('attire-subtitle');
+  const tabMadrinhas = document.getElementById('tab-madrinhas');
 
   if (tipo === 'dama-honra') {
+    // Alterar título da seção
+    if (attireTitleEm) attireTitleEm.textContent = 'Traje da Dama de Honra';
+    if (attireSubtitle) attireSubtitle.textContent = 'Vista-se para brilhar ao nosso lado';
+    
+    // Alterar texto da aba
+    if (tabMadrinhas) {
+      tabMadrinhas.innerHTML = '<i class="fas fa-crown"></i> Dama de Honra';
+      tabMadrinhas.style.display = 'flex';
+    }
+    
+    // Atualizar conteúdo do painel
     panelMadrinhas.innerHTML = `
       <div class="attire-gallery">
         <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
@@ -551,12 +574,27 @@ function setupAttireForSpecial(tipo, nome) {
         <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
         <div class="palette-swatches">
           <div class="palette-swatch"><div class="swatch-circle" style="background:#e8b4b8;"></div><span class="swatch-name">Blush</span></div>
+          <div class="palette-swatch"><div class="swatch-circle" style="background:#f5c6cb;"></div><span class="swatch-name">Rose</span></div>
         </div>
+        <ul class="attire-notes-list">
+          <li><i class="fas fa-check"></i> Vestido longo em tom blush ou rosa claro</li>
+          <li><i class="fas fa-check"></i> Acessórios delicados em dourado</li>
+          <li><i class="fas fa-check"></i> Penteado elegante e maquiagem suave</li>
+        </ul>
       </div>`;
-    document.getElementById('tab-madrinhas').innerHTML = '<i class="fas fa-crown"></i> Dama de Honra';
-    document.getElementById('attire-title-em').textContent = 'Traje da Dama de Honra';
-    document.getElementById('attire-subtitle').textContent = 'Vista-se para brilhar ao nosso lado';
-  } else if (tipo === 'florista') {
+  } 
+  else if (tipo === 'florista') {
+    // Alterar título da seção
+    if (attireTitleEm) attireTitleEm.textContent = 'Traje das Floristas';
+    if (attireSubtitle) attireSubtitle.textContent = 'Espalhe flores com elegância';
+    
+    // Alterar texto da aba
+    if (tabMadrinhas) {
+      tabMadrinhas.innerHTML = '<i class="fas fa-flower"></i> Florista';
+      tabMadrinhas.style.display = 'flex';
+    }
+    
+    // Atualizar conteúdo do painel
     panelMadrinhas.innerHTML = `
       <div class="attire-gallery">
         <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
@@ -571,18 +609,29 @@ function setupAttireForSpecial(tipo, nome) {
           <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
           <div class="attire-img-label">Florista<span>Inspiração 2</span></div>
         </div>
+      </div>
+      <div class="attire-palette">
+        <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
+        <div class="palette-swatches">
+          <div class="palette-swatch"><div class="swatch-circle" style="background:#f9e0c7;"></div><span class="swatch-name">Champanhe</span></div>
+          <div class="palette-swatch"><div class="swatch-circle" style="background:#e8d5c4;"></div><span class="swatch-name">Marfim</span></div>
+          <div class="palette-swatch"><div class="swatch-circle" style="background:#c9b6a4;"></div><span class="swatch-name">Nude</span></div>
+        </div>
+        <ul class="attire-notes-list">
+          <li><i class="fas fa-check"></i> Vestido em tons claros e suaves</li>
+          <li><i class="fas fa-check"></i> Cestinha de flores para espalhar pétalas</li>
+          <li><i class="fas fa-check"></i> Penteado solto ou meio preso</li>
+        </ul>
       </div>`;
-    document.getElementById('tab-madrinhas').innerHTML = '<i class="fas fa-spa"></i> Florista';
-    document.getElementById('attire-title-em').textContent = 'Traje das Floristas';
-    document.getElementById('attire-subtitle').textContent = 'Espalhe flores com elegância';
   }
 
+  // Garantir que apenas a aba de madrinhas/dama/florista está visível e ativa
   showTab('tab-madrinhas');
   showPanel('panel-madrinhas');
   document.getElementById('tab-madrinhas').classList.add('active');
   document.getElementById('attire-tabs').style.maxWidth = '280px';
+  document.getElementById('attire-tabs').style.justifyContent = 'center';
 }
-
 /* ── MENSAGENS ── */
 function getMessageByType(tipo, nome) {
   if (tipo === 'casal') return {
