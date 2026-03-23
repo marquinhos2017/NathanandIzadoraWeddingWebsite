@@ -1052,7 +1052,7 @@ body{
   }
 }
 
-  function applyFormCustomizations(coupleType, coupleName, messages) {
+ function applyFormCustomizations(coupleType, coupleName, messages) {
     document.getElementById('invite-couple-name').textContent = coupleName;
     document.getElementById('invite-message-content').innerHTML = messages.mensagem;
     document.getElementById('invite-question').innerHTML = messages.pergunta;
@@ -1060,24 +1060,44 @@ body{
     document.getElementById('selected-couple').value = coupleName;
 
     if (coupleType === 'madrinha') {
-      const padrinhoRow = document.getElementById('padrinho-fields-row');
-      if (padrinhoRow) padrinhoRow.style.display = 'none';
+        const padrinhoRow = document.getElementById('padrinho-fields-row');
+        if (padrinhoRow) padrinhoRow.style.display = 'none';
 
-      document.getElementById('form-title').textContent = 'Responda ao Convite';
-      document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
-      document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
-      document.getElementById('accept-no-text').textContent = 'Não poderei';
+        document.getElementById('form-title').textContent = 'Responda ao Convite';
+        document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
+        document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
+        document.getElementById('accept-no-text').textContent = 'Não poderei';
 
-      const tabPadrinhos = document.getElementById('tab-padrinhos');
-      if (tabPadrinhos) tabPadrinhos.style.display = 'none';
+        const tabPadrinhos = document.getElementById('tab-padrinhos');
+        if (tabPadrinhos) tabPadrinhos.style.display = 'none';
 
-      const tabsEl = document.getElementById('attire-tabs');
-      if (tabsEl) {
-        tabsEl.style.maxWidth = '220px';
-        tabsEl.style.margin = '0 auto 2rem';
-      }
+        const tabsEl = document.getElementById('attire-tabs');
+        if (tabsEl) {
+            tabsEl.style.maxWidth = '220px';
+            tabsEl.style.margin = '0 auto 2rem';
+        }
+    } else {
+        // É um CASAL - garantir que ambas as abas apareçam
+        const padrinhoRow = document.getElementById('padrinho-fields-row');
+        if (padrinhoRow) padrinhoRow.style.display = 'grid';
+        
+        const tabPadrinhos = document.getElementById('tab-padrinhos');
+        if (tabPadrinhos) tabPadrinhos.style.display = 'flex';
+        
+        const tabMadrinhas = document.getElementById('tab-madrinhas');
+        if (tabMadrinhas) tabMadrinhas.style.display = 'flex';
+        
+        const tabsEl = document.getElementById('attire-tabs');
+        if (tabsEl) {
+            tabsEl.style.maxWidth = '400px';
+            tabsEl.style.margin = '0 auto 2rem';
+        }
+        
+        // Garantir que o painel de padrinhos está visível
+        const panelPadrinhos = document.getElementById('panel-padrinhos');
+        if (panelPadrinhos) panelPadrinhos.style.display = 'block';
     }
-  }
+}
 
 
 function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
@@ -1600,6 +1620,37 @@ document.getElementById('floatBtn').addEventListener('click', function(e) {
     window.location.href = this.href;
   }, 300);
 });
+
+// Função para verificar e carregar imagens com fallback
+function setupImageFallback() {
+    const images = document.querySelectorAll('.attire-img-card img');
+    images.forEach(img => {
+        img.onerror = function() {
+            this.style.display = 'none';
+            const placeholder = this.nextElementSibling;
+            if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
+                placeholder.style.display = 'flex';
+            }
+        };
+        
+        // Verificar se a imagem já está carregada
+        if (!img.complete) {
+            img.onload = function() {
+                this.style.display = 'block';
+                const placeholder = this.nextElementSibling;
+                if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
+                    placeholder.style.display = 'none';
+                }
+            };
+        }
+    });
+}
+
+// Chamar após o DOM carregar
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(setupImageFallback, 100);
+});
+
 </script>
 </body>
 </html>
