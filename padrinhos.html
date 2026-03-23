@@ -583,7 +583,7 @@ body{
     <div class="invite-message" id="invite-message-content"></div>
     <div class="invite-question" id="invite-question"></div>
     <div class="invite-signature">
-      Com amor, <span>Iza e Nata</span> ❤️
+      Com amor, <span>Izadora e Natanael</span> ❤️
     </div>
   </div>
 
@@ -1610,8 +1610,13 @@ window.submitGodparentResponse = async function() {
     if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
   });
 
-  window.switchTab = function(tab) {
-  document.querySelectorAll('.attire-panel').forEach(p => p.classList.remove('active'));
+window.switchTab = function(tab) {
+  // Remove active de todos os painéis E limpa qualquer inline style
+  document.querySelectorAll('.attire-panel').forEach(p => {
+    p.classList.remove('active');
+    p.style.removeProperty('display');
+  });
+  
   document.querySelectorAll('.attire-tab-btn').forEach(b => b.classList.remove('active'));
   
   const panel = document.getElementById('panel-' + tab);
