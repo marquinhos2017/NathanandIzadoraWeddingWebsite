@@ -23,38 +23,18 @@
   --white:#fff;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  background:linear-gradient(135deg,var(--ivory) 0%,var(--warm) 100%);
-  font-family:'Cormorant Garamond',serif;
-  color:var(--dark);
-  min-height:100vh;
-  line-height:1.6;
-}
-
+body{background:linear-gradient(135deg,var(--ivory) 0%,var(--warm) 100%);font-family:'Cormorant Garamond',serif;color:var(--dark);min-height:100vh;line-height:1.6;}
 .container{max-width:1000px;margin:0 auto;padding:2rem}
 
 /* ── INVITE CARD ─────────────────────────────── */
-.invite-card{
-  background:var(--white);
-  border-radius:24px;
-  padding:3rem 2rem;
-  box-shadow:0 20px 50px rgba(93,76,64,.15);
-  margin-bottom:2rem;
-  border:1px solid rgba(201,168,122,.2);
-  position:relative;
-  overflow:hidden;
-  text-align:center;
-}
+.invite-card{background:var(--white);border-radius:24px;padding:3rem 2rem;box-shadow:0 20px 50px rgba(93,76,64,.15);margin-bottom:2rem;border:1px solid rgba(201,168,122,.2);position:relative;overflow:hidden;text-align:center;}
 .invite-card::before{content:'❤️';position:absolute;top:-20px;left:-20px;font-size:8rem;opacity:.03;transform:rotate(15deg)}
 .invite-card::after{content:'❤️';position:absolute;bottom:-20px;right:-20px;font-size:8rem;opacity:.03;transform:rotate(-15deg)}
-
 .invite-hearts{display:flex;justify-content:center;gap:1rem;margin-bottom:2rem}
 .invite-hearts span{font-size:2rem;color:var(--gold);opacity:.6;animation:floatHeart 2s ease-in-out infinite}
 .invite-hearts span:nth-child(2){animation-delay:.3s}
 .invite-hearts span:nth-child(3){animation-delay:.6s}
 @keyframes floatHeart{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
 .invite-names{font-family:'Dancing Script',cursive;font-size:3.5rem;color:var(--brown);margin-bottom:1rem}
 .invite-couple{font-size:2rem;color:var(--gold);margin-bottom:1.5rem;font-family:'Dancing Script',cursive;background:rgba(201,168,122,.1);padding:.5rem 2rem;border-radius:50px;display:inline-block}
 .invite-message{font-size:1.3rem;color:var(--dark);max-width:600px;margin:0 auto 2rem;line-height:1.8;font-style:italic}
@@ -88,7 +68,6 @@ body{
 .area-header h2{font-family:'Dancing Script',cursive;font-size:2.8rem;color:var(--brown);margin-bottom:.5rem}
 .area-header p{color:var(--muted);font-size:1.2rem;font-style:italic}
 .welcome-message{background:rgba(201,168,122,.08);padding:1.5rem;border-radius:12px;margin-bottom:2rem;border-left:4px solid var(--gold);font-size:1.2rem;color:var(--dark)}
-
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2.5rem}
 .info-card{background:linear-gradient(135deg,var(--ivory),var(--warm));border-radius:16px;padding:1.8rem;border:1px solid rgba(201,168,122,.2)}
 .info-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--dark);margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;padding-bottom:.6rem;border-bottom:2px solid rgba(201,168,122,.15)}
@@ -98,304 +77,64 @@ body{
 .info-row .label{font-weight:600;color:var(--brown);min-width:80px}
 .info-row .value{color:var(--dark)}
 
-/* ── ATTIRE SECTION (NEW ELEGANT) ────────────── */
-.attire-section{
-  margin:2.5rem 0;
-  position:relative;
-}
-
-.attire-section-header{
-  text-align:center;
-  margin-bottom:2rem;
-  position:relative;
-}
-.attire-section-header::before,
-.attire-section-header::after{
-  content:'';
-  position:absolute;
-  top:50%;
-  width:25%;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold));
-}
+/* ── ATTIRE SECTION ──────────────────────────── */
+.attire-section{margin:2.5rem 0;position:relative;}
+.attire-section-header{text-align:center;margin-bottom:2rem;position:relative;}
+.attire-section-header::before,.attire-section-header::after{content:'';position:absolute;top:50%;width:25%;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
 .attire-section-header::before{left:0;transform:scaleX(-1)}
 .attire-section-header::after{right:0}
-
-.attire-section-title{
-  font-family:'Playfair Display',serif;
-  font-size:2rem;
-  color:var(--dark);
-  display:inline-block;
-  position:relative;
-}
-.attire-section-title em{
-  font-family:'Dancing Script',cursive;
-  color:var(--gold);
-  font-style:normal;
-  font-size:2.4rem;
-}
-.attire-section-subtitle{
-  font-style:italic;
-  color:var(--muted);
-  font-size:1.1rem;
-  margin-top:.5rem;
-}
+.attire-section-title{font-family:'Playfair Display',serif;font-size:2rem;color:var(--dark);display:inline-block;position:relative;}
+.attire-section-title em{font-family:'Dancing Script',cursive;color:var(--gold);font-style:normal;font-size:2.4rem;}
+.attire-section-subtitle{font-style:italic;color:var(--muted);font-size:1.1rem;margin-top:.5rem;}
 
 /* ── TABS ────────────────────────────────────── */
-.attire-tabs{
-  display:flex;
-  justify-content:center;
-  gap:0;
-  margin-bottom:2rem;
-  background:rgba(245,237,224,.5);
-  border-radius:50px;
-  padding:.4rem;
-  max-width:400px;
-  margin-left:auto;
-  margin-right:auto;
-  margin-bottom:2rem;
-  border:1px solid rgba(201,168,122,.2);
-}
-.attire-tab-btn{
-  flex:1;
-  padding:.7rem 1.5rem;
-  border:none;
-  background:transparent;
-  font-family:'Playfair Display',serif;
-  font-size:1rem;
-  color:var(--muted);
-  cursor:pointer;
-  border-radius:50px;
-  transition:all .35s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-}
-.attire-tab-btn.active{
-  background:linear-gradient(135deg,var(--brown),var(--dark));
-  color:#fff;
-  box-shadow:0 5px 15px rgba(93,76,64,.3);
-}
+.attire-tabs{display:flex;justify-content:center;gap:0;background:rgba(245,237,224,.5);border-radius:50px;padding:.4rem;max-width:400px;margin:0 auto 2rem;border:1px solid rgba(201,168,122,.2);}
+.attire-tab-btn{flex:1;padding:.7rem 1.5rem;border:none;background:transparent;font-family:'Playfair Display',serif;font-size:1rem;color:var(--muted);cursor:pointer;border-radius:50px;transition:all .35s;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.attire-tab-btn.active{background:linear-gradient(135deg,var(--brown),var(--dark));color:#fff;box-shadow:0 5px 15px rgba(93,76,64,.3);}
 .attire-tab-btn i{font-size:.9rem}
 
-/* ── GALLERY PANELS ──────────────────────────── */
-.attire-panel{display:none}
-.attire-panel.active{display:block;animation:fadeInUp .5s ease}
+/* ── PANELS — única fonte de verdade ─────────── */
+.attire-panel { display: none; }
+.attire-panel.active { display: block; animation: fadeInUp .5s ease; }
 
-@keyframes fadeInUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-.attire-gallery{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1.5rem;
-  margin-bottom:1.5rem;
-}
-
-.attire-img-card{
-  position:relative;
-  border-radius:20px;
-  overflow:hidden;
-  aspect-ratio:3/4;
-  background:linear-gradient(135deg,#f0e6d8,#e8d5c0);
-  border:1px solid rgba(201,168,122,.25);
-  cursor:pointer;
-  group:true;
-  box-shadow:0 8px 30px rgba(93,76,64,.12);
-  transition:transform .4s, box-shadow .4s;
-}
-.attire-img-card:hover{
-  transform:translateY(-6px) scale(1.02);
-  box-shadow:0 20px 50px rgba(93,76,64,.22);
-}
-
-.attire-img-card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:transform .6s ease;
-}
-.attire-img-card:hover img{
-  transform:scale(1.06);
-}
-
-.attire-img-label{
-  position:absolute;
-  bottom:0;left:0;right:0;
-  padding:1.2rem 1rem .9rem;
-  background:linear-gradient(to top,rgba(28,23,20,.75) 0%,transparent 100%);
-  color:#fff;
-  font-family:'Playfair Display',serif;
-  font-size:1rem;
-  text-align:center;
-  pointer-events:none;
-}
-.attire-img-label span{
-  font-family:'Jost',sans-serif;
-  font-size:.7rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  opacity:.75;
-  display:block;
-  margin-top:.2rem;
-}
-
-/* Zoom overlay */
-.attire-img-zoom{
-  position:absolute;
-  top:12px;right:12px;
-  width:36px;height:36px;
-  background:rgba(255,255,255,.85);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;
-  transition:opacity .3s;
-  color:var(--brown);
-  font-size:.85rem;
-  backdrop-filter:blur(4px);
-}
+/* ── GALLERY ─────────────────────────────────── */
+.attire-gallery{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+.attire-img-card{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:3/4;background:linear-gradient(135deg,#f0e6d8,#e8d5c0);border:1px solid rgba(201,168,122,.25);cursor:pointer;box-shadow:0 8px 30px rgba(93,76,64,.12);transition:transform .4s,box-shadow .4s;}
+.attire-img-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(93,76,64,.22);}
+.attire-img-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.attire-img-card:hover img{transform:scale(1.06);}
+.attire-img-label{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1rem .9rem;background:linear-gradient(to top,rgba(28,23,20,.75) 0%,transparent 100%);color:#fff;font-family:'Playfair Display',serif;font-size:1rem;text-align:center;pointer-events:none;}
+.attire-img-label span{font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;opacity:.75;display:block;margin-top:.2rem;}
+.attire-img-zoom{position:absolute;top:12px;right:12px;width:36px;height:36px;background:rgba(255,255,255,.85);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;color:var(--brown);font-size:.85rem;backdrop-filter:blur(4px);}
 .attire-img-card:hover .attire-img-zoom{opacity:1}
-
-/* Placeholder when image not loaded */
-.attire-img-placeholder{
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:1rem;
-  color:var(--muted);
-  font-style:italic;
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.1rem;
-  background:linear-gradient(135deg,#f5ede0 0%,#ecdcc8 100%);
-}
-.attire-img-placeholder i{
-  font-size:3rem;
-  color:var(--gold);
-  opacity:.5;
-}
+.attire-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:var(--muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.1rem;background:linear-gradient(135deg,#f5ede0 0%,#ecdcc8 100%);}
+.attire-img-placeholder i{font-size:3rem;color:var(--gold);opacity:.5;}
 
 /* ── COLOUR PALETTE ──────────────────────────── */
-.attire-palette{
-  background:linear-gradient(135deg,#fff9f3,#fdf4ea);
-  border-radius:16px;
-  padding:1.5rem;
-  border:1px solid rgba(201,168,122,.2);
-  margin-top:1rem;
-}
-.attire-palette h4{
-  font-family:'Playfair Display',serif;
-  font-size:1.2rem;
-  color:var(--dark);
-  margin-bottom:1.2rem;
-  display:flex;
-  align-items:center;
-  gap:.5rem;
-}
+.attire-palette{background:linear-gradient(135deg,#fff9f3,#fdf4ea);border-radius:16px;padding:1.5rem;border:1px solid rgba(201,168,122,.2);margin-top:1rem;}
+.attire-palette h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--dark);margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem;}
 .attire-palette h4 i{color:var(--gold)}
-
-.palette-swatches{
-  display:flex;
-  gap:.8rem;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-bottom:1rem;
-}
-.palette-swatch{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:.4rem;
-  cursor:default;
-}
-.swatch-circle{
-  width:48px;height:48px;
-  border-radius:50%;
-  border:3px solid rgba(255,255,255,.8);
-  box-shadow:0 4px 12px rgba(0,0,0,.12);
-  transition:transform .2s;
-}
+.palette-swatches{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem;}
+.palette-swatch{display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:default;}
+.swatch-circle{width:48px;height:48px;border-radius:50%;border:3px solid rgba(255,255,255,.8);box-shadow:0 4px 12px rgba(0,0,0,.12);transition:transform .2s;}
 .palette-swatch:hover .swatch-circle{transform:scale(1.1)}
-.swatch-name{
-  font-family:'Jost',sans-serif;
-  font-size:.65rem;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:center;
-}
-
-.attire-notes-list{
-  list-style:none;
-  margin-top:1rem;
-}
-.attire-notes-list li{
-  display:flex;
-  align-items:flex-start;
-  gap:.7rem;
-  padding:.5rem 0;
-  font-size:1.05rem;
-  color:var(--dark);
-  border-bottom:1px solid rgba(201,168,122,.1);
-}
+.swatch-name{font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;}
+.attire-notes-list{list-style:none;margin-top:1rem;}
+.attire-notes-list li{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;font-size:1.05rem;color:var(--dark);border-bottom:1px solid rgba(201,168,122,.1);}
 .attire-notes-list li:last-child{border-bottom:none}
 .attire-notes-list i{color:var(--gold);margin-top:.2rem;flex-shrink:0}
 
 /* ── LIGHTBOX ────────────────────────────────── */
-.lightbox{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:rgba(28,23,20,.92);
-  backdrop-filter:blur(10px);
-  align-items:center;
-  justify-content:center;
-  padding:1.5rem;
-}
+.lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(28,23,20,.92);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1.5rem;}
 .lightbox.open{display:flex;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-.lightbox-inner{
-  position:relative;
-  max-width:520px;
-  width:100%;
-  text-align:center;
-}
-.lightbox-img{
-  width:100%;
-  border-radius:20px;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
-  max-height:80vh;
-  object-fit:contain;
-}
-.lightbox-close{
-  position:absolute;
-  top:-16px;right:-16px;
-  width:44px;height:44px;
-  background:var(--white);
-  border:none;border-radius:50%;
-  font-size:1.2rem;
-  color:var(--brown);
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 5px 20px rgba(0,0,0,.2);
-  transition:transform .2s;
-}
+.lightbox-inner{position:relative;max-width:520px;width:100%;text-align:center;}
+.lightbox-img{width:100%;border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.5);max-height:80vh;object-fit:contain;}
+.lightbox-close{position:absolute;top:-16px;right:-16px;width:44px;height:44px;background:var(--white);border:none;border-radius:50%;font-size:1.2rem;color:var(--brown);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 20px rgba(0,0,0,.2);transition:transform .2s;}
 .lightbox-close:hover{transform:scale(1.1)}
-.lightbox-caption{
-  color:rgba(255,255,255,.75);
-  font-family:'Playfair Display',serif;
-  font-size:1.1rem;
-  margin-top:1rem;
-  font-style:italic;
-}
+.lightbox-caption{color:rgba(255,255,255,.75);font-family:'Playfair Display',serif;font-size:1.1rem;margin-top:1rem;font-style:italic;}
 
 /* ── SCHEDULE ────────────────────────────────── */
 .schedule-item{display:flex;gap:1rem;padding:1rem;border-bottom:1px solid rgba(201,168,122,.1)}
@@ -403,7 +142,6 @@ body{
 .schedule-time{font-family:'Jost',sans-serif;font-size:.8rem;font-weight:600;color:var(--gold);min-width:70px}
 .schedule-desc h5{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dark)}
 .schedule-desc p{color:var(--muted);font-size:.9rem;margin:0}
-
 .warning-box{background:rgba(231,76,60,.05);border:1px solid rgba(231,76,60,.2);border-radius:12px;padding:1.5rem;margin-top:2rem}
 .warning-box h4{color:#e74c3c;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
 .warning-box ul{padding-left:1.5rem;color:var(--dark)}
@@ -418,6 +156,29 @@ body{
 .toast-notif .tn-icon{font-size:1.1rem}
 .toast-notif .tn-text{font-family:'Cormorant Garamond',serif;font-size:.95rem}
 
+/* ── LOADER ──────────────────────────────────── */
+.loader-container{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;background:var(--white);border-radius:24px;padding:3rem;box-shadow:0 20px 50px rgba(93,76,64,.15);}
+.loader-hearts{display:flex;gap:1rem;margin-bottom:2rem;}
+.loader-heart{font-size:2.5rem;color:var(--gold);animation:loaderPulse 1.4s ease-in-out infinite;}
+.loader-heart:nth-child(2){animation-delay:.2s}
+.loader-heart:nth-child(3){animation-delay:.4s}
+@keyframes loaderPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.3);opacity:1}}
+.loader-text{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brown);margin-bottom:1rem;}
+.loader-subtext{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--muted);font-style:italic;}
+.loader-progress{width:200px;height:4px;background:rgba(201,168,122,.2);border-radius:4px;margin-top:2rem;overflow:hidden;position:relative;}
+.loader-progress::after{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:4px;animation:loaderProgress 1.5s ease-in-out infinite;}
+@keyframes loaderProgress{0%{left:-40%}100%{left:100%}}
+
+/* ── FLOAT BTN ───────────────────────────────── */
+.float-btn{position:fixed;bottom:30px;right:30px;width:60px;height:60px;background:linear-gradient(135deg,var(--gold),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:1.8rem;box-shadow:0 8px 25px rgba(201,168,122,.4);cursor:pointer;transition:all .3s ease;z-index:999;text-decoration:none;border:2px solid rgba(255,255,255,.3);animation:floatBtn 3s ease-in-out infinite;}
+.float-btn:hover{transform:scale(1.1) rotate(5deg);background:linear-gradient(135deg,var(--brown),var(--dark));box-shadow:0 12px 35px rgba(93,76,64,.5);}
+@keyframes floatBtn{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.float-tooltip{position:absolute;bottom:70px;right:0;background:var(--dark);color:white;padding:.5rem 1rem;border-radius:20px;font-size:.8rem;font-family:'Jost',sans-serif;white-space:nowrap;opacity:0;visibility:hidden;transition:all .3s ease;pointer-events:none;box-shadow:0 5px 15px rgba(0,0,0,.2);}
+.float-tooltip::after{content:'';position:absolute;bottom:-5px;right:20px;width:10px;height:10px;background:var(--dark);transform:rotate(45deg);}
+.float-btn:hover .float-tooltip{opacity:1;visibility:visible;bottom:80px;}
+.confetti-particle{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:1000;animation:confetti 1s ease-out forwards;}
+@keyframes confetti{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-100px) rotate(720deg);opacity:0}}
+
 /* ── RESPONSIVE ──────────────────────────────── */
 @media(max-width:768px){
   .container{padding:1rem}
@@ -431,167 +192,48 @@ body{
   .info-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
   .attire-gallery{grid-template-columns:1fr 1fr;gap:1rem}
-  .attire-section-header::before,
-  .attire-section-header::after{width:10%}
+  .attire-section-header::before,.attire-section-header::after{width:10%}
+  .float-btn{bottom:20px;right:20px;width:50px;height:50px;font-size:1.5rem;}
+  .float-tooltip{display:none}
 }
-@media(max-width:480px){
-  .attire-gallery{grid-template-columns:1fr}
-}
+@media(max-width:480px){.attire-gallery{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<!-- ── FLOATING BUTTON TO INDEX ───────────────────── -->
-<!-- ── FLOATING BUTTON TO INDEX ───────────────────── -->
+
 <a href="index.html" class="float-btn" id="floatBtn" title="Voltar à página principal">
   <i class="fas fa-home"></i>
   <span class="float-tooltip">Página Inicial</span>
 </a>
 
-<style>
-.float-btn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, var(--gold), var(--accent));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.8rem;
-  box-shadow: 0 8px 25px rgba(201, 168, 122, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 999;
-  text-decoration: none;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  animation: floatBtn 3s ease-in-out infinite;
-}
-
-.float-btn:hover {
-  transform: scale(1.1) rotate(5deg);
-  background: linear-gradient(135deg, var(--brown), var(--dark));
-  box-shadow: 0 12px 35px rgba(93, 76, 64, 0.5);
-}
-
-.float-btn:active {
-  animation: clickPop 0.3s ease;
-}
-
-@keyframes floatBtn {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes clickPop {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.3); }
-  60% { transform: scale(0.9); }
-  100% { transform: scale(1); }
-}
-
-.float-tooltip {
-  position: absolute;
-  bottom: 70px;
-  right: 0;
-  background: var(--dark);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-family: 'Jost', sans-serif;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  pointer-events: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.float-tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  right: 20px;
-  width: 10px;
-  height: 10px;
-  background: var(--dark);
-  transform: rotate(45deg);
-}
-
-.float-btn:hover .float-tooltip {
-  opacity: 1;
-  visibility: visible;
-  bottom: 80px;
-}
-
-/* Animação de confete ao clicar */
-@keyframes confetti {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
-}
-
-.confetti-particle {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1000;
-  animation: confetti 1s ease-out forwards;
-}
-
-/* Ajuste para mobile */
-@media (max-width: 768px) {
-  .float-btn {
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-  }
-  
-  .float-tooltip {
-    display: none;
-  }
-}
-</style>
-
-
 <div class="container" id="app">
-<!-- ── LOADER ──────────────────────────────────────── -->
-<div class="loader-container" id="loader">
-  <div class="loader-hearts">
-    <span class="loader-heart">❤️</span>
-    <span class="loader-heart">💕</span>
-    <span class="loader-heart">❤️</span>
-  </div>
-  <div class="loader-text">Carregando...</div>
-  <div class="loader-subtext">Preparando o convite especial</div>
-  <div class="loader-progress"></div>
-</div>
-  <!-- ── INVITE CARD ────────────────────────────── -->
-  <div class="invite-card" id="invite-card">
-    <div class="invite-hearts">
-      <span>❤️</span><span>💕</span><span>❤️</span>
+
+  <!-- LOADER -->
+  <div class="loader-container" id="loader">
+    <div class="loader-hearts">
+      <span class="loader-heart">❤️</span>
+      <span class="loader-heart">💕</span>
+      <span class="loader-heart">❤️</span>
     </div>
+    <div class="loader-text">Carregando...</div>
+    <div class="loader-subtext">Preparando o convite especial</div>
+    <div class="loader-progress"></div>
+  </div>
+
+  <!-- INVITE CARD -->
+  <div class="invite-card" id="invite-card" style="display:none">
+    <div class="invite-hearts"><span>❤️</span><span>💕</span><span>❤️</span></div>
     <h1 class="invite-names">Natanael & Izadora</h1>
     <div class="invite-couple" id="invite-couple-name"></div>
     <div class="invite-message" id="invite-message-content"></div>
     <div class="invite-question" id="invite-question"></div>
-    <div class="invite-signature">
-      Com amor, <span>Izadora e Natanael</span> ❤️
-    </div>
+    <div class="invite-signature">Com amor, <span>Izadora e Natanael</span> ❤️</div>
   </div>
 
-  <!-- ── FORM ──────────────────────────────────── -->
-  <div class="form-wrap" id="form-section">
+  <!-- FORM -->
+  <div class="form-wrap" id="form-section" style="display:none">
     <h2 class="form-title" id="form-title">Respondam ao Convite</h2>
     <p class="form-sub" id="form-sub">Queridos <span id="form-couple-name"></span>, preencham seus dados abaixo</p>
-
     <div class="form-row">
       <div class="form-group">
         <label>Nome da Madrinha *</label>
@@ -602,60 +244,52 @@ body{
         <input type="email" id="madrinha-email" class="form-input" placeholder="email@exemplo.com">
       </div>
     </div>
-
- <div class="form-row" id="padrinho-fields-row">
-  <div class="form-group" id="padrinho-name-group">
-    <label>Nome do Padrinho *</label>
-    <input type="text" id="padrinho-name" class="form-input" placeholder="Nome completo">
-  </div>
-  <div class="form-group" id="padrinho-email-group">
-    <label>Email do Padrinho *</label>
-    <input type="email" id="padrinho-email" class="form-input" placeholder="email@exemplo.com">
-  </div>
-</div>
-
+    <div class="form-row" id="padrinho-fields-row">
+      <div class="form-group">
+        <label>Nome do Padrinho *</label>
+        <input type="text" id="padrinho-name" class="form-input" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <label>Email do Padrinho *</label>
+        <input type="email" id="padrinho-email" class="form-input" placeholder="email@exemplo.com">
+      </div>
+    </div>
     <input type="hidden" id="selected-couple" value="">
-
-   <div class="radio-group" id="radio-group-container">
-  <div class="radio-option">
-    <input type="radio" name="godparent-response" id="accept-yes" value="Sim">
-    <label for="accept-yes" class="radio-label" id="accept-yes-label">
-      <i class="fas fa-check-circle"></i>
-      <span id="accept-yes-text">Sim, aceitamos!</span>
-    </label>
-  </div>
-  <div class="radio-option">
-    <input type="radio" name="godparent-response" id="accept-no" value="Não">
-    <label for="accept-no" class="radio-label" id="accept-no-label">
-      <i class="fas fa-times-circle"></i>
-      <span id="accept-no-text">Não poderemos</span>
-    </label>
-  </div>
-</div>
-
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" name="godparent-response" id="accept-yes" value="Sim">
+        <label for="accept-yes" class="radio-label">
+          <i class="fas fa-check-circle"></i>
+          <span id="accept-yes-text">Sim, aceitamos!</span>
+        </label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" name="godparent-response" id="accept-no" value="Não">
+        <label for="accept-no" class="radio-label">
+          <i class="fas fa-times-circle"></i>
+          <span id="accept-no-text">Não poderemos</span>
+        </label>
+      </div>
+    </div>
     <button class="submit-btn" onclick="submitGodparentResponse()">
       <i class="fas fa-heart"></i> Enviar Resposta
     </button>
   </div>
 
-  <!-- ── GODPARENT AREA ─────────────────────────── -->
-  <div class="godparent-area" id="godparent-area">
-
+  <!-- GODPARENT AREA -->
+  <div class="godparent-area" id="godparent-area" style="display:none">
     <div class="area-header">
       <h2>Bem-vindos, <span id="godparent-names-display"></span>!</h2>
       <p>Área exclusiva para padrinhos</p>
     </div>
-
     <div class="welcome-message">
       <i class="fas fa-heart" style="color:var(--gold);margin-right:.8rem;"></i>
       É com imensa alegria que confirmamos sua presença como padrinhos. Preparamos todas as informações para este dia especial.
     </div>
-
     <h3 style="font-family:'Playfair Display';margin-bottom:1.5rem;">
       <i class="fas fa-ring" style="color:var(--gold);margin-right:.5rem;"></i>
       Informações do Casamento
     </h3>
-
     <div class="info-grid">
       <div class="info-card">
         <h3><i class="fas fa-church"></i> Cerimónia</h3>
@@ -673,16 +307,11 @@ body{
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-         TRAJE DOS PADRINHOS — NOVA SECÇÃO ELEGANTE
-    ══════════════════════════════════════════ -->
+    <!-- TRAJE -->
     <div class="attire-section">
-
       <div class="attire-section-header">
-        <h2 class="attire-section-title">
-          <em>Traje</em> dos Padrinhos
-        </h2>
-        <p class="attire-section-subtitle">Vista-se para fazer parte desta memória</p>
+        <h2 class="attire-section-title"><em id="attire-title-em">Traje</em> dos Padrinhos</h2>
+        <p class="attire-section-subtitle" id="attire-subtitle">Vista-se para fazer parte desta memória</p>
       </div>
 
       <!-- TABS -->
@@ -700,121 +329,50 @@ body{
         <div class="attire-gallery">
           <div class="attire-img-card" onclick="openLightbox('a1.jpeg','Inspiração 1 — Vestido longo')">
             <img src="a1.jpeg" alt="Traje madrinha 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Foto de referência
-            </div>
+            <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Foto de referência</div>
             <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Inspiração 1
-              <span>Vestido longo</span>
-            </div>
+            <div class="attire-img-label">Inspiração 1<span>Vestido longo</span></div>
           </div>
-
           <div class="attire-img-card" onclick="openLightbox('a2.jpeg','Inspiração 2 — Vestido midi')">
             <img src="a2.jpeg" alt="Traje madrinha 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Foto de referência
-            </div>
+            <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Foto de referência</div>
             <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Inspiração 2
-              <span>Vestido midi</span>
-            </div>
+            <div class="attire-img-label">Inspiração 2<span>Vestido midi</span></div>
           </div>
-        </div>
-  <!-- 
-        <div class="attire-palette">
-          <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
-          <div class="palette-swatches">
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#e8d8c9;"></div>
-              <span class="swatch-name">Bege</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#d4bda1;"></div>
-              <span class="swatch-name">Caramelo</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#e8b4b8;"></div>
-              <span class="swatch-name">Blush</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#c5b9d0;"></div>
-              <span class="swatch-name">Lavanda</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#ccd5ae;"></div>
-              <span class="swatch-name">Sage</span>
-            </div>
-          </div>
-          <ul class="attire-notes-list">
-            <li><i class="fas fa-check"></i> Vestido longo ou midi em tons pastéis ou terrosos</li>
-            <li><i class="fas fa-check"></i> Acessórios discretos em dourado ou bege</li>
-            <li><i class="fas fa-times" style="color:var(--red)"></i> Evite branco total — reservado para a noiva</li>
-            <li><i class="fas fa-times" style="color:var(--red)"></i> Evite azul vibrante ou cores muito saturadas</li>
-          </ul>
         </div>
       </div>
--->
+
       <!-- PANEL PADRINHOS -->
       <div class="attire-panel" id="panel-padrinhos">
         <div class="attire-gallery">
           <div class="attire-img-card" onclick="openLightbox('a3.jpeg','Inspiração 1 — Traje social')">
             <img src="a3.jpeg" alt="Traje padrinho 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Foto de referência
-            </div>
+            <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Foto de referência</div>
             <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Inspiração 1
-              <span>Traje social</span>
-            </div>
+            <div class="attire-img-label">Inspiração 1<span>Traje social</span></div>
           </div>
-
           <div class="attire-img-card" onclick="openLightbox('a4.jpeg','Inspiração 2 — Blazer & gravata')">
             <img src="a4.jpeg" alt="Traje padrinho 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="attire-img-placeholder" style="display:none">
-              <i class="fas fa-image"></i>
-              Foto de referência
-            </div>
+            <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Foto de referência</div>
             <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-            <div class="attire-img-label">
-              Inspiração 2
-              <span>Blazer & gravata</span>
-            </div>
+            <div class="attire-img-label">Inspiração 2<span>Blazer & gravata</span></div>
           </div>
         </div>
-
-        <div class="attire-palette">
+   <!--     <div class="attire-palette">
           <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
           <div class="palette-swatches">
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#6c757d;"></div>
-              <span class="swatch-name">Cinza</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#2c3e50;"></div>
-              <span class="swatch-name">Azul Marinho</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#e8d8c9;"></div>
-              <span class="swatch-name">Bege</span>
-            </div>
-            <div class="palette-swatch">
-              <div class="swatch-circle" style="background:#8b7355;"></div>
-              <span class="swatch-name">Tabaco</span>
-            </div>
-          </div>
-          <ul class="attire-notes-list">
+            <div class="palette-swatch"><div class="swatch-circle" style="background:#6c757d;"></div><span class="swatch-name">Cinza</span></div>
+            <div class="palette-swatch"><div class="swatch-circle" style="background:#2c3e50;"></div><span class="swatch-name">Azul Marinho</span></div>
+            <div class="palette-swatch"><div class="swatch-circle" style="background:#e8d8c9;"></div><span class="swatch-name">Bege</span></div>
+            <div class="palette-swatch"><div class="swatch-circle" style="background:#8b7355;"></div><span class="swatch-name">Tabaco</span></div>
+          </div>-->
+         <!--   <ul class="attire-notes-list">
             <li><i class="fas fa-check"></i> Terno ou blazer em tons de cinza, azul marinho ou bege</li>
             <li><i class="fas fa-check"></i> Gravata e acessórios podem seguir a paleta do casamento</li>
             <li><i class="fas fa-check"></i> Camisa branca ou em tom neutro</li>
             <li><i class="fas fa-times" style="color:var(--red)"></i> Evite ternos pretos — reservado ao noivo</li>
           </ul>
-        </div>
+        </div>-->
       </div>
 
       <div style="text-align:center;margin-top:2rem;font-style:italic;color:var(--muted);font-size:1.05rem;">
@@ -824,37 +382,13 @@ body{
       </div>
     </div>
 
-    <!-- ── SCHEDULE ────────────────────────────── -->
+    <!-- SCHEDULE -->
     <div class="info-card" style="margin-top:1.5rem;">
       <h3><i class="fas fa-clock"></i> Cronograma para Padrinhos</h3>
-      <div class="schedule-item">
-        <div class="schedule-time">15:30</div>
-        <div class="schedule-desc">
-          <h5>Chegada dos Padrinhos</h5>
-          <p>Chegada ao local da cerimónia para fotos e preparativos</p>
-        </div>
-      </div>
-      <div class="schedule-item">
-        <div class="schedule-time">16:30</div>
-        <div class="schedule-desc">
-          <h5>Recepção aos Convidados</h5>
-          <p>Padrinhos auxiliam na recepção dos demais convidados</p>
-        </div>
-      </div>
-      <div class="schedule-item">
-        <div class="schedule-time">17:00</div>
-        <div class="schedule-desc">
-          <h5>Cerimónia</h5>
-          <p>Entrada dos padrinhos antes dos noivos</p>
-        </div>
-      </div>
-      <div class="schedule-item">
-        <div class="schedule-time">19:00</div>
-        <div class="schedule-desc">
-          <h5>Cocktail e Fotos</h5>
-          <p>Fotos oficiais com os noivos e cocktail</p>
-        </div>
-      </div>
+      <div class="schedule-item"><div class="schedule-time">15:30</div><div class="schedule-desc"><h5>Chegada dos Padrinhos</h5><p>Chegada ao local da cerimónia para fotos e preparativos</p></div></div>
+      <div class="schedule-item"><div class="schedule-time">16:30</div><div class="schedule-desc"><h5>Recepção aos Convidados</h5><p>Padrinhos auxiliam na recepção dos demais convidados</p></div></div>
+      <div class="schedule-item"><div class="schedule-time">17:00</div><div class="schedule-desc"><h5>Cerimónia</h5><p>Entrada dos padrinhos antes dos noivos</p></div></div>
+      <div class="schedule-item"><div class="schedule-time">19:00</div><div class="schedule-desc"><h5>Cocktail e Fotos</h5><p>Fotos oficiais com os noivos e cocktail</p></div></div>
     </div>
 
     <div class="warning-box">
@@ -868,8 +402,7 @@ body{
     </div>
 
     <div style="text-align:center;margin-top:2rem;">
-      <a href="https://wa.me/351968922572" target="_blank"
-         style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">
+      <a href="https://wa.me/351968922572" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">
         <i class="fab fa-whatsapp"></i> Falar com os Noivos
       </a>
     </div>
@@ -877,925 +410,399 @@ body{
 
 </div><!-- /container -->
 
-<!-- ── LIGHTBOX ──────────────────────────────── -->
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <div class="lightbox-inner">
-    <button class="lightbox-close" onclick="closeLightbox()">
-      <i class="fas fa-times"></i>
-    </button>
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
     <img src="" alt="" id="lightbox-img" class="lightbox-img">
     <p class="lightbox-caption" id="lightbox-caption"></p>
   </div>
 </div>
 
 <script>
-  // ADICIONE ISSO NO INÍCIO DO SCRIPT PARA DEBUG
-  console.log('=== DEBUG INFO ===');
-  console.log('URL completa:', window.location.href);
-  console.log('Hostname:', window.location.hostname);
-  console.log('Pathname:', window.location.pathname);
-  console.log('Parâmetros:', window.location.search);
-  console.log('Parâmetro casal:', new URLSearchParams(window.location.search).get('casal'));
+/* ═══════════════════════════════════════════════
+   ÚNICA fonte de verdade para toda a lógica JS
+   Sem funções duplicadas, sem setTimeout em conflito
+═══════════════════════════════════════════════ */
 
-  // AGUARDAR O DOM CARREGAR COMPLETAMENTE
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM carregado, iniciando aplicação...');
-    initializeApp();
-  });
+/* ── SUPABASE ── */
+const SUPABASE_URL  = 'https://yihqeaqjatwnekhdqcju.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-
-  const specialMapping = {
-  'anedina': { nome: 'Anedina', tipo: 'dama-honra', titulo: 'Dama de Honra' },
-  'laura': { nome: 'Laura', tipo: 'florista', titulo: 'Florista' },
-  'esther': { nome: 'Esther', tipo: 'florista', titulo: 'Florista' },
+/* ── MAPPINGS ── */
+const coupleMapping = {
+  'jane-e-rogerio':        { nome: 'Jane e Rogerio',        tipo: 'casal' },
+  'izabella-e-tiago':      { nome: 'Izabella e Tiago',      tipo: 'casal' },
+  'alexandro-e-lauranne':  { nome: 'Alexandro e Lauranne',  tipo: 'casal' },
+  'sandra-e-andre':        { nome: 'Sandra e André',        tipo: 'casal' },
+  'raquel-e-elton':        { nome: 'Raquel e Elton',        tipo: 'casal' },
+  'bruna-e-heber':         { nome: 'Bruna e Heber',         tipo: 'casal' },
+  'lorena':                { nome: 'Lorena',                tipo: 'madrinha' },
+  'nicole':                { nome: 'Nicole',                tipo: 'madrinha' },
 };
 
+const specialMapping = {
+  'anedina': { nome: 'Anedina', tipo: 'dama-honra', titulo: 'Dama de Honra' },
+  'laura':   { nome: 'Laura',   tipo: 'florista',   titulo: 'Florista' },
+  'esther':  { nome: 'Esther',  tipo: 'florista',   titulo: 'Florista' },
+};
 
-  /* ── SUPABASE ──────────────────────────────────────── */
-  const SUPABASE_URL = 'https://yihqeaqjatwnekhdqcju.supabase.co';
-  const SUPABASE_ANON = 'sb_publishable_XFM24HPrpL-tfeePm7aqpA_8vgckbad';
-  const { createClient } = supabase;
-  const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
-
-  /* ── TOAST ─────────────────────────────────────────── */
-  function showToast(msg, type = 'success') {
-    const t = document.createElement('div');
-    t.className = `toast-notif ${type}`;
-    t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type === 'success' ? '✅' : '❌'}</span><span class="tn-text">${msg}</span></div>`;
-    document.body.appendChild(t);
-    setTimeout(() => t.classList.add('show'), 10);
-    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
-  }
-
-  /* ── COUPLE MAPPING ────────────────────────────────── */
-  const coupleMapping = {
-    'jane-e-rogerio': { nome: 'Jane e Rogerio', tipo: 'casal' },
-    'izabella-e-tiago': { nome: 'Izabella e Tiago', tipo: 'casal' },
-    'alexandro-e-lauranne': { nome: 'Alexandro e Lauranne', tipo: 'casal' },
-    'sandra-e-andre': { nome: 'Sandra e André', tipo: 'casal' },
-    'raquel-e-elton': { nome: 'Raquel e Elton', tipo: 'casal' },
-    'bruna-e-heber': { nome: 'Bruna e Heber', tipo: 'casal' },
-    'lorena': { nome: 'Lorena', tipo: 'madrinha' },
-    'nicole': { nome: 'Nicole', tipo: 'madrinha' },
-  };
-
-  function getCoupleFromUrl() {
-    // Primeiro tenta pegar dos parâmetros normais (/?casal=jane-e-rogerio)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('casal')) {
-      const coupleKey = urlParams.get('casal');
-      console.log('Couple key from query param:', coupleKey);
-      return coupleMapping[coupleKey] || null;
-    }
-
-    // Depois tenta pegar da URL amigável (ex: /casal/jane-e-rogerio)
-    const pathParts = window.location.pathname.split('/').filter(part => part !== '');
-    console.log('Path parts:', pathParts);
-
-    // Verifica se o path tem formato /casal/nome ou /madrinha/nome
-    if (pathParts.length >= 2) {
-      // Se o arquivo atual é padrinhos.html e está em /padrinhos/casal/nome
-      if (pathParts[0] === 'padrinhos' && pathParts[1] === 'casal' && pathParts.length >= 3) {
-        const coupleKey = pathParts[2];
-        console.log('Couple key from /padrinhos/casal/ path:', coupleKey);
-        return coupleMapping[coupleKey] || null;
-      }
-      if (pathParts[0] === 'padrinhos' && pathParts[1] === 'madrinha' && pathParts.length >= 3) {
-        const coupleKey = pathParts[2];
-        console.log('Couple key from /padrinhos/madrinha/ path:', coupleKey);
-        return coupleMapping[coupleKey] || null;
-      }
-      
-      // Formato antigo: /casal/jane-e-rogerio ou /madrinha/lorena
-      if (pathParts[0] === 'casal' || pathParts[0] === 'madrinha') {
-        const coupleKey = pathParts[1];
-        console.log('Couple key from path with prefix:', coupleKey);
-        return coupleMapping[coupleKey] || null;
-      }
-    }
-
-    // Tenta pegar diretamente do path (se for só o nome do casal)
-    if (pathParts.length === 1) {
-      const coupleKey = pathParts[0];
-      console.log('Couple key from direct path:', coupleKey);
-      return coupleMapping[coupleKey] || null;
-    }
-
-    // Verifica se o arquivo tem extensão .html no nome
-    const fileName = window.location.pathname.split('/').pop() || '';
-    if (fileName.includes('.html')) {
-      const possibleKey = fileName.replace('.html', '');
-      console.log('Trying from filename:', possibleKey);
-      return coupleMapping[possibleKey] || null;
-    }
-
-    return null;
-  }
-
-  function getSpecialFromUrl() {
+/* ── URL HELPERS ── */
+function getCoupleFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('convidado')) {
-    const key = urlParams.get('convidado');
-    return specialMapping[key] || null;
+  if (urlParams.has('casal')) return coupleMapping[urlParams.get('casal')] || null;
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  for (const key of [parts[2], parts[1], parts[0]]) {
+    if (coupleMapping[key]) return coupleMapping[key];
   }
+  const fname = (window.location.pathname.split('/').pop() || '').replace('.html','');
+  return coupleMapping[fname] || null;
+}
 
-  const pathParts = window.location.pathname.split('/').filter(part => part !== '');
-  if (pathParts.length >= 2 && pathParts[0] === 'padrinhos') {
-    const key = pathParts[1];
-    return specialMapping[key] || null;
+function getSpecialFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('convidado')) return specialMapping[urlParams.get('convidado')] || null;
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  for (const key of [parts[1], parts[0]]) {
+    if (specialMapping[key]) return specialMapping[key];
   }
-  
-  if (pathParts.length === 1) {
-    return specialMapping[pathParts[0]] || null;
-  }
-  
   return null;
 }
 
+/* ── TOAST ── */
+function showToast(msg, type = 'success') {
+  const t = document.createElement('div');
+  t.className = `toast-notif ${type}`;
+  t.innerHTML = `<div class="tn-inner"><span class="tn-icon">${type==='success'?'✅':'❌'}</span><span class="tn-text">${msg}</span></div>`;
+  document.body.appendChild(t);
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+}
 
-  function getMessageByType(tipo, nome) {
-    if (tipo === 'casal') {
-      return {
-        mensagem: `<p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
-          <p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
-          <p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>`,
-        pergunta: `❤️ ${nome}, aceitam ser nossos padrinhos de casamento? ❤️`
-      };
-    } else {
-      return {
-        mensagem: `<p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
-          <p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
-          <p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>`,
-        pergunta: `❤️ ${nome}, aceita ser nossa madrinha de casamento? ❤️`
-      };
-    }
-  }
+/* ── TABS — única definição ── */
+window.switchTab = function(tab) {
+  document.querySelectorAll('.attire-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.attire-tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById('panel-' + tab);
+  const btn   = document.getElementById('tab-' + tab);
+  if (panel) panel.classList.add('active');
+  if (btn)   btn.classList.add('active');
+};
 
+/* ── HELPERS de visibilidade ── */
+function hidePanel(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.remove('active'); }
+}
+function showPanel(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); }
+}
+function hideTab(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+function showTab(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.removeProperty('display');
+}
 
-  function getSpecialMessage(tipo, nome, titulo) {
+/* ── CONFIGURAR ÁREA DE TRAJE para CASAL ── */
+function setupAttireForCasal() {
+  showTab('tab-madrinhas');
+  showTab('tab-padrinhos');
+  document.getElementById('attire-tabs').style.maxWidth = '400px';
+  // Painel de madrinhas activo por defeito, padrinhos escondido
+  hidePanel('panel-padrinhos');
+  showPanel('panel-madrinhas');
+  document.getElementById('tab-madrinhas').classList.add('active');
+  document.getElementById('tab-padrinhos').classList.remove('active');
+}
+
+/* ── CONFIGURAR ÁREA DE TRAJE para MADRINHA ── */
+function setupAttireForMadrinha() {
+  hideTab('tab-padrinhos');
+  hidePanel('panel-padrinhos');
+  showTab('tab-madrinhas');
+  showPanel('panel-madrinhas');
+  document.getElementById('tab-madrinhas').classList.add('active');
+  document.getElementById('attire-tabs').style.maxWidth = '220px';
+}
+
+/* ── CONFIGURAR ÁREA DE TRAJE para ESPECIAL ── */
+function setupAttireForSpecial(tipo, nome) {
+  hideTab('tab-padrinhos');
+  hidePanel('panel-padrinhos');
+
+  const panelMadrinhas = document.getElementById('panel-madrinhas');
+
   if (tipo === 'dama-honra') {
-    return {
-      mensagem: `<p>Querida <strong>${nome}</strong>, hoje queremos fazer um convite muito especial para alguém que ocupa um lugar muito importante em nossos corações.</p>
-        <p>Em um dia tão único e cheio de significado para nós, não poderíamos imaginar esse momento sem a sua presença e alegria.</p>
-        <p>Será uma grande felicidade ter você ao nosso lado, participando desse momento tão especial e tornando nosso casamento ainda mais bonito.</p>`,
-      pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
-    };
-  } else {
-    return {
-      mensagem: `<p>Querida <strong>${nome}</strong>, em um dia tão especial para nós, queremos que pessoas muito queridas façam parte desse momento inesquecível.</p>
-        <p>Por isso, temos um convite muito especial para você!</p>
-        <p>No nosso casamento, precisamos de alguém que leve beleza, alegria e muitas flores pelo caminho até o altar. E pensamos em você para essa missão tão importante.</p>
-        <p>Você aceita ser nossa <strong>${titulo}</strong> e espalhar flores no nosso grande dia?</p>
-        <p>Ficaremos muito felizes em ter você participando desse momento tão lindo conosco.</p>`,
-      pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
-    };
+    panelMadrinhas.innerHTML = `
+      <div class="attire-gallery">
+        <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
+          <img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Dama de Honra</div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">Dama de Honra<span>Traje especial</span></div>
+        </div>
+      </div>
+      <div class="attire-palette">
+        <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
+        <div class="palette-swatches">
+          <div class="palette-swatch"><div class="swatch-circle" style="background:#e8b4b8;"></div><span class="swatch-name">Blush</span></div>
+        </div>
+      </div>`;
+    document.getElementById('tab-madrinhas').innerHTML = '<i class="fas fa-crown"></i> Dama de Honra';
+    document.getElementById('attire-title-em').textContent = 'Traje da Dama de Honra';
+    document.getElementById('attire-subtitle').textContent = 'Vista-se para brilhar ao nosso lado';
+  } else if (tipo === 'florista') {
+    panelMadrinhas.innerHTML = `
+      <div class="attire-gallery">
+        <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
+          <img src="florista1.jpeg" alt="Florista 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Florista</div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">Florista<span>Inspiração 1</span></div>
+        </div>
+        <div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')">
+          <img src="florista2.jpeg" alt="Florista 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Florista</div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">Florista<span>Inspiração 2</span></div>
+        </div>
+      </div>`;
+    document.getElementById('tab-madrinhas').innerHTML = '<i class="fas fa-spa"></i> Florista';
+    document.getElementById('attire-title-em').textContent = 'Traje das Floristas';
+    document.getElementById('attire-subtitle').textContent = 'Espalhe flores com elegância';
   }
+
+  showTab('tab-madrinhas');
+  showPanel('panel-madrinhas');
+  document.getElementById('tab-madrinhas').classList.add('active');
+  document.getElementById('attire-tabs').style.maxWidth = '280px';
 }
 
-function applyFormCustomizations(coupleType, coupleName, messages) {
-  document.getElementById('invite-couple-name').textContent = coupleName;
-  document.getElementById('invite-message-content').innerHTML = messages.mensagem;
-  document.getElementById('invite-question').innerHTML = messages.pergunta;
-  document.getElementById('form-couple-name').textContent = coupleName;
-  document.getElementById('selected-couple').value = coupleName;
-
-  if (coupleType === 'madrinha') {
-    const padrinhoRow = document.getElementById('padrinho-fields-row');
-    if (padrinhoRow) padrinhoRow.style.display = 'none';
-
-    document.getElementById('form-title').textContent = 'Responda ao Convite';
-    document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
-    document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
-    document.getElementById('accept-no-text').textContent = 'Não poderei';
-
-    // Ocultar aba e painel de padrinhos
-    const tabPadrinhos = document.getElementById('tab-padrinhos');
-    const panelPadrinhos = document.getElementById('panel-padrinhos');
-    if (tabPadrinhos) tabPadrinhos.style.display = 'none';
-    if (panelPadrinhos) panelPadrinhos.style.display = 'none';
-
-    // Ajustar largura das tabs
-    const tabsEl = document.getElementById('attire-tabs');
-    if (tabsEl) {
-      tabsEl.style.maxWidth = '220px';
-      tabsEl.style.margin = '0 auto 2rem';
-    }
-
-    // Garantir que o painel de madrinhas está ativo
-    const panelMadrinhas = document.getElementById('panel-madrinhas');
-    if (panelMadrinhas) panelMadrinhas.classList.add('active');
-    const tabMadrinhas = document.getElementById('tab-madrinhas');
-    if (tabMadrinhas) tabMadrinhas.classList.add('active');
-
-  } else {
-    // CASAL — tudo visível e funcionando
-    const padrinhoRow = document.getElementById('padrinho-fields-row');
-    if (padrinhoRow) padrinhoRow.style.display = 'grid';
-
-    // Mostrar ambas as abas
-    const tabPadrinhos = document.getElementById('tab-padrinhos');
-    const tabMadrinhas = document.getElementById('tab-madrinhas');
-    if (tabPadrinhos) {
-      tabPadrinhos.style.display = 'flex';
-      tabPadrinhos.style.removeProperty('display'); // limpa qualquer override
-    }
-    if (tabMadrinhas) {
-      tabMadrinhas.style.display = 'flex';
-      tabMadrinhas.style.removeProperty('display');
-    }
-
-    // Mostrar ambos os painéis (o CSS controla qual aparece via .active)
-    const panelPadrinhos = document.getElementById('panel-padrinhos');
-    const panelMadrinhas = document.getElementById('panel-madrinhas');
-    if (panelPadrinhos) {
-      panelPadrinhos.style.removeProperty('display'); // NÃO force display aqui — o CSS .active cuida disso
-    }
-    if (panelMadrinhas) {
-      panelMadrinhas.style.removeProperty('display');
-      panelMadrinhas.classList.add('active'); // madrinha ativa por padrão
-    }
-
-    // Garantir que a aba de madrinhas começa ativa
-    if (tabMadrinhas) tabMadrinhas.classList.add('active');
-    if (tabPadrinhos) tabPadrinhos.classList.remove('active');
-
-    // Ajustar largura das tabs para casal
-    const tabsEl = document.getElementById('attire-tabs');
-    if (tabsEl) {
-      tabsEl.style.maxWidth = '400px';
-      tabsEl.style.margin = '0 auto 2rem';
-    }
-  }
+/* ── MENSAGENS ── */
+function getMessageByType(tipo, nome) {
+  if (tipo === 'casal') return {
+    mensagem: `<p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
+      <p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
+      <p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>`,
+    pergunta: `❤️ ${nome}, aceitam ser nossos padrinhos de casamento? ❤️`
+  };
+  return {
+    mensagem: `<p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
+      <p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
+      <p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>`,
+    pergunta: `❤️ ${nome}, aceita ser nossa madrinha de casamento? ❤️`
+  };
 }
 
-function applySpecialFormCustomizations(tipo, nome, titulo, messages) {
+function getSpecialMessage(tipo, nome, titulo) {
+  if (tipo === 'dama-honra') return {
+    mensagem: `<p>Querida <strong>${nome}</strong>, hoje queremos fazer um convite muito especial para alguém que ocupa um lugar muito importante em nossos corações.</p>
+      <p>Em um dia tão único e cheio de significado para nós, não poderíamos imaginar esse momento sem a sua presença e alegria.</p>
+      <p>Será uma grande felicidade ter você ao nosso lado, participando desse momento tão especial e tornando nosso casamento ainda mais bonito.</p>`,
+    pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
+  };
+  return {
+    mensagem: `<p>Querida <strong>${nome}</strong>, em um dia tão especial para nós, queremos que pessoas muito queridas façam parte desse momento inesquecível.</p>
+      <p>No nosso casamento, precisamos de alguém que leve beleza, alegria e muitas flores pelo caminho até o altar. E pensamos em você para essa missão tão importante.</p>
+      <p>Você aceita ser nossa <strong>${titulo}</strong> e espalhar flores no nosso grande dia?</p>`,
+    pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
+  };
+}
+
+/* ── PREENCHER FORMULÁRIO ── */
+function fillInvite(nome, messages) {
   document.getElementById('invite-couple-name').textContent = nome;
   document.getElementById('invite-message-content').innerHTML = messages.mensagem;
   document.getElementById('invite-question').innerHTML = messages.pergunta;
   document.getElementById('form-couple-name').textContent = nome;
   document.getElementById('selected-couple').value = nome;
-  
-  // Ocultar campo do padrinho
-  const padrinhoRow = document.getElementById('padrinho-fields-row');
-  if (padrinhoRow) padrinhoRow.style.display = 'none';
-  
-  // Ajustar títulos
-  document.getElementById('form-title').textContent = 'Responda ao Convite';
-  document.getElementById('form-sub').innerHTML = `Querida <span>${nome}</span>, preencha seus dados abaixo`;
-  document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
-  document.getElementById('accept-no-text').textContent = 'Não poderei';
-  
-  // Ocultar a ABA de padrinhos (não o conteúdo, a aba inteira)
-  const tabPadrinhos = document.getElementById('tab-padrinhos');
-  if (tabPadrinhos) tabPadrinhos.style.display = 'none';
-  
-  // Ocultar o PANEL de padrinhos também
-  const panelPadrinhos = document.getElementById('panel-padrinhos');
-  if (panelPadrinhos) panelPadrinhos.style.display = 'none';
-  
-  // Ajustar largura das tabs
-  const tabsEl = document.getElementById('attire-tabs');
-  if (tabsEl) {
-    tabsEl.style.maxWidth = '220px';
-    tabsEl.style.margin = '0 auto 2rem';
-  }
-  
-  // Ajustar texto do header na área de confirmação
-  const areaHeader = document.querySelector('.area-header h2 span');
-  if (areaHeader) areaHeader.textContent = nome;
-  
-  // ========== ALTERAR A GALERIA DE TRAJE CONFORME O TIPO ==========
-  const panelMadrinhas = document.getElementById('panel-madrinhas');
-  
-  if (!panelMadrinhas) return;
-  
-  // Limpar e recriar o conteúdo do painel de madrinhas
-  if (tipo === 'dama-honra') {
-    // Dama de Honra - usar imagem dama.jpeg
-    panelMadrinhas.innerHTML = `
-      <div class="attire-gallery">
-        <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
-          <img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="attire-img-placeholder" style="display:none">
-            <i class="fas fa-image"></i>
-            Dama de Honra
-          </div>
-          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-          <div class="attire-img-label">
-            Dama de Honra
-            <span>Traje especial</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="attire-palette">
-        <h4><i class="fas fa-palette"></i> Paleta de Cores</h4>
-        <div class="palette-swatches">
-          <div class="palette-swatch">
-            <div class="swatch-circle" style="background:#e8b4b8;"></div>
-            <span class="swatch-name">Blush</span>
-          </div>
-        </div>
-      </div>
-    `;
-  } 
-  else if (tipo === 'florista') {
-    // Floristas - usar florista1.jpeg e florista2.jpeg
-    panelMadrinhas.innerHTML = `
-      <div class="attire-gallery">
-        <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
-          <img src="florista1.jpeg" alt="Florista inspiração 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="attire-img-placeholder" style="display:none">
-            <i class="fas fa-image"></i>
-            Florista
-          </div>
-          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-          <div class="attire-img-label">
-            Florista
-            <span>Inspiração 1</span>
-          </div>
-        </div>
-        <div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')">
-          <img src="florista2.jpeg" alt="Florista inspiração 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="attire-img-placeholder" style="display:none">
-            <i class="fas fa-image"></i>
-            Florista
-          </div>
-          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-          <div class="attire-img-label">
-            Florista
-            <span>Inspiração 2</span>
-          </div>
-        </div>
-      </div>
-      
-     
-    `;
-  }
-  
-  // Atualizar título da seção de traje
-  const attireTitle = document.querySelector('.attire-section-title em');
-  if (attireTitle) {
-    if (tipo === 'dama-honra') attireTitle.textContent = 'Traje da Dama de Honra';
-    else if (tipo === 'florista') attireTitle.textContent = 'Traje das Floristas';
-  }
-  
-  const attireSubtitle = document.querySelector('.attire-section-subtitle');
-  if (attireSubtitle) {
-    if (tipo === 'dama-honra') attireSubtitle.textContent = 'Vista-se para brilhar ao nosso lado';
-    else if (tipo === 'florista') attireSubtitle.textContent = 'Espalhe flores com elegância';
-  }
-  
-  // ========== ALTERAR O NOME DAS ABAS (TABS) CONFORME O TIPO ==========
-  const tabMadrinhas = document.getElementById('tab-madrinhas');
-  const tabPadrinhosElem = document.getElementById('tab-padrinhos');
-  
-  if (tipo === 'dama-honra') {
-    // Alterar texto da aba principal
-    if (tabMadrinhas) {
-      tabMadrinhas.innerHTML = '<i class="fas fa-crown"></i> Dama de Honra';
-      tabMadrinhas.style.display = 'flex';
-    }
-    // Ocultar aba de padrinhos
-    if (tabPadrinhosElem) tabPadrinhosElem.style.display = 'none';
-  } 
-  else if (tipo === 'florista') {
-    // Alterar texto da aba principal
-    if (tabMadrinhas) {
-      tabMadrinhas.innerHTML = '<i class="fas fa-flower"></i> Florista';
-      tabMadrinhas.style.display = 'flex';
-    }
-    // Ocultar aba de padrinhos
-    if (tabPadrinhosElem) tabPadrinhosElem.style.display = 'none';
-  }
-  
-  // Garantir que apenas uma aba fique visível e ativa
-  const tabsContainer = document.getElementById('attire-tabs');
-  if (tabsContainer) {
-    if (tipo === 'dama-honra' || tipo === 'florista') {
-      tabsContainer.style.maxWidth = '280px';
-      tabsContainer.style.justifyContent = 'center';
-    }
-  }
-  
-  // Garantir que o painel de madrinhas está ativo e visível
-  panelMadrinhas.classList.add('active');
-  
-  // Forçar que a aba de madrinhas esteja ativa
-  if (tabMadrinhas) {
-    tabMadrinhas.classList.add('active');
-  }
-}function showUnauthorizedMessage() {
-    const loader = document.getElementById('loader');
-    if (loader) loader.style.display = 'none';
-    
-    const container = document.querySelector('.container');
-    if (!container) return;
-    
-    container.innerHTML = `
-      <div style="text-align:center;padding:4rem 2rem;background:var(--white);border-radius:24px;box-shadow:0 20px 50px rgba(93,76,64,.15);">
-        <div style="font-size:5rem;margin-bottom:1rem;">🔒</div>
-        <h1 style="font-family:'Playfair Display';font-size:2.5rem;color:var(--brown);margin-bottom:1rem;">Acesso Não Autorizado</h1>
-        <p style="font-size:1.3rem;color:var(--muted);margin-bottom:2rem;">Você não tem permissão para acessar esta página.</p>
-        <p style="font-size:1.1rem;color:var(--dark);">Este link é exclusivo para os padrinhos convidados.<br>Se você acha que isso é um erro, entre em contato com os noivos.</p>
-        <div style="margin-top:2rem;">
-          <a href="https://wa.me/351968922572" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">
-            <i class="fab fa-whatsapp"></i> Falar com os Noivos
-          </a>
-          <a href="index.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--brown);color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-left:1rem;">
-            <i class="fas fa-home"></i> Página Inicial
-          </a>
-        </div>
-      </div>
-    `;
-  }
-
-  async function checkIfAlreadyAccepted(coupleData) {
-    try {
-      const coupleName = coupleData.nome;
-      const coupleType = coupleData.tipo;
-      const messages = getMessageByType(coupleType, coupleName);
-
-      const couple_id = coupleName.toLowerCase()
-        .replace(/\s+&\s+/g, '-')
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '');
-
-      console.log('Checking couple_id:', couple_id);
-
-      const { data, error } = await sb
-        .from('godparents')
-        .select('*')
-        .eq('couple_id', couple_id)
-        .eq('resposta', 'Sim');
-
-      if (error) throw error;
-
-      // Esconder loader
-      document.getElementById('loader').style.display = 'none';
-
-      if (data && data.length > 0) {
-        // Já aceitou - mostrar área de padrinhos
-        console.log('Já aceitou, mostrando área de padrinhos');
-        document.getElementById('godparent-names-display').textContent = coupleName;
-        document.getElementById('godparent-area').style.display = 'block';
-      } else {
-        // Ainda não respondeu - mostrar formulário
-        console.log('Ainda não respondeu, mostrando formulário');
-        applyFormCustomizations(coupleType, coupleName, messages);
-        document.getElementById('invite-card').style.display = 'block';
-        document.getElementById('form-section').style.display = 'block';
-      }
-    } catch (err) {
-      console.error('Erro ao verificar status:', err);
-      
-      // Em caso de erro, mostrar o formulário mesmo assim
-      document.getElementById('loader').style.display = 'none';
-      
-      const coupleName = coupleData.nome;
-      const coupleType = coupleData.tipo;
-      const messages = getMessageByType(coupleType, coupleName);
-      
-      applyFormCustomizations(coupleType, coupleName, messages);
-      document.getElementById('invite-card').style.display = 'block';
-      document.getElementById('form-section').style.display = 'block';
-      
-      showToast('Erro ao verificar status, mas você pode responder normalmente.', 'error');
-    }
-  }
-
-
-async function checkSpecialAlreadyAccepted(specialData) {
-  try {
-    const nome = specialData.nome;
-    const tipo = specialData.tipo;
-    const titulo = specialData.titulo;
-    const messages = getSpecialMessage(tipo, nome, titulo);
-    
-    const convite_id = `special_${nome.toLowerCase()}`;
-
-    console.log('Checking special convite_id:', convite_id);
-
-    const { data, error } = await sb
-      .from('godparents')
-      .select('*')
-      .eq('couple_id', convite_id)
-      .eq('resposta', 'Sim');
-
-    if (error) throw error;
-
-    // PRIMEIRO: aplicar as customizações visuais
-    applySpecialFormCustomizations(tipo, nome, titulo, messages);
-    
-    // SEGUNDO: esconder o loader
-    document.getElementById('loader').style.display = 'none';
-
-    if (data && data.length > 0) {
-      // Já aceitou
-      document.getElementById('godparent-names-display').textContent = nome;
-      document.getElementById('godparent-area').style.display = 'block';
-      document.getElementById('invite-card').style.display = 'none';
-      document.getElementById('form-section').style.display = 'none';
-    } else {
-      // Ainda não respondeu - mostrar formulário com as customizações já aplicadas
-      document.getElementById('invite-card').style.display = 'block';
-      document.getElementById('form-section').style.display = 'block';
-    }
-  } catch (err) {
-    console.error('Erro ao verificar status especial:', err);
-    
-    document.getElementById('loader').style.display = 'none';
-    
-    const nome = specialData.nome;
-    const tipo = specialData.tipo;
-    const titulo = specialData.titulo;
-    const messages = getSpecialMessage(tipo, nome, titulo);
-    
-    applySpecialFormCustomizations(tipo, nome, titulo, messages);
-    document.getElementById('invite-card').style.display = 'block';
-    document.getElementById('form-section').style.display = 'block';
-    
-    showToast('Erro ao verificar status, mas você pode responder normalmente.', 'error');
-  }
 }
-  function initializeApp() {
-  const loader = document.getElementById('loader');
-  if (loader) loader.style.display = 'flex';
-  
+
+function showForm() {
+  document.getElementById('loader').style.display = 'none';
+  document.getElementById('invite-card').style.display = 'block';
+  document.getElementById('form-section').style.display = 'block';
+}
+
+function showGodparentArea(nome) {
+  document.getElementById('loader').style.display = 'none';
   document.getElementById('invite-card').style.display = 'none';
   document.getElementById('form-section').style.display = 'none';
-  document.getElementById('godparent-area').style.display = 'none';
+  document.getElementById('godparent-names-display').textContent = nome;
+  document.getElementById('godparent-area').style.display = 'block';
+}
 
-  // Verificar primeiro convidados especiais
+function showUnauthorizedMessage() {
+  document.getElementById('loader').style.display = 'none';
+  document.querySelector('.container').innerHTML = `
+    <div style="text-align:center;padding:4rem 2rem;background:var(--white);border-radius:24px;box-shadow:0 20px 50px rgba(93,76,64,.15);">
+      <div style="font-size:5rem;margin-bottom:1rem;">🔒</div>
+      <h1 style="font-family:'Playfair Display';font-size:2.5rem;color:var(--brown);margin-bottom:1rem;">Acesso Não Autorizado</h1>
+      <p style="font-size:1.3rem;color:var(--muted);margin-bottom:2rem;">Você não tem permissão para acessar esta página.</p>
+      <p style="font-size:1.1rem;color:var(--dark);">Este link é exclusivo para os padrinhos convidados.<br>Se você acha que isso é um erro, entre em contato com os noivos.</p>
+      <div style="margin-top:2rem;">
+        <a href="https://wa.me/351968922572" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">
+          <i class="fab fa-whatsapp"></i> Falar com os Noivos
+        </a>
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--brown);color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-left:1rem;">
+          <i class="fas fa-home"></i> Página Inicial
+        </a>
+      </div>
+    </div>`;
+}
+
+/* ── INIT ── */
+async function initializeApp() {
+  document.getElementById('loader').style.display = 'flex';
+
   const specialData = getSpecialFromUrl();
-  console.log('Special data:', specialData);
-  
+  const coupleData  = getCoupleFromUrl();
+
   if (specialData) {
-    checkSpecialAlreadyAccepted(specialData);
+    const { nome, tipo, titulo } = specialData;
+    const messages = getSpecialMessage(tipo, nome, titulo);
+    fillInvite(nome, messages);
+    // Formulário: sem campo padrinho, textos singulares
+    document.getElementById('padrinho-fields-row').style.display = 'none';
+    document.getElementById('form-title').textContent = 'Responda ao Convite';
+    document.getElementById('form-sub').innerHTML = `Querida <span>${nome}</span>, preencha seus dados abaixo`;
+    document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
+    document.getElementById('accept-no-text').textContent = 'Não poderei';
+    setupAttireForSpecial(tipo, nome);
+
+    try {
+      const { data } = await sb.from('godparents').select('*').eq('couple_id', `special_${nome.toLowerCase()}`).eq('resposta', 'Sim');
+      if (data && data.length > 0) showGodparentArea(titulo + ': ' + nome);
+      else showForm();
+    } catch { showForm(); }
     return;
   }
 
-  // Depois padrinhos tradicionais
-  const coupleData = getCoupleFromUrl();
-  console.log('Couple data:', coupleData);
+  if (!coupleData) { showUnauthorizedMessage(); return; }
 
-  if (!coupleData) {
-    showUnauthorizedMessage();
-    return;
+  const { nome: coupleName, tipo: coupleType } = coupleData;
+  const messages = getMessageByType(coupleType, coupleName);
+  fillInvite(coupleName, messages);
+
+  if (coupleType === 'madrinha') {
+    document.getElementById('padrinho-fields-row').style.display = 'none';
+    document.getElementById('form-title').textContent = 'Responda ao Convite';
+    document.getElementById('form-sub').innerHTML = `Querida <span>${coupleName}</span>, preencha seus dados abaixo`;
+    document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
+    document.getElementById('accept-no-text').textContent = 'Não poderei';
+    setupAttireForMadrinha();
+  } else {
+    document.getElementById('padrinho-fields-row').style.display = 'grid';
+    setupAttireForCasal();
   }
 
-  checkIfAlreadyAccepted(coupleData);
-}
-
-
-  /* ── FORM SUBMIT ─────────────────────────────────── */
-async function submitSpecialResponse(specialData) {
-  const nomeConvidado = specialData.nome;
-  const tipo = specialData.tipo;  // 'dama-honra' ou 'florista'
-  const titulo = specialData.titulo;
-  
-  const nome = document.getElementById('madrinha-name').value.trim();
-  const email = document.getElementById('madrinha-email').value.trim();
-  const responseEl = document.querySelector('input[name="godparent-response"]:checked');
-
-  if (!nome) return showToast('Por favor, digite seu nome.', 'error');
-  if (!email) return showToast('Por favor, digite seu email.', 'error');
-  if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
-
-  const resposta = responseEl.value;
-  const convite_id = `special_${nomeConvidado.toLowerCase()}`;
-
+  const couple_id = coupleName.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
   try {
-    // Usar o tipo correto (dama-honra ou florista) - seu banco já aceita esses valores
-    const { error } = await sb.from('godparents')
-      .insert([{ 
-        nome: nome, 
-        email: email, 
-        resposta: resposta, 
-        couple: nomeConvidado, 
-        couple_id: convite_id, 
-        tipo: tipo  // 'dama-honra' ou 'florista'
-      }]);
-    if (error) throw error;
-
-    showToast('Resposta enviada com sucesso! 💌');
-
-    if (resposta === 'Sim') {
-      document.getElementById('invite-card').style.display = 'none';
-      document.getElementById('form-section').style.display = 'none';
-      document.getElementById('godparent-area').style.display = 'block';
-      document.getElementById('godparent-names-display').textContent = `${titulo}: ${nomeConvidado}`;
-    } else {
-      document.getElementById('form-section').innerHTML = `
-        <div style="text-align:center;padding:2rem;">
-          <div style="font-size:3rem;margin-bottom:1rem;">💌</div>
-          <h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${nomeConvidado}</h2>
-          <p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p>
-        </div>`;
-    }
-  } catch (err) {
-    console.error('Erro ao salvar:', err);
-    if (err.code === '23505') {
-      showToast('Este email já foi registado.', 'error');
-    } else {
-      showToast('Erro ao salvar. Tente novamente.', 'error');
-    }
-  }
+    const { data } = await sb.from('godparents').select('*').eq('couple_id', couple_id).eq('resposta', 'Sim');
+    if (data && data.length > 0) showGodparentArea(coupleName);
+    else showForm();
+  } catch { showForm(); }
 }
 
+/* ── SUBMIT ── */
 window.submitGodparentResponse = async function() {
-  // Verificar primeiro se é convidado especial
   const specialData = getSpecialFromUrl();
-  const coupleData = getCoupleFromUrl();
-  
-  if (specialData) {
-    await submitSpecialResponse(specialData);
-    return;
-  }
-  
-  if (!coupleData) {
-    showToast('Erro ao identificar o casal', 'error');
-    return;
-  }
+  const coupleData  = getCoupleFromUrl();
 
-  const coupleType = coupleData.tipo;
-  const madrinhaNome = document.getElementById('madrinha-name').value.trim();
+  const madrinhaNome  = document.getElementById('madrinha-name').value.trim();
   const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
-  const padrinhoNome = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
-  const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
-  const couple = document.getElementById('selected-couple').value;
-  const responseEl = document.querySelector('input[name="godparent-response"]:checked');
+  const responseEl    = document.querySelector('input[name="godparent-response"]:checked');
 
-  if (!madrinhaNome) return showToast('Por favor, digite o nome.', 'error');
+  if (!madrinhaNome)  return showToast('Por favor, digite o nome.', 'error');
   if (!madrinhaEmail) return showToast('Por favor, digite o email.', 'error');
-  if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
-  if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
-  if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
+  if (!responseEl)    return showToast('Por favor, selecione se aceita ou não.', 'error');
 
   const resposta = responseEl.value;
-  const couple_id = couple.toLowerCase()
-    .replace(/\s+&\s+/g, '-')
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '');
+
+  if (specialData) {
+    const { nome, tipo } = specialData;
+    try {
+      const { error } = await sb.from('godparents').insert([{ nome: madrinhaNome, email: madrinhaEmail, resposta, couple: nome, couple_id: `special_${nome.toLowerCase()}`, tipo }]);
+      if (error) throw error;
+      showToast('Resposta enviada com sucesso! 💌');
+      if (resposta === 'Sim') showGodparentArea(specialData.titulo + ': ' + nome);
+      else document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${nome}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+    } catch(err) {
+      if (err.code === '23505') showToast('Este email já foi registado.', 'error');
+      else showToast('Erro ao salvar. Tente novamente.', 'error');
+    }
+    return;
+  }
+
+  if (!coupleData) return showToast('Erro ao identificar o casal', 'error');
+
+  const { nome: couple, tipo: coupleType } = coupleData;
+  const padrinhoNome  = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
+  const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
+
+  if (coupleType === 'casal' && !padrinhoNome)  return showToast('Por favor, digite o nome do padrinho.', 'error');
+  if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
+
+  const couple_id = couple.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
 
   try {
-    const { error: e1 } = await sb.from('godparents')
-      .insert([{ 
-        nome: madrinhaNome, 
-        email: madrinhaEmail, 
-        resposta, 
-        couple, 
-        couple_id, 
-        tipo: 'madrinha' 
-      }]);
+    const { error: e1 } = await sb.from('godparents').insert([{ nome: madrinhaNome, email: madrinhaEmail, resposta, couple, couple_id, tipo: 'madrinha' }]);
     if (e1) throw e1;
-
     if (coupleType === 'casal') {
-      const { error: e2 } = await sb.from('godparents')
-        .insert([{ 
-          nome: padrinhoNome, 
-          email: padrinhoEmail, 
-          resposta, 
-          couple, 
-          couple_id, 
-          tipo: 'padrinho' 
-        }]);
+      const { error: e2 } = await sb.from('godparents').insert([{ nome: padrinhoNome, email: padrinhoEmail, resposta, couple, couple_id, tipo: 'padrinho' }]);
       if (e2) throw e2;
     }
-
     showToast('Resposta enviada com sucesso! 💌');
-
-    if (resposta === 'Sim') {
-      document.getElementById('invite-card').style.display = 'none';
-      document.getElementById('form-section').style.display = 'none';
-      document.getElementById('godparent-area').style.display = 'block';
-      document.getElementById('godparent-names-display').textContent = couple;
-    } else {
-      document.getElementById('form-section').innerHTML = `
-        <div style="text-align:center;padding:2rem;">
-          <div style="font-size:3rem;margin-bottom:1rem;">💌</div>
-          <h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2>
-          <p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p>
-        </div>`;
-    }
-  } catch (err) {
-    console.error('Erro ao salvar:', err);
-    if (err.code === '23505') {
-      showToast('Um dos emails já foi registado.', 'error');
-    } else {
-      showToast('Erro ao salvar. Tente novamente.', 'error');
-    }
+    if (resposta === 'Sim') showGodparentArea(couple);
+    else document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+  } catch(err) {
+    if (err.code === '23505') showToast('Um dos emails já foi registado.', 'error');
+    else showToast('Erro ao salvar. Tente novamente.', 'error');
   }
 };
-  /* ── LIGHTBOX ──────────────────────────────────────── */
-  window.openLightbox = function(src, caption) {
-    const lb = document.getElementById('lightbox');
-    const img = document.getElementById('lightbox-img');
-    const cap = document.getElementById('lightbox-caption');
-    img.src = src;
-    img.alt = caption;
-    cap.textContent = caption;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
 
-  window.closeLightbox = function(e) {
-    if (!e || e.target === document.getElementById('lightbox') || e.target.closest('.lightbox-close')) {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  };
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
-  });
-
-window.switchTab = function(tab) {
-  // Remove active de todos os painéis E limpa qualquer inline style
-  document.querySelectorAll('.attire-panel').forEach(p => {
-    p.classList.remove('active');
-    p.style.removeProperty('display');
-  });
-  
-  document.querySelectorAll('.attire-tab-btn').forEach(b => b.classList.remove('active'));
-  
-  const panel = document.getElementById('panel-' + tab);
-  const btn = document.getElementById('tab-' + tab);
-  
-  if (panel) panel.classList.add('active');
-  if (btn) btn.classList.add('active');
+/* ── LIGHTBOX ── */
+window.openLightbox = function(src, caption) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-img').alt = caption;
+  document.getElementById('lightbox-caption').textContent = caption;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
 };
-</script>
+window.closeLightbox = function(e) {
+  if (!e || e.target === document.getElementById('lightbox') || e.target.closest('.lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+};
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') }); });
 
-<script>
-// Animação de confete ao clicar no botão flutuante
+/* ── FLOAT BTN CONFETTI ── */
 document.getElementById('floatBtn').addEventListener('click', function(e) {
-  e.preventDefault(); // Previne o redirecionamento imediato
-  
-  // Criar partículas de confete
-  const colors = ['#c9a87a', '#e8d5a3', '#5d4c40', '#b8965a', '#d4bda1'];
-  const btnRect = this.getBoundingClientRect();
-  const centerX = btnRect.left + btnRect.width / 2;
-  const centerY = btnRect.top + btnRect.height / 2;
-  
+  e.preventDefault();
+  const colors = ['#c9a87a','#e8d5a3','#5d4c40','#b8965a','#d4bda1'];
+  const r = this.getBoundingClientRect();
   for (let i = 0; i < 20; i++) {
     setTimeout(() => {
-      const particle = document.createElement('div');
-      particle.className = 'confetti-particle';
-      particle.style.left = centerX + 'px';
-      particle.style.top = centerY + 'px';
-      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-      particle.style.transform = `rotate(${Math.random() * 360}deg)`;
-      document.body.appendChild(particle);
-      
-      setTimeout(() => particle.remove(), 1000);
+      const p = document.createElement('div');
+      p.className = 'confetti-particle';
+      p.style.left = (r.left + r.width/2) + 'px';
+      p.style.top  = (r.top  + r.height/2) + 'px';
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1000);
     }, i * 30);
   }
-  
-  // Pequeno atraso antes de redirecionar para ver a animação
-  setTimeout(() => {
-    window.location.href = this.href;
-  }, 300);
+  setTimeout(() => { window.location.href = this.href; }, 300);
 });
 
-// Função para verificar e carregar imagens com fallback
-// Função para verificar e carregar imagens com fallback
-function setupImageFallback() {
-    const images = document.querySelectorAll('.attire-img-card img');
-    images.forEach(img => {
-        // Verificar se a imagem já tem onerror definido
-        if (!img.hasAttribute('data-fallback-set')) {
-            img.setAttribute('data-fallback-set', 'true');
-            img.onerror = function() {
-                console.log('Imagem não encontrada:', this.src);
-                this.style.display = 'none';
-                const placeholder = this.nextElementSibling;
-                if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
-                    placeholder.style.display = 'flex';
-                }
-            };
-            
-            // Verificar se a imagem já está carregada ou com erro
-            if (img.complete) {
-                if (img.naturalWidth === 0) {
-                    img.onerror();
-                } else {
-                    img.style.display = 'block';
-                    const placeholder = this.nextElementSibling;
-                    if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
-                        placeholder.style.display = 'none';
-                    }
-                }
-            } else {
-                img.onload = function() {
-                    this.style.display = 'block';
-                    const placeholder = this.nextElementSibling;
-                    if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
-                        placeholder.style.display = 'none';
-                    }
-                };
-            }
-        }
-    });
-}
-// Chamar após o DOM carregar
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(setupImageFallback, 100);
-});
-
-
-// Função para garantir que os painéis sejam exibidos corretamente para casais
-
-// Modificar a função initializeApp para chamar ensurePanelsVisibility após carregar
-
-
-// Chamar a função também quando o DOM estiver completamente carregado
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(ensurePanelsVisibility, 500);
-});
-
+/* ── START ── */
+document.addEventListener('DOMContentLoaded', initializeApp);
 </script>
 </body>
 </html>
-
-<style>
-  /* ── LOADER ──────────────────────────────────────── */
-.loader-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-  background: var(--white);
-  border-radius: 24px;
-  padding: 3rem;
-  box-shadow: 0 20px 50px rgba(93,76,64,.15);
-}
-
-.loader-hearts {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.loader-heart {
-  font-size: 2.5rem;
-  color: var(--gold);
-  animation: loaderPulse 1.4s ease-in-out infinite;
-}
-
-.loader-heart:nth-child(2) { animation-delay: 0.2s; }
-.loader-heart:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes loaderPulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.3); opacity: 1; }
-}
-
-.loader-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  color: var(--brown);
-  margin-bottom: 1rem;
-}
-
-.loader-subtext {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
-  color: var(--muted);
-  font-style: italic;
-}
-
-.loader-progress {
-  width: 200px;
-  height: 4px;
-  background: rgba(201,168,122,.2);
-  border-radius: 4px;
-  margin-top: 2rem;
-  overflow: hidden;
-  position: relative;
-}
-
-.loader-progress::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40%;
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--accent));
-  border-radius: 4px;
-  animation: loaderProgress 1.5s ease-in-out infinite;
-}
-
-@keyframes loaderProgress {
-  0% { left: -40%; }
-  100% { left: 100%; }
-}
-
-.attire-panel.active {
-  display: block !important;
-  animation: fadeInUp .5s ease;
-}
-
-</style>
