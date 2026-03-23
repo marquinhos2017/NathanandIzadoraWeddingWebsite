@@ -1622,33 +1622,92 @@ document.getElementById('floatBtn').addEventListener('click', function(e) {
 });
 
 // Função para verificar e carregar imagens com fallback
+// Função para verificar e carregar imagens com fallback
 function setupImageFallback() {
     const images = document.querySelectorAll('.attire-img-card img');
     images.forEach(img => {
-        img.onerror = function() {
-            this.style.display = 'none';
-            const placeholder = this.nextElementSibling;
-            if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
-                placeholder.style.display = 'flex';
-            }
-        };
-        
-        // Verificar se a imagem já está carregada
-        if (!img.complete) {
-            img.onload = function() {
-                this.style.display = 'block';
+        // Verificar se a imagem já tem onerror definido
+        if (!img.hasAttribute('data-fallback-set')) {
+            img.setAttribute('data-fallback-set', 'true');
+            img.onerror = function() {
+                console.log('Imagem não encontrada:', this.src);
+                this.style.display = 'none';
                 const placeholder = this.nextElementSibling;
                 if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
-                    placeholder.style.display = 'none';
+                    placeholder.style.display = 'flex';
                 }
             };
+            
+            // Verificar se a imagem já está carregada ou com erro
+            if (img.complete) {
+                if (img.naturalWidth === 0) {
+                    img.onerror();
+                } else {
+                    img.style.display = 'block';
+                    const placeholder = this.nextElementSibling;
+                    if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
+                        placeholder.style.display = 'none';
+                    }
+                }
+            } else {
+                img.onload = function() {
+                    this.style.display = 'block';
+                    const placeholder = this.nextElementSibling;
+                    if (placeholder && placeholder.classList.contains('attire-img-placeholder')) {
+                        placeholder.style.display = 'none';
+                    }
+                };
+            }
         }
     });
 }
-
 // Chamar após o DOM carregar
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(setupImageFallback, 100);
+});
+
+
+// Função para garantir que os painéis sejam exibidos corretamente para casais
+function ensurePanelsVisibility() {
+    const coupleData = getCoupleFromUrl();
+    if (coupleData && coupleData.tipo === 'casal') {
+        // Garantir que o painel de padrinhos está visível
+        const panelPadrinhos = document.getElementById('panel-padrinhos');
+        if (panelPadrinhos) {
+            panelPadrinhos.style.display = 'block';
+            // Garantir que não está com display none do CSS
+            panelPadrinhos.classList.remove('active');
+            panelPadrinhos.classList.add('active');
+        }
+        
+        // Garantir que a aba de padrinhos está visível
+        const tabPadrinhos = document.getElementById('tab-padrinhos');
+        if (tabPadrinhos) {
+            tabPadrinhos.style.display = 'flex';
+        }
+        
+        // Garantir que o container das tabs tem o tamanho correto
+        const tabsEl = document.getElementById('attire-tabs');
+        if (tabsEl) {
+            tabsEl.style.maxWidth = '400px';
+            tabsEl.style.margin = '0 auto 2rem';
+        }
+        
+        // Verificar e corrigir o fallback das imagens
+        setTimeout(setupImageFallback, 200);
+    }
+}
+
+// Modificar a função initializeApp para chamar ensurePanelsVisibility após carregar
+const originalInitializeApp = initializeApp;
+window.initializeApp = function() {
+    originalInitializeApp();
+    setTimeout(ensurePanelsVisibility, 500);
+};
+
+// Chamar a função também quando o DOM estiver completamente carregado
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(ensurePanelsVisibility, 500);
 });
 
 </script>
