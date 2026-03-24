@@ -280,11 +280,11 @@ body{background:linear-gradient(135deg,var(--ivory) 0%,var(--warm) 100%);font-fa
   <div class="godparent-area" id="godparent-area" style="display:none">
     <div class="area-header">
       <h2>Bem-vindos, <span id="godparent-names-display"></span>!</h2>
-      <p>Área exclusiva para padrinhos</p>
+      <p>Área exclusiva</p>
     </div>
     <div class="welcome-message">
       <i class="fas fa-heart" style="color:var(--gold);margin-right:.8rem;"></i>
-      É com imensa alegria que confirmamos sua presença como padrinhos. Preparamos todas as informações para este dia especial.
+      É com imensa alegria que confirmamos sua presença. Preparamos todas as informações para este dia especial.
     </div>
     <h3 style="font-family:'Playfair Display';margin-bottom:1.5rem;">
       <i class="fas fa-ring" style="color:var(--gold);margin-right:.5rem;"></i>
@@ -310,7 +310,7 @@ body{background:linear-gradient(135deg,var(--ivory) 0%,var(--warm) 100%);font-fa
     <!-- TRAJE -->
     <div class="attire-section">
       <div class="attire-section-header">
-        <h2 class="attire-section-title"><em id="attire-title-em">Traje</em> dos Padrinhos</h2>
+        <h2 class="attire-section-title"><em id="attire-title-em">Traje dos Padrinhos</em> </h2>
         <p class="attire-section-subtitle" id="attire-subtitle">Vista-se para fazer parte desta memória</p>
       </div>
 
@@ -377,14 +377,14 @@ body{background:linear-gradient(135deg,var(--ivory) 0%,var(--warm) 100%);font-fa
 
       <div style="text-align:center;margin-top:2rem;font-style:italic;color:var(--muted);font-size:1.05rem;">
         <i class="fas fa-heart" style="color:var(--gold);margin-right:.4rem;"></i>
-        O traje dos padrinhos faz parte da identidade visual deste dia único
+        O traje acima faz parte da identidade visual deste dia único
         <i class="fas fa-heart" style="color:var(--gold);margin-left:.4rem;"></i>
       </div>
     </div>
 
     <!-- SCHEDULE -->
     <div class="info-card" style="margin-top:1.5rem;">
-      <h3><i class="fas fa-clock"></i> Cronograma para Padrinhos</h3>
+      <h3><i class="fas fa-clock"></i> Cronograma</h3>
       <div class="schedule-item"><div class="schedule-time">15:30</div><div class="schedule-desc"><h5>Chegada dos Padrinhos</h5><p>Chegada ao local da cerimónia para fotos e preparativos</p></div></div>
       <div class="schedule-item"><div class="schedule-time">16:30</div><div class="schedule-desc"><h5>Recepção aos Convidados</h5><p>Padrinhos auxiliam na recepção dos demais convidados</p></div></div>
       <div class="schedule-item"><div class="schedule-time">17:00</div><div class="schedule-desc"><h5>Cerimónia</h5><p>Entrada dos padrinhos antes dos noivos</p></div></div>
@@ -421,8 +421,7 @@ body{background:linear-gradient(135deg,var(--ivory) 0%,var(--warm) 100%);font-fa
 
 <script>
 /* ═══════════════════════════════════════════════
-   ÚNICA fonte de verdade para toda a lógica JS
-   Sem funções duplicadas, sem setTimeout em conflito
+   SCRIPT COMPLETO CORRIGIDO - PAIS FUNCIONANDO
 ═══════════════════════════════════════════════ */
 
 /* ── SUPABASE ── */
@@ -440,6 +439,8 @@ const coupleMapping = {
   'bruna-e-heber':         { nome: 'Bruna e Heber',         tipo: 'casal' },
   'lorena':                { nome: 'Lorena',                tipo: 'madrinha' },
   'nicole':                { nome: 'Nicole',                tipo: 'madrinha' },
+  'sueli-e-ivanir':        { nome: 'Sueli e Ivanir',        tipo: 'pais-noivo' },
+  'gerson-e-rose':         { nome: 'Gerson e Rose',         tipo: 'pais-noiva' },
 };
 
 const specialMapping = {
@@ -448,7 +449,20 @@ const specialMapping = {
   'esther':  { nome: 'Esther',  tipo: 'florista',   titulo: 'Florista' },
 };
 
-/* ── URL HELPERS ── */
+/* ── FUNÇÃO PARA PEGAR PAIS DA URL (DEFINIDA PRIMEIRO) ── */
+function getParentsFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('pais')) {
+    const val = urlParams.get('pais');
+    if (val === 'sueli-ivanir') return { nome: 'Sueli e Ivanir', tipo: 'pais-noivo' };
+    if (val === 'gerson-rose') return { nome: 'Gerson e Rose', tipo: 'pais-noiva' };
+  }
+  const path = window.location.pathname;
+  if (path.includes('sueli-e-ivanir')) return { nome: 'Sueli e Ivanir', tipo: 'pais-noivo' };
+  if (path.includes('gerson-e-rose')) return { nome: 'Gerson e Rose', tipo: 'pais-noiva' };
+  return null;
+}
+
 function getCoupleFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('casal')) return coupleMapping[urlParams.get('casal')] || null;
@@ -480,7 +494,7 @@ function showToast(msg, type = 'success') {
   setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
 }
 
-/* ── TABS — única definição ── */
+/* ── TABS ── */
 window.switchTab = function(tab) {
   document.querySelectorAll('.attire-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.attire-tab-btn').forEach(b => b.classList.remove('active'));
@@ -490,14 +504,13 @@ window.switchTab = function(tab) {
   if (btn)   btn.classList.add('active');
 };
 
-/* ── HELPERS de visibilidade ── */
 function hidePanel(id) {
   const el = document.getElementById(id);
-  if (el) { el.classList.remove('active'); }
+  if (el) el.classList.remove('active');
 }
 function showPanel(id) {
   const el = document.getElementById(id);
-  if (el) { el.classList.add('active'); }
+  if (el) el.classList.add('active');
 }
 function hideTab(id) {
   const el = document.getElementById(id);
@@ -508,19 +521,83 @@ function showTab(id) {
   if (el) el.style.removeProperty('display');
 }
 
-/* ── CONFIGURAR ÁREA DE TRAJE para CASAL ── */
+/* ── FUNÇÃO PARA MENSAGEM DOS PAIS ── */
+function getParentsMessage(tipo, nome) {
+  const isNoivo = tipo === 'pais-noivo';
+  const titulo = isNoivo ? 'Pais do Noivo' : 'Pais da Noiva';
+  return {
+    mensagem: `<p>Com imensa alegria e gratidão, queremos convidar vocês para fazerem parte de um dos momentos mais importantes das nossas vidas.</p>
+      <p>Pai e mãe, vocês são nossa base, nosso porto seguro. Não há honra maior do que tê-los ao nosso lado neste dia, testemunhando a união que é fruto do amor que vocês nos mostraram.</p>
+      <p>Será uma alegria imensa caminharmos até o altar sabendo que vocês estão ali, torcendo e celebrando conosco.</p>`,
+    pergunta: `❤️ ${nome}, vocês aceitam estar ao nosso lado como <strong>${titulo}</strong> neste dia tão especial? ❤️`
+  };
+}
+
+/* ── FUNÇÃO PARA TRAJE DOS PAIS ── */
+function setupAttireForParents(tipo) {
+  const tabPadrinhos = document.getElementById('tab-padrinhos');
+  const panelPadrinhos = document.getElementById('panel-padrinhos');
+  if (tabPadrinhos) tabPadrinhos.style.display = 'none';
+  if (panelPadrinhos) panelPadrinhos.style.display = 'none';
+  
+  const tabMadrinhas = document.getElementById('tab-madrinhas');
+  const panelMadrinhas = document.getElementById('panel-madrinhas');
+  const attireTitleEm = document.getElementById('attire-title-em');
+  const attireSubtitle = document.getElementById('attire-subtitle');
+  
+  if (tabMadrinhas) {
+    tabMadrinhas.innerHTML = '<i class="fas fa-users"></i> Traje dos Pais';
+  }
+  
+  if (attireTitleEm) attireTitleEm.textContent = 'Traje dos Pais';
+  if (attireSubtitle) attireSubtitle.textContent = 'Elegância para este dia especial';
+  
+  const isNoivo = tipo === 'pais-noivo';
+  const imagens = isNoivo ? [
+    { src: 'pai-noiva3.jpeg', label: 'Sueli', sub: 'Mãe do Noivo' },
+    { src: 'pai-noivo1.jpeg', label: 'Ivanir', sub: 'Pai do Noivo' }
+  ] : [
+    { src: 'pai-noivo2.jpeg', label: 'Rose', sub: 'Mãe da Noiva' },
+    { src: 'pai-noivo1.jpeg', label: 'Gerson', sub: 'Pai da Noiva' }
+  ];
+  
+  if (panelMadrinhas) {
+    panelMadrinhas.innerHTML = `
+      <div class="attire-gallery">
+        <div class="attire-img-card" onclick="openLightbox('${imagens[0].src}','${imagens[0].label} — ${imagens[0].sub}')">
+          <img src="${imagens[0].src}" alt="${imagens[0].label}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>${imagens[0].label}</div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">${imagens[0].label}<span>${imagens[0].sub}</span></div>
+        </div>
+        <div class="attire-img-card" onclick="openLightbox('${imagens[1].src}','${imagens[1].label} — ${imagens[1].sub}')">
+          <img src="${imagens[1].src}" alt="${imagens[1].label}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>${imagens[1].label}</div>
+          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
+          <div class="attire-img-label">${imagens[1].label}<span>${imagens[1].sub}</span></div>
+        </div>
+      </div>
+    `;
+  }
+  
+  const attireTabs = document.getElementById('attire-tabs');
+  if (attireTabs) attireTabs.style.maxWidth = '280px';
+  
+  showPanel('panel-madrinhas');
+  if (tabMadrinhas) tabMadrinhas.classList.add('active');
+}
+
+/* ── FUNÇÕES DE TRAJE EXISTENTES ── */
 function setupAttireForCasal() {
   showTab('tab-madrinhas');
   showTab('tab-padrinhos');
   document.getElementById('attire-tabs').style.maxWidth = '400px';
-  // Painel de madrinhas activo por defeito, padrinhos escondido
   hidePanel('panel-padrinhos');
   showPanel('panel-madrinhas');
   document.getElementById('tab-madrinhas').classList.add('active');
   document.getElementById('tab-padrinhos').classList.remove('active');
 }
 
-/* ── CONFIGURAR ÁREA DE TRAJE para MADRINHA ── */
 function setupAttireForMadrinha() {
   hideTab('tab-padrinhos');
   hidePanel('panel-padrinhos');
@@ -530,117 +607,63 @@ function setupAttireForMadrinha() {
   document.getElementById('attire-tabs').style.maxWidth = '220px';
 }
 
-/* ── CONFIGURAR ÁREA DE TRAJE para ESPECIAL ── */
-/* ── CONFIGURAR ÁREA DE TRAJE para ESPECIAL ── */
 function setupAttireForSpecial(tipo, nome) {
   hideTab('tab-padrinhos');
   hidePanel('panel-padrinhos');
-  
-  // Esconder também o botão de padrinhos
   const tabPadrinhos = document.getElementById('tab-padrinhos');
   if (tabPadrinhos) tabPadrinhos.style.display = 'none';
-  
-  // Ocultar o painel de padrinhos completamente
   const panelPadrinhos = document.getElementById('panel-padrinhos');
   if (panelPadrinhos) panelPadrinhos.style.display = 'none';
-
   const panelMadrinhas = document.getElementById('panel-madrinhas');
   const attireTitleEm = document.getElementById('attire-title-em');
   const attireSubtitle = document.getElementById('attire-subtitle');
   const tabMadrinhas = document.getElementById('tab-madrinhas');
-
   if (tipo === 'dama-honra') {
-    // Alterar título da seção
     if (attireTitleEm) attireTitleEm.textContent = 'Traje da Dama de Honra';
     if (attireSubtitle) attireSubtitle.textContent = 'Vista-se para brilhar ao nosso lado';
-    
-    // Alterar texto da aba
     if (tabMadrinhas) {
       tabMadrinhas.innerHTML = '<i class="fas fa-crown"></i> Dama de Honra';
       tabMadrinhas.style.display = 'flex';
     }
-    
-    // Atualizar conteúdo do painel
-    panelMadrinhas.innerHTML = `
-      <div class="attire-gallery">
-        <div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')">
-          <img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Dama de Honra</div>
-          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-          <div class="attire-img-label">Dama de Honra<span>Traje especial</span></div>
-        </div>
-      </div>
-`;
-  } 
-  else if (tipo === 'florista') {
-    // Alterar título da seção
+    panelMadrinhas.innerHTML = `<div class="attire-gallery"><div class="attire-img-card" onclick="openLightbox('dama.jpeg','Dama de Honra — Traje especial')"><img src="dama.jpeg" alt="Traje Dama de Honra" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Dama de Honra</div><div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div><div class="attire-img-label">Dama de Honra<span>Traje especial</span></div></div></div>`;
+  } else if (tipo === 'florista') {
     if (attireTitleEm) attireTitleEm.textContent = 'Traje das Floristas';
     if (attireSubtitle) attireSubtitle.textContent = 'Espalhe flores com elegância';
-    
-    // Alterar texto da aba
     if (tabMadrinhas) {
       tabMadrinhas.innerHTML = '<i class="fas fa-flower"></i> Florista';
       tabMadrinhas.style.display = 'flex';
     }
-    
-    // Atualizar conteúdo do painel
-    panelMadrinhas.innerHTML = `
-      <div class="attire-gallery">
-        <div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')">
-          <img src="florista1.jpeg" alt="Florista 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Florista</div>
-          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-          <div class="attire-img-label">Florista<span>Inspiração 1</span></div>
-        </div>
-        <div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')">
-          <img src="florista2.jpeg" alt="Florista 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Florista</div>
-          <div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div>
-          <div class="attire-img-label">Florista<span>Inspiração 2</span></div>
-        </div>
-      </div>
-      `;
+    panelMadrinhas.innerHTML = `<div class="attire-gallery"><div class="attire-img-card" onclick="openLightbox('florista1.jpeg','Florista — Inspiração 1')"><img src="florista1.jpeg" alt="Florista 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Florista</div><div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div><div class="attire-img-label">Florista<span>Inspiração 1</span></div></div><div class="attire-img-card" onclick="openLightbox('florista2.jpeg','Florista — Inspiração 2')"><img src="florista2.jpeg" alt="Florista 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="attire-img-placeholder" style="display:none"><i class="fas fa-image"></i>Florista</div><div class="attire-img-zoom"><i class="fas fa-search-plus"></i></div><div class="attire-img-label">Florista<span>Inspiração 2</span></div></div></div>`;
   }
-
-  // Garantir que apenas a aba de madrinhas/dama/florista está visível e ativa
   showTab('tab-madrinhas');
   showPanel('panel-madrinhas');
   document.getElementById('tab-madrinhas').classList.add('active');
   document.getElementById('attire-tabs').style.maxWidth = '280px';
   document.getElementById('attire-tabs').style.justifyContent = 'center';
 }
-/* ── MENSAGENS ── */
+
 function getMessageByType(tipo, nome) {
   if (tipo === 'casal') return {
-    mensagem: `<p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
-      <p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
-      <p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>`,
+    mensagem: `<p>Com muito amor e alegria, queremos convidar vocês para fazer parte de um dos momentos mais importantes das nossas vidas.</p><p>Mais do que testemunhas do nosso casamento, gostaríamos que fossem nossos <strong>padrinhos</strong>, pessoas especiais que caminham ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p><p>A amizade, o carinho e a importância que vocês têm para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de vocês nesse dia tão sonhado.</p>`,
     pergunta: `❤️ ${nome}, aceitam ser nossos padrinhos de casamento? ❤️`
   };
   return {
-    mensagem: `<p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p>
-      <p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p>
-      <p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>`,
+    mensagem: `<p>Com muito amor e alegria, queremos convidar você para fazer parte de um dos momentos mais importantes das nossas vidas.</p><p>Mais do que testemunha do nosso casamento, gostaríamos que você fosse nossa <strong>madrinha</strong>, uma pessoa especial que caminha ao nosso lado e que desejamos ter ainda mais perto nesse novo capítulo.</p><p>A amizade, o carinho e a importância que você tem para nós fazem desse convite algo muito especial. Será uma grande honra poder contar com o apoio, a presença e o carinho de você nesse dia tão sonhado.</p>`,
     pergunta: `❤️ ${nome}, aceita ser nossa madrinha de casamento? ❤️`
   };
 }
 
 function getSpecialMessage(tipo, nome, titulo) {
   if (tipo === 'dama-honra') return {
-    mensagem: `<p>Querida <strong>${nome}</strong>, hoje queremos fazer um convite muito especial para alguém que ocupa um lugar muito importante em nossos corações.</p>
-      <p>Em um dia tão único e cheio de significado para nós, não poderíamos imaginar esse momento sem a sua presença e alegria.</p>
-      <p>Será uma grande felicidade ter você ao nosso lado, participando desse momento tão especial e tornando nosso casamento ainda mais bonito.</p>`,
+    mensagem: `<p>Querida <strong>${nome}</strong>, hoje queremos fazer um convite muito especial para alguém que ocupa um lugar muito importante em nossos corações.</p><p>Em um dia tão único e cheio de significado para nós, não poderíamos imaginar esse momento sem a sua presença e alegria.</p><p>Será uma grande felicidade ter você ao nosso lado, participando desse momento tão especial e tornando nosso casamento ainda mais bonito.</p>`,
     pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
   };
   return {
-    mensagem: `<p>Querida <strong>${nome}</strong>, em um dia tão especial para nós, queremos que pessoas muito queridas façam parte desse momento inesquecível.</p>
-      <p>No nosso casamento, precisamos de alguém que leve beleza, alegria e muitas flores pelo caminho até o altar. E pensamos em você para essa missão tão importante.</p>
-      <p>Você aceita ser nossa <strong>${titulo}</strong> e espalhar flores no nosso grande dia?</p>`,
+    mensagem: `<p>Querida <strong>${nome}</strong>, em um dia tão especial para nós, queremos que pessoas muito queridas façam parte desse momento inesquecível.</p><p>No nosso casamento, precisamos de alguém que leve beleza, alegria e muitas flores pelo caminho até o altar. E pensamos em você para essa missão tão importante.</p><p>Você aceita ser nossa <strong>${titulo}</strong> e espalhar flores no nosso grande dia?</p>`,
     pergunta: `❤️ ${nome}, você aceita ser nossa <strong>${titulo}</strong>? ❤️`
   };
 }
 
-/* ── PREENCHER FORMULÁRIO ── */
 function fillInvite(nome, messages) {
   document.getElementById('invite-couple-name').textContent = nome;
   document.getElementById('invite-message-content').innerHTML = messages.mensagem;
@@ -665,42 +688,62 @@ function showGodparentArea(nome) {
 
 function showUnauthorizedMessage() {
   document.getElementById('loader').style.display = 'none';
-  document.querySelector('.container').innerHTML = `
-    <div style="text-align:center;padding:4rem 2rem;background:var(--white);border-radius:24px;box-shadow:0 20px 50px rgba(93,76,64,.15);">
-      <div style="font-size:5rem;margin-bottom:1rem;">🔒</div>
-      <h1 style="font-family:'Playfair Display';font-size:2.5rem;color:var(--brown);margin-bottom:1rem;">Acesso Não Autorizado</h1>
-      <p style="font-size:1.3rem;color:var(--muted);margin-bottom:2rem;">Você não tem permissão para acessar esta página.</p>
-      <p style="font-size:1.1rem;color:var(--dark);">Este link é exclusivo para os padrinhos convidados.<br>Se você acha que isso é um erro, entre em contato com os noivos.</p>
-      <div style="margin-top:2rem;">
-        <a href="https://wa.me/351968922572" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;">
-          <i class="fab fa-whatsapp"></i> Falar com os Noivos
-        </a>
-        <a href="index.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--brown);color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-left:1rem;">
-          <i class="fas fa-home"></i> Página Inicial
-        </a>
-      </div>
-    </div>`;
+  document.querySelector('.container').innerHTML = `<div style="text-align:center;padding:4rem 2rem;background:var(--white);border-radius:24px;box-shadow:0 20px 50px rgba(93,76,64,.15);"><div style="font-size:5rem;margin-bottom:1rem;">🔒</div><h1 style="font-family:'Playfair Display';font-size:2.5rem;color:var(--brown);margin-bottom:1rem;">Acesso Não Autorizado</h1><p style="font-size:1.3rem;color:var(--muted);margin-bottom:2rem;">Você não tem permissão para acessar esta página.</p><p style="font-size:1.1rem;color:var(--dark);">Este link é exclusivo para os padrinhos convidados.<br>Se você acha que isso é um erro, entre em contato com os noivos.</p><div style="margin-top:2rem;"><a href="https://wa.me/351968922572" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;"><i class="fab fa-whatsapp"></i> Falar com os Noivos</a><a href="index.html" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--brown);color:#fff;padding:.8rem 1.5rem;border-radius:50px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-left:1rem;"><i class="fas fa-home"></i> Página Inicial</a></div></div>`;
 }
 
-/* ── INIT ── */
+/* ── FUNÇÃO PRINCIPAL INITIALIZEAPP ── */
 async function initializeApp() {
+  console.log("Inicializando...");
   document.getElementById('loader').style.display = 'flex';
-
+  
   const specialData = getSpecialFromUrl();
-  const coupleData  = getCoupleFromUrl();
-
+  const coupleData = getCoupleFromUrl();
+  const parentsData = getParentsFromUrl();
+  
+  console.log("parentsData:", parentsData);
+  
+  // PRIORIDADE: PAIS
+  if (parentsData) {
+    console.log("É PAI! Nome:", parentsData.nome, "Tipo:", parentsData.tipo);
+    const { nome, tipo } = parentsData;
+    const messages = getParentsMessage(tipo, nome);
+    fillInvite(nome, messages);
+    
+    document.getElementById('padrinho-fields-row').style.display = 'grid';
+    document.getElementById('form-title').textContent = 'Confirmem Presença';
+    document.getElementById('form-sub').innerHTML = `Queridos <span>${nome}</span>, preencham seus dados abaixo`;
+    document.getElementById('accept-yes-text').textContent = 'Sim, estaremos presentes!';
+    document.getElementById('accept-no-text').textContent = 'Infelizmente não poderemos';
+    
+    setupAttireForParents(tipo);
+    
+    const couple_id = nome.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-');
+    console.log("couple_id:", couple_id);
+    
+    try {
+      const { data } = await sb.from('godparents').select('*').eq('couple_id', couple_id).eq('resposta', 'Sim');
+      console.log("Dados existentes:", data);
+      if (data && data.length > 0) showGodparentArea(nome);
+      else showForm();
+    } catch (err) {
+      console.error("Erro ao buscar dados:", err);
+      showForm();
+    }
+    return;
+  }
+  
+  // DEPOIS: CONVIDADOS ESPECIAIS
   if (specialData) {
+    console.log("É ESPECIAL!");
     const { nome, tipo, titulo } = specialData;
     const messages = getSpecialMessage(tipo, nome, titulo);
     fillInvite(nome, messages);
-    // Formulário: sem campo padrinho, textos singulares
     document.getElementById('padrinho-fields-row').style.display = 'none';
     document.getElementById('form-title').textContent = 'Responda ao Convite';
     document.getElementById('form-sub').innerHTML = `Querida <span>${nome}</span>, preencha seus dados abaixo`;
     document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
     document.getElementById('accept-no-text').textContent = 'Não poderei';
     setupAttireForSpecial(tipo, nome);
-
     try {
       const { data } = await sb.from('godparents').select('*').eq('couple_id', `special_${nome.toLowerCase()}`).eq('resposta', 'Sim');
       if (data && data.length > 0) showGodparentArea(titulo + ': ' + nome);
@@ -708,13 +751,19 @@ async function initializeApp() {
     } catch { showForm(); }
     return;
   }
-
-  if (!coupleData) { showUnauthorizedMessage(); return; }
-
+  
+  // POR FIM: PADRINHOS
+  if (!coupleData) { 
+    console.log("Nenhum dado encontrado!");
+    showUnauthorizedMessage(); 
+    return; 
+  }
+  
+  console.log("É PADRINHO!");
   const { nome: coupleName, tipo: coupleType } = coupleData;
   const messages = getMessageByType(coupleType, coupleName);
   fillInvite(coupleName, messages);
-
+  
   if (coupleType === 'madrinha') {
     document.getElementById('padrinho-fields-row').style.display = 'none';
     document.getElementById('form-title').textContent = 'Responda ao Convite';
@@ -726,7 +775,7 @@ async function initializeApp() {
     document.getElementById('padrinho-fields-row').style.display = 'grid';
     setupAttireForCasal();
   }
-
+  
   const couple_id = coupleName.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
   try {
     const { data } = await sb.from('godparents').select('*').eq('couple_id', couple_id).eq('resposta', 'Sim');
@@ -738,55 +787,133 @@ async function initializeApp() {
 /* ── SUBMIT ── */
 window.submitGodparentResponse = async function() {
   const specialData = getSpecialFromUrl();
-  const coupleData  = getCoupleFromUrl();
-
-  const madrinhaNome  = document.getElementById('madrinha-name').value.trim();
+  const coupleData = getCoupleFromUrl();
+  const parentsData = getParentsFromUrl();
+  
+  const madrinhaNome = document.getElementById('madrinha-name').value.trim();
   const madrinhaEmail = document.getElementById('madrinha-email').value.trim();
-  const responseEl    = document.querySelector('input[name="godparent-response"]:checked');
-
-  if (!madrinhaNome)  return showToast('Por favor, digite o nome.', 'error');
+  const responseEl = document.querySelector('input[name="godparent-response"]:checked');
+  
+  if (!madrinhaNome) return showToast('Por favor, digite o nome.', 'error');
   if (!madrinhaEmail) return showToast('Por favor, digite o email.', 'error');
-  if (!responseEl)    return showToast('Por favor, selecione se aceita ou não.', 'error');
-
+  if (!responseEl) return showToast('Por favor, selecione se aceita ou não.', 'error');
+  
   const resposta = responseEl.value;
-
-  if (specialData) {
-    const { nome, tipo } = specialData;
+  
+  // PARA PAIS
+  if (parentsData) {
+    const { nome, tipo } = parentsData;
+    const couple_id = nome.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-');
+    const padrinhoNome = document.getElementById('padrinho-name').value.trim();
+    const padrinhoEmail = document.getElementById('padrinho-email').value.trim();
+    
+    if (!padrinhoNome) return showToast('Por favor, digite o nome do pai/mãe.', 'error');
+    if (!padrinhoEmail) return showToast('Por favor, digite o email do pai/mãe.', 'error');
+    
     try {
-      const { error } = await sb.from('godparents').insert([{ nome: madrinhaNome, email: madrinhaEmail, resposta, couple: nome, couple_id: `special_${nome.toLowerCase()}`, tipo }]);
+      // Salvar mãe
+      const { error: e1 } = await sb.from('godparents').insert([{ 
+        nome: madrinhaNome, 
+        email: madrinhaEmail, 
+        resposta, 
+        couple: nome, 
+        couple_id, 
+        tipo: tipo
+      }]);
+      if (e1) throw e1;
+      
+      // Salvar pai
+      const { error: e2 } = await sb.from('godparents').insert([{ 
+        nome: padrinhoNome, 
+        email: padrinhoEmail, 
+        resposta, 
+        couple: nome, 
+        couple_id, 
+        tipo: tipo
+      }]);
+      if (e2) throw e2;
+      
+      showToast('Resposta enviada com sucesso! 💌');
+      if (resposta === 'Sim') showGodparentArea(nome);
+      else {
+        document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${nome}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+      }
+    } catch(err) {
+      console.error('Erro detalhado:', err);
+      if (err.code === '23505') showToast('Um dos emails já foi registado.', 'error');
+      else showToast('Erro ao salvar: ' + (err.message || 'Tente novamente.'), 'error');
+    }
+    return;
+  }
+  
+  // PARA ESPECIAIS
+  if (specialData) {
+    const { nome, tipo, titulo } = specialData;
+    try {
+      const { error } = await sb.from('godparents').insert([{ 
+        nome: madrinhaNome, 
+        email: madrinhaEmail, 
+        resposta, 
+        couple: nome, 
+        couple_id: `special_${nome.toLowerCase()}`, 
+        tipo: tipo 
+      }]);
       if (error) throw error;
       showToast('Resposta enviada com sucesso! 💌');
-      if (resposta === 'Sim') showGodparentArea(specialData.titulo + ': ' + nome);
-      else document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${nome}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+      if (resposta === 'Sim') showGodparentArea(titulo + ': ' + nome);
+      else {
+        document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${nome}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+      }
     } catch(err) {
+      console.error('Erro:', err);
       if (err.code === '23505') showToast('Este email já foi registado.', 'error');
       else showToast('Erro ao salvar. Tente novamente.', 'error');
     }
     return;
   }
-
-  if (!coupleData) return showToast('Erro ao identificar o casal', 'error');
-
+  
+  // PARA PADRINHOS NORMAIS
+  if (!coupleData) return showToast('Erro ao identificar o convite', 'error');
+  
   const { nome: couple, tipo: coupleType } = coupleData;
-  const padrinhoNome  = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
+  const padrinhoNome = coupleType === 'casal' ? document.getElementById('padrinho-name').value.trim() : null;
   const padrinhoEmail = coupleType === 'casal' ? document.getElementById('padrinho-email').value.trim() : null;
-
-  if (coupleType === 'casal' && !padrinhoNome)  return showToast('Por favor, digite o nome do padrinho.', 'error');
+  
+  if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
   if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
-
+  
   const couple_id = couple.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
-
+  
   try {
-    const { error: e1 } = await sb.from('godparents').insert([{ nome: madrinhaNome, email: madrinhaEmail, resposta, couple, couple_id, tipo: 'madrinha' }]);
+    const { error: e1 } = await sb.from('godparents').insert([{ 
+      nome: madrinhaNome, 
+      email: madrinhaEmail, 
+      resposta, 
+      couple, 
+      couple_id, 
+      tipo: 'madrinha' 
+    }]);
     if (e1) throw e1;
+    
     if (coupleType === 'casal') {
-      const { error: e2 } = await sb.from('godparents').insert([{ nome: padrinhoNome, email: padrinhoEmail, resposta, couple, couple_id, tipo: 'padrinho' }]);
+      const { error: e2 } = await sb.from('godparents').insert([{ 
+        nome: padrinhoNome, 
+        email: padrinhoEmail, 
+        resposta, 
+        couple, 
+        couple_id, 
+        tipo: 'padrinho' 
+      }]);
       if (e2) throw e2;
     }
+    
     showToast('Resposta enviada com sucesso! 💌');
     if (resposta === 'Sim') showGodparentArea(couple);
-    else document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+    else {
+      document.getElementById('form-section').innerHTML = `<div style="text-align:center;padding:2rem;"><div style="font-size:3rem;margin-bottom:1rem;">💌</div><h2 style="font-family:'Playfair Display';">Obrigado pela resposta, ${couple}</h2><p style="font-size:1.2rem;color:var(--muted);">Sentiremos sua falta, mas compreendemos. 💛</p></div>`;
+    }
   } catch(err) {
+    console.error('Erro:', err);
     if (err.code === '23505') showToast('Um dos emails já foi registado.', 'error');
     else showToast('Erro ao salvar. Tente novamente.', 'error');
   }
@@ -809,26 +936,33 @@ window.closeLightbox = function(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') }); });
 
 /* ── FLOAT BTN CONFETTI ── */
-document.getElementById('floatBtn').addEventListener('click', function(e) {
-  e.preventDefault();
-  const colors = ['#c9a87a','#e8d5a3','#5d4c40','#b8965a','#d4bda1'];
-  const r = this.getBoundingClientRect();
-  for (let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const p = document.createElement('div');
-      p.className = 'confetti-particle';
-      p.style.left = (r.left + r.width/2) + 'px';
-      p.style.top  = (r.top  + r.height/2) + 'px';
-      p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 1000);
-    }, i * 30);
-  }
-  setTimeout(() => { window.location.href = this.href; }, 300);
-});
+const floatBtn = document.getElementById('floatBtn');
+if (floatBtn) {
+  floatBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const colors = ['#c9a87a','#e8d5a3','#5d4c40','#b8965a','#d4bda1'];
+    const r = this.getBoundingClientRect();
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const p = document.createElement('div');
+        p.className = 'confetti-particle';
+        p.style.left = (r.left + r.width/2) + 'px';
+        p.style.top  = (r.top  + r.height/2) + 'px';
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+      }, i * 30);
+    }
+    setTimeout(() => { window.location.href = this.href; }, 300);
+  });
+}
 
 /* ── START ── */
 document.addEventListener('DOMContentLoaded', initializeApp);
 </script>
 </body>
 </html>
+
+<style>
+  
+</style>

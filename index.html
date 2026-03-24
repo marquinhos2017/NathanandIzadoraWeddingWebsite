@@ -26,6 +26,341 @@ p{font-size:1.15rem;margin-bottom:1rem}
 section{padding:80px 0}
 .container{width:90%;max-width:1200px;margin:0 auto;padding:20px 0}
 
+
+
+/* ════════════════════════════════
+   HEADER & NAVBAR - REFORMULADA
+════════════════════════════════ */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.2rem 0;
+  background: transparent;
+  transition: all 0.4s ease;
+}
+header.scrolled {
+  background: rgba(28, 23, 20, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 0.8rem 0;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(201, 168, 122, 0.2);
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+header.scrolled .logo {
+  color: #e8d5a3;
+  font-size: 1.6rem;
+}
+.logo:hover {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2.2rem;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  transition: all 0.25s;
+  padding: 0.4rem 0;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #c9a87a;
+  transition: width 0.3s ease;
+}
+.nav-links a:hover {
+  color: #e8d5a3;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav-rsvp {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.6rem 1.5rem;
+  background: #c9a87a;
+  color: #1c1714;
+  text-decoration: none;
+  border-radius: 40px;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.nav-rsvp:hover {
+  background: #b8965a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 168, 122, 0.3);
+}
+.nav-admin {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 40px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.nav-admin i {
+  font-size: 0.75rem;
+}
+.nav-admin:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #c9a87a;
+  color: #e8d5a3;
+}
+header.scrolled .nav-admin {
+  border-color: rgba(201, 168, 122, 0.5);
+  color: #e8d5a3;
+}
+header.scrolled .nav-rsvp {
+  background: #c9a87a;
+  color: #1c1714;
+}
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.menu-toggle i {
+  font-size: 1.2rem;
+  color: #fff;
+}
+.menu-toggle:hover {
+  background: rgba(201, 168, 122, 0.3);
+  transform: scale(1.05);
+}
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  max-width: 320px;
+  height: 100vh;
+  background: linear-gradient(145deg, #1c1714 0%, #2a221d 100%);
+  z-index: 1001;
+  padding: 5rem 1.8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
+}
+.mobile-menu.active {
+  right: 0;
+}
+.mobile-header {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.8rem;
+  right: 1.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(201, 168, 122, 0.2);
+}
+.mobile-logo {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #e8d5a3;
+  text-decoration: none;
+}
+.mobile-close {
+  width: 36px;
+  height: 36px;
+  background: rgba(201, 168, 122, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.mobile-close i {
+  color: #c9a87a;
+  font-size: 1rem;
+}
+.mobile-close:hover {
+  background: rgba(201, 168, 122, 0.35);
+  transform: rotate(90deg);
+}
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  flex: 1;
+}
+.mobile-links a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 0.8rem 0;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-bottom: 1px solid rgba(201, 168, 122, 0.08);
+}
+.mobile-links a i {
+  width: 28px;
+  color: #c9a87a;
+  font-size: 0.95rem;
+}
+.mobile-links a:hover {
+  color: #e8d5a3;
+  padding-left: 0.5rem;
+  background: rgba(201, 168, 122, 0.08);
+}
+.mobile-buttons {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  border-top: 1px solid rgba(201, 168, 122, 0.15);
+}
+.mobile-rsvp {
+  background: linear-gradient(135deg, #c9a87a, #b8965a);
+  color: #1c1714;
+  text-align: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 0.9rem;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: 'Jost', sans-serif;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}.mobile-rsvp i {
+  color: #1c1714;
+  font-size: 0.9rem;
+}
+
+.mobile-rsvp:hover {
+  background: linear-gradient(135deg, #b8965a, #9c7548);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(201, 168, 122, 0.3);
+}
+
+.mobile-admin {
+  background: rgba(201, 168, 122, 0.12);
+  border: 1.5px solid rgba(201, 168, 122, 0.35);
+  text-align: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 0.85rem;
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.mobile-admin i {
+  font-size: 0.85rem;
+  color: #c9a87a;
+}
+
+.mobile-admin:hover {
+  background: rgba(201, 168, 122, 0.25);
+  border-color: #c9a87a;
+  transform: translateY(-2px);
+  color: #e8d5a3;
+}
+@media (max-width: 968px) {
+  .nav-links, .nav-buttons { display: none; }
+  .menu-toggle { display: flex; }
+  nav { padding: 0 6%; }
+  .logo { font-size: 1.6rem; }
+}
+@media (max-width: 480px) {
+  .logo { font-size: 1.4rem; }
+  .menu-toggle { width: 38px; height: 38px; }
+  .mobile-menu { width: 85%; padding: 4.5rem 1.5rem 1.5rem; }
+  .mobile-links a { font-size: 1.1rem; padding: 0.7rem 0; }
+}
+
+
+
 /* ════════════════════════════════
    LANDING
 ════════════════════════════════ */
@@ -83,25 +418,7 @@ section{padding:80px 0}
 @keyframes fadeIn{to{opacity:1}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ════════════════════════════════
-   HEADER
-════════════════════════════════ */
-header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 0;background:transparent;transition:all .6s cubic-bezier(.165,.84,.44,1)}
-header.scrolled{background:rgba(26,23,20,.93);padding:.8rem 0;backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
-nav{display:flex;justify-content:space-between;align-items:center;padding:0}
-.logo{font-family:'Dancing Script',cursive;font-size:2rem;font-weight:700;color:#fff;text-decoration:none;transition:all .4s ease}
-header.scrolled .logo{color:var(--gold)}
-.nav-links{display:flex;list-style:none;gap:2rem}
-.nav-links a{text-decoration:none;color:#fff;font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:.03em;transition:color .3s;position:relative;padding-bottom:4px}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s}
-.nav-links a:hover{color:var(--gold)}
-.nav-links a:hover::after{width:100%}
-.nav-rsvp{font-family:'Jost',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;padding:.65rem 1.5rem;border:1px solid rgba(255,255,255,.5);color:#fff;text-decoration:none;transition:all .3s}
-.nav-rsvp:hover,.nav-rsvp:focus{background:var(--gold);border-color:var(--gold);color:#fff}
-header.scrolled .nav-rsvp{border-color:var(--gold);color:var(--gold)}
-.menu-toggle{display:none;font-size:1.5rem;cursor:pointer;color:#fff;transition:transform .3s;z-index:1001}
-header.scrolled .menu-toggle{color:#fff}
-.menu-toggle:hover{transform:rotate(90deg);color:var(--gold)}
+
 
 /* ════════════════════════════════
    HERO
@@ -480,7 +797,7 @@ footer::after{content:'';position:absolute;inset:0;background-image:url("data:im
   .nav-links{display:none}
   .nav-links.active{display:flex;flex-direction:column;align-items:center;justify-content:center;position:fixed;inset:0;background:rgba(26,23,20,.97);gap:2rem;z-index:999}
   .nav-links.active a{font-size:1.5rem}
-  .menu-toggle{display:block}
+
   .details-grid{flex-direction:column;align-items:center}
   .detail-box{max-width:420px;width:100%}
   .detail-sep{flex-direction:row;padding:.5rem 0}
@@ -720,27 +1037,28 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
 </script>
 <!-- HEADER -->
 <!-- HEADER -->
+<!-- HEADER -->
 <header id="header">
   <div class="container">
     <nav>
       <a href="#home" class="logo">N&I</a>
       <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-      <ul class="nav-links" id="navLinks">
+      <ul class="nav-links">
         <li><a href="#home">Início</a></li>
         <li><a href="#details">Detalhes</a></li>
         <li><a href="#historia">História</a></li>
         <li><a href="#traje">Vestuário</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#presentes">Presentes</a></li>
+        <li><a href="#rsvp">RSVP</a></li>
       </ul>
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <a href="#rsvp" class="nav-rsvp">Confirmar Presença</a>
-        <a href="painel.html" class="nav-login" style="font-family:'Jost',sans-serif; font-size:.62rem; font-weight:500; letter-spacing:.3em; text-transform:uppercase; padding:.65rem 1.5rem; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,.3); color:#fff; text-decoration:none; transition:all .3s; border-radius:4px;"><i class="fas fa-lock" style="margin-right:6px;"></i> Admin</a>
+      <div class="nav-buttons">
+        <a href="#rsvp" class="nav-rsvp">Confirmar</a>
+        <a href="painel.html" class="nav-admin"><i class="fas fa-lock"></i> Admin</a>
       </div>
     </nav>
   </div>
 </header>
-
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-content">
@@ -1310,40 +1628,70 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('albumLightb
 </section>
 
 <!-- FOOTER -->
-<footer>
+<!-- FOOTER - VERSÃO REDUZIDA -->
+<footer style="padding: 3rem 0 2rem;">
   <div class="container">
-    <div class="countdown-section">
-      <h3 class="cd-section-title">Contagem Regressiva para o Grande Dia</h3>
-      <div class="footer-cd">
-        <div class="fcd-item"><div class="fcd-num" id="fcdD">--</div><span class="fcd-lbl">Dias</span></div>
-        <div class="fcd-sep">:</div>
-        <div class="fcd-item"><div class="fcd-num" id="fcdH">--</div><span class="fcd-lbl">Horas</span></div>
-        <div class="fcd-sep">:</div>
-        <div class="fcd-item"><div class="fcd-num" id="fcdM">--</div><span class="fcd-lbl">Minutos</span></div>
-        <div class="fcd-sep">:</div>
-        <div class="fcd-item"><div class="fcd-num" id="fcdS">--</div><span class="fcd-lbl">Segundos</span></div>
+    <div class="countdown-section" style="margin-bottom: 2rem;">
+      <h3 class="cd-section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">Contagem Regressiva</h3>
+      <div class="footer-cd" style="gap: 0.5rem;">
+        <div class="fcd-item" style="padding: 0.8rem 0.6rem; min-width: 65px;">
+          <div class="fcd-num" id="fcdD" style="font-size: 1.8rem;">--</div>
+          <span class="fcd-lbl" style="font-size: 0.45rem;">Dias</span>
+        </div>
+        <div class="fcd-sep" style="font-size: 1.2rem;">:</div>
+        <div class="fcd-item" style="padding: 0.8rem 0.6rem; min-width: 65px;">
+          <div class="fcd-num" id="fcdH" style="font-size: 1.8rem;">--</div>
+          <span class="fcd-lbl" style="font-size: 0.45rem;">Horas</span>
+        </div>
+        <div class="fcd-sep" style="font-size: 1.2rem;">:</div>
+        <div class="fcd-item" style="padding: 0.8rem 0.6rem; min-width: 65px;">
+          <div class="fcd-num" id="fcdM" style="font-size: 1.8rem;">--</div>
+          <span class="fcd-lbl" style="font-size: 0.45rem;">Minutos</span>
+        </div>
+        <div class="fcd-sep" style="font-size: 1.2rem;">:</div>
+        <div class="fcd-item" style="padding: 0.8rem 0.6rem; min-width: 65px;">
+          <div class="fcd-num" id="fcdS" style="font-size: 1.8rem;">--</div>
+          <span class="fcd-lbl" style="font-size: 0.45rem;">Segundos</span>
+        </div>
       </div>
-      <p class="cd-msg">Mal podemos esperar para celebrar convosco! ✨</p>
+      <p class="cd-msg" style="font-size: 0.9rem; margin-top: 0.8rem;">Mal podemos esperar para celebrar convosco! ✨</p>
     </div>
-    <div class="footer-main">
-      <span class="footer-logo">Natanael & Izadora</span>
-      <div class="footer-date-badge"><i class="fas fa-calendar-heart"></i><span>07 de Junho de 2026 · Albufeira</span></div>
-      <p class="footer-tagline">Com amor, Natanael e Izadora</p>
-      <div class="social-links">
-        <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="mailto:seuemail@email.com" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
-        <a href="https://wa.me/351968922572" class="social-link" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    
+    <div class="footer-main" style="margin-bottom: 1.5rem;">
+      <span class="footer-logo" style="font-size: 2rem;">Natanael & Izadora</span>
+      <div class="footer-date-badge" style="padding: 0.5rem 1.2rem; margin-bottom: 1rem;">
+        <i class="fas fa-calendar-heart" style="font-size: 0.8rem;"></i>
+        <span style="font-size: 0.8rem;">07 de Junho de 2026 · Albufeira</span>
       </div>
+      <p class="footer-tagline" style="font-size: 1rem; margin-bottom: 1rem;">Com amor, Natanael e Izadora</p>
+      
+      <div class="social-links" style="margin-bottom: 1.2rem; gap: 0.8rem;">
+        <a href="#" class="social-link" style="width: 36px; height: 36px; font-size: 0.9rem;"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link" style="width: 36px; height: 36px; font-size: 0.9rem;"><i class="fab fa-facebook-f"></i></a>
+        <a href="mailto:seuemail@email.com" class="social-link" style="width: 36px; height: 36px; font-size: 0.9rem;"><i class="fas fa-envelope"></i></a>
+        <a href="https://wa.me/351968922572" class="social-link" style="width: 36px; height: 36px; font-size: 0.9rem;"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      
       <div class="hashtag-wrap">
-        <p>Use a nossa hashtag:</p>
-        <div class="hashtag-pill" onclick="copyText('#NatanaelEIzadora2026','Hashtag')"><i class="fas fa-hashtag"></i><span>NatanaelEIzadora2026</span></div>
+        <p style="font-size: 0.7rem;">Use a nossa hashtag:</p>
+        <div class="hashtag-pill" onclick="copyText('#NatanaelEIzadora2026','Hashtag')" style="padding: 0.4rem 1rem;">
+          <i class="fas fa-hashtag" style="font-size: 0.7rem;"></i>
+          <span style="font-size: 0.8rem;">NatanaelEIzadora2026</span>
+        </div>
       </div>
     </div>
-    <div class="footer-divider"><div class="fdiv-line"></div><div class="fdiv-heart"><i class="fas fa-heart"></i></div><div class="fdiv-line"></div></div>
+    
+    <div class="footer-divider" style="margin: 1.5rem 0;">
+      <div class="fdiv-line" style="max-width: 180px;"></div>
+      <div class="fdiv-heart" style="width: 32px; height: 32px; margin: 0 1rem;">
+        <i class="fas fa-heart" style="font-size: 0.9rem;"></i>
+      </div>
+      <div class="fdiv-line" style="max-width: 180px;"></div>
+    </div>
+    
     <div class="footer-copy">
-      <p>© 2026 Casamento Natanael & Izadora. Todos os direitos reservados.</p>
-      <p class="made">Feito com <span class="made-heart">♥</span> para o nosso dia especial</p>
+      <p style="font-size: 0.65rem;">© 2026 Casamento Natanael & Izadora. Todos os direitos reservados.</p>
+      <p class="made" style="font-size: 0.6rem;">Feito com <span class="made-heart">♥</span> para o nosso dia especial</p>
     </div>
   </div>
 </footer>
@@ -1414,20 +1762,6 @@ window.addEventListener('scroll', ()=>{
   document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// ════════════════
-// MOBILE MENU
-// ════════════════
-document.getElementById('menuToggle').addEventListener('click', function(){
-  const nl = document.getElementById('navLinks');
-  nl.classList.toggle('active');
-  this.querySelector('i').className = nl.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
-});
-document.querySelectorAll('.nav-links a, .nav-rsvp').forEach(a=>{
-  a.addEventListener('click', ()=>{
-    document.getElementById('navLinks').classList.remove('active');
-    document.querySelector('#menuToggle i').className = 'fas fa-bars';
-  });
-});
 
 // ════════════════
 // SCROLL REVEAL
@@ -1591,125 +1925,96 @@ function customGift(){
   if(!v || v < 5){ showToast('Valor mínimo de €5.', 'error'); return; }
   showToast(`Obrigado! Utilize os dados de transferência acima para enviar €${v}. 💛`);
 }
-</script>
+
+
+// Mobile Menu
+// Substitua a parte do menu mobile no código JavaScript por esta versão corrigida:
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const body = document.body;
+  const overlay = document.createElement('div'); 
+  overlay.className = 'menu-overlay'; 
+  document.body.appendChild(overlay);
+  
+  const mobileMenu = document.createElement('div'); 
+  mobileMenu.className = 'mobile-menu';
+  mobileMenu.innerHTML = `<div class="mobile-header"><a href="#home" class="mobile-logo">N&I</a><div class="mobile-close"><i class="fas fa-times"></i></div></div>
+    <div class="mobile-links">
+      <a href="#home"><i class="fas fa-home"></i> Início</a>
+      <a href="#details"><i class="fas fa-church"></i> Detalhes</a>
+      <a href="#historia"><i class="fas fa-heart"></i> História</a>
+      <a href="#traje"><i class="fas fa-tshirt"></i> Vestuário</a>
+      <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
+      <a href="#presentes"><i class="fas fa-gift"></i> Presentes</a>
+      <a href="#rsvp"><i class="fas fa-envelope"></i> RSVP</a>
+    </div>
+    <div class="mobile-buttons">
+      <a href="#rsvp" class="mobile-rsvp"><i class="fas fa-check-circle"></i> Confirmar</a>
+      <a href="painel.html" class="mobile-admin" id="mobileAdminLink"><i class="fas fa-lock"></i> Admin</a>
+    </div>`;
+  document.body.appendChild(mobileMenu);
+  
+  const closeBtn = mobileMenu.querySelector('.mobile-close');
+  const adminLink = mobileMenu.querySelector('#mobileAdminLink');
+  
+  function closeMenu() { 
+    mobileMenu.classList.remove('active'); 
+    overlay.classList.remove('active'); 
+    body.style.overflow = ''; 
+  }
+  
+  function openMenu() { 
+    mobileMenu.classList.add('active'); 
+    overlay.classList.add('active'); 
+    body.style.overflow = 'hidden'; 
+  }
+  
+  if(menuToggle) {
+    menuToggle.addEventListener('click', (e) => { 
+      e.stopPropagation(); 
+      if(mobileMenu.classList.contains('active')) closeMenu(); 
+      else openMenu(); 
+    });
+  }
+  
+  overlay.addEventListener('click', closeMenu);
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  
+  // Corrigido: tratamento especial para links externos
+  mobileMenu.querySelectorAll('a').forEach(link => { 
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      
+      // Verifica se é um link externo (começa com http, https, ou é um arquivo .html)
+      if(href && (href.startsWith('http') || href.endsWith('.html') || href.includes('painel'))) {
+        // Para links externos, apenas fecha o menu e permite o navegador navegar
+        closeMenu();
+        // Não previne o comportamento padrão
+        return;
+      }
+      
+      // Para links internos (âncoras), previne e faz scroll suave
+      if(href && href !== '#') {
+        e.preventDefault();
+        closeMenu();
+        const target = document.querySelector(href);
+        if(target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+  
+  window.addEventListener('resize', () => { 
+    if(window.innerWidth > 968 && mobileMenu.classList.contains('active')) closeMenu(); 
+  });
+});</script>
 </body>
 </html>
 
 
-<style>
-  /* ════════════════════════════════
-   MOBILE PADDING FIX
-════════════════════════════════ */
-@media(max-width:768px){
-  .container{
-    width: 85%;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  
-  .hero-content{
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  
-  .rsvp-form-wrap{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .elegant-form{
-    padding: 1.5rem;
-  }
-  
-  .faq-wrap, 
-  .faq-tips, 
-  .faq-contact{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .detail-box{
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-  }
-  
-  .schedule-grid{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  
-  .story-text-wrap{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  
-  .avoid-block,
-  .palette-block,
-  .elegant-block{
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  
-  .gifts-grid{
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  
-  .custom-gift{
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  
-  .registry-grid{
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  
-  .transfer-notes{
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-  
-  .registry-msg{
-    margin-left: 15px;
-    margin-right: 15px;
-  }
-}
 
-@media(max-width:480px){
-  .container{
-    width: 92%;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  
-  .hero-content{
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  
-  .elegant-form{
-    padding: 1.2rem;
-  }
-  
-  .rsvp-deco{
-    gap: 1rem;
-  }
-  
-  .radio-lbl{
-    padding: 1rem;
-    gap: 0.7rem;
-  }
-  
-  .submit-btn{
-    padding: 1rem 2rem;
-    min-width: 180px;
-  }
-}
-</style>
 <style>
   /* ════════════════════════════════
    BOTÃO DE LOGIN (ADMIN)
@@ -1837,4 +2142,122 @@ header.scrolled .nav-login {
     padding:12px 16px;
   }
 }
+</style>
+
+
+
+
+
+
+
+
+<style>
+  /* ════════════════════════════════
+   CURSOR PERSONALIZADO ELEGANTE
+════════════════════════════════ */
+
+/* Cursor personalizado para todo o site */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="%23c9a87a" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="%23c9a87a" stroke="none"/></svg>') 12 12, auto;
+}
+
+/* Cursor para links e elementos clicáveis */
+a, button, .gift-btn, .reg-btn, .nav-rsvp, .nav-admin, .hero-btn, .map-btn, 
+.submit-btn, .custom-btn, .faq-q, .hashtag-pill, .album-hashtag, .social-link,
+.p-circle, .thumb, .strip-photo, .polaroid, .detail-box, .gift-card, .reg-card,
+.menu-toggle, .mobile-close, .mobile-rsvp, .mobile-admin, .look-card, .tip-card {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" fill="none" stroke="%23e8d5a3" stroke-width="1.8"/><path d="M14 6 L14 22 M6 14 L22 14" stroke="%23e8d5a3" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="%23e8d5a3"/></svg>') 14 14, pointer;
+}
+
+/* Cursor para elementos de formulário (input, textarea) */
+input, textarea, select, .form-input {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="2" fill="none" stroke="%23c9a87a" stroke-width="1.5"/><line x1="8" y1="11" x2="14" y2="11" stroke="%23c9a87a" stroke-width="1.5"/></svg>') 11 11, text;
+}
+
+/* Efeito de partículas ao passar o mouse (opcional - mais sutil) */
+a:hover, button:hover, .gift-btn:hover, .reg-btn:hover {
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  filter: brightness(1.02);
+}
+
+/* Efeito de brilho suave ao passar o mouse em elementos importantes */
+.nav-rsvp:hover, .hero-btn:hover, .submit-btn:hover, .custom-btn:hover {
+  box-shadow: 0 0 20px rgba(201, 168, 122, 0.4);
+}
+
+/* Efeito de escala sutil em imagens interativas */
+.thumb img, .strip-photo img, .polaroid img, .gift-img img, .look-img img {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
+}
+
+/* Efeito de destaque em cards ao passar o mouse */
+.detail-box, .gift-card, .reg-card, .look-card, .faq-item {
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.detail-box:hover, .gift-card:hover, .reg-card:hover, .look-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(93, 76, 64, 0.15);
+}
+
+/* Efeito de ripple para botões (clique) */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(201, 168, 122, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.btn-ripple:active::after {
+  width: 200%;
+  height: 200%;
+}
+
+/* Efeito de brilho em bordas de cards ao passar o mouse */
+.reg-card.featured:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 30px rgba(201, 168, 122, 0.3);
+}
+
+/* Efeito de gradiente animado em botões principais */
+.hero-btn, .submit-btn, .nav-rsvp {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hero-btn::before, .submit-btn::before, .nav-rsvp::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+  z-index: -1;
+}
+
+.hero-btn:hover::before, .submit-btn:hover::before, .nav-rsvp:hover::before {
+  left: 100%;
+}
+
+/* Efeito de cursor magnético para elementos principais (opcional - mais avançado) */
+/* Remove se não quiser o efeito magnético */
+/*
+.magnetic-hover {
+  transition: transform 0.2s ease-out;
+}
+*/
 </style>
