@@ -520,19 +520,62 @@ function showTab(id) {
   const el = document.getElementById(id);
   if (el) el.style.removeProperty('display');
 }
-
 /* ── FUNÇÃO PARA MENSAGEM DOS PAIS ── */
 function getParentsMessage(tipo, nome) {
   const isNoivo = tipo === 'pais-noivo';
+  const isNoiva = tipo === 'pais-noiva';
+  
+  if (isNoivo) {
+    return {
+      mensagem: `<p>Talvez essa seja a mensagem mais difícil que eu já escrevi… porque não existem palavras suficientes para agradecer por tudo o que vocês fizeram por mim.</p>
+      <p>A minha história começou antes mesmo de eu entender o que era a vida. No dia 08 de fevereiro de 1999, em meio a tantas dificuldades, medos e incertezas, existia a possibilidade de eu nem estar aqui como estou hoje. Mas Deus, na Sua infinita graça, decidiu fazer um milagre… e esse milagre não foi só me dar vida — foi me dar vocês.</p>
+      <p>Porque, pai e mãe… não foi fácil.</p>
+      <p>Eu sei que não foi.</p>
+      <p>Mesmo quando faltavam condições, nunca faltou amor. Mesmo quando o mundo podia parecer pesado, vocês foram leves comigo. Vocês seguraram minhas mãos quando eu nem sabia andar, e seguraram minha vida inteira quando eu nem percebia.</p>
+      <p>Quantas vezes vocês abriram mão de vocês por mim? Quantas vezes escolheram o meu bem-estar acima do de vocês? Quantas noites, preocupações, orações em silêncio… tudo para que eu estivesse bem.</p>
+      <p>Se hoje eu sou um homem saudável, de pé, com sonhos e pronto para construir uma família, é porque vocês nunca desistiram de mim.</p>
+      <p>Vocês acreditaram… quando talvez nem tudo dava motivos para acreditar.</p>
+      <p>E é por isso que hoje, escrevendo isso, meu coração se enche de emoção.</p>
+      <p>O caçula de vocês… o "bebê"… está dando um dos passos mais importantes da vida.</p>
+      <p>Eu vou me casar.</p>
+      <p>No dia 07 de junho de 2026, começo um novo capítulo. Mas eu não chego lá sozinho. Eu chego com tudo o que vocês colocaram dentro de mim: a fé que vocês me ensinaram, o amor que vocês me deram, os valores que moldaram quem eu sou.</p>
+      <p>Vocês estão em cada parte desse momento.</p>
+      <p>E é impossível imaginar esse dia sem vocês.</p>
+      <p>Mais do que um convite, isso é um pedido, quase como aquele filho pequeno que ainda precisa dos pais: por favor, estejam comigo. Quando eu estiver lá na frente, eu vou procurar vocês. Vou precisar do olhar de vocês, da presença de vocês… porque, no fundo, eu ainda sou aquele filho que sempre encontrou força no abraço de vocês.</p>
+      <p>Se hoje eu sou um milagre, é porque Deus escreveu minha história através do amor de vocês.</p>
+      <p>Obrigado por nunca desistirem de mim. Obrigado por me amarem quando eu nem sabia o que era amor. Obrigado por serem exatamente quem vocês são.</p>
+      <p>Eu amo vocês com toda a minha vida.</p>
+      <p>Com todo o amor de um filho que nunca vai deixar de ser o "bebê" de vocês,</p>
+      <p>Natanael</p>`,
+      pergunta: `❤️ ${nome}, vocês aceitam estar ao nosso lado neste dia tão especial? ❤️`
+    };
+  }
+  
+  if (isNoiva) {
+    return {
+      mensagem: `<p>Queridos pai e mãe,</p>
+      <p>Estou em um novo capítulo da minha vida, olhar para trás e pensar em tudo o que vocês fizeram por mim, me guiando no caminho certo para escolher a pessoa certa.</p>
+      <p>Tudo o que fizeram só me fortaleceu para me tornar quem eu sou hoje. Cada ensinamento, cada cuidado e até cada bronca foram fundamentais para me tornar a mulher que está prestes a se casar.</p>
+      <p>Vocês me ensinaram o valor da família, do respeito, da paciência e, principalmente, o caminho da verdade. É esse ensinamento que levo comigo agora para construir a minha própria família.</p>
+      <p>Pai, obrigada por ser meu exemplo de proteção.<br>
+      Mãe, obrigada pelo exemplo de força.</p>
+      <p>Vocês estiveram comigo quando eu dei os meus primeiros passos, no primeiro dia de aula, quando meu dentinho caiu a primeira vez, na formatura do ensino médio, e agora no dia mais importante da minha vida.</p>
+      <p>Agradeço a vocês por se fazerem parte desse momento e me levarem até ao altar.</p>
+      <p>Com todo o meu amor,</p>
+      <p>Iza</p>`,
+      pergunta: `❤️ ${nome}, vocês aceitam estar ao nosso lado neste dia tão especial? ❤️`
+    };
+  }
+  
+  // Fallback para o formato original caso necessário
   const titulo = isNoivo ? 'Pais do Noivo' : 'Pais da Noiva';
   return {
     mensagem: `<p>Com imensa alegria e gratidão, queremos convidar vocês para fazerem parte de um dos momentos mais importantes das nossas vidas.</p>
       <p>Pai e mãe, vocês são nossa base, nosso porto seguro. Não há honra maior do que tê-los ao nosso lado neste dia, testemunhando a união que é fruto do amor que vocês nos mostraram.</p>
       <p>Será uma alegria imensa caminharmos até o altar sabendo que vocês estão ali, torcendo e celebrando conosco.</p>`,
-    pergunta: `❤️ ${nome}, vocês aceitam estar ao nosso lado como <strong>${titulo}</strong> neste dia tão especial? ❤️`
+    pergunta: `❤️ ${nome}, vocês aceitam estar ao nosso lado neste dia tão especial? ❤️`
   };
 }
-
 /* ── FUNÇÃO PARA TRAJE DOS PAIS ── */
 function setupAttireForParents(tipo) {
   const tabPadrinhos = document.getElementById('tab-padrinhos');
