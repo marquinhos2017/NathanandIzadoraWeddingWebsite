@@ -293,21 +293,16 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
         <div class="table-scroll">
           <table>
             <thead>
-              <tr>
-                <th>#</th><th>Nome & Email</th><th>Telefone</th>
-                <th>Presença</th><th>Mensagem</th><th>Data</th><th></th>
-              </tr>
+              <tr><th>#</th><th>Nome & Email</th><th>Telefone</th><th>Presença</th><th>Mensagem</th><th>Data</th><th></th></tr>
             </thead>
-            <tbody id="rsvpTableBody">
-              <tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin" style="margin-right:.5rem"></i>A carregar dados...</td></tr>
-            </tbody>
+            <tbody id="rsvpTableBody"><tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin"></i> A carregar...</td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
     <!-- ═══════════════════
-         TAB 2 — PADRINHOS
+         TAB 2 — PADRINHOS (ATUALIZADO COM TODOS OS CONVIDADOS)
     ═══════════════════ -->
     <div class="tab-section" id="section-padrinhos">
 
@@ -353,15 +348,8 @@ td{padding:.85rem 1rem;vertical-align:middle;color:var(--dark)}
         </div>
         <div class="table-scroll">
           <table>
-            <thead>
-              <tr>
-                <th>#</th><th>Nome & Email</th><th>Tipo</th>
-                <th>Grupo</th><th>Resposta</th><th>Data</th><th></th>
-              </tr>
-            </thead>
-            <tbody id="gpTableBody">
-              <tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin" style="margin-right:.5rem"></i>A carregar...</td></tr>
-            </tbody>
+            <thead><tr><th>#</th><th>Nome & Email</th><th>Tipo</th><th>Grupo</th><th>Resposta</th><th>Data</th><th></th></tr></thead>
+            <tbody id="gpTableBody"><tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin"></i> A carregar...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -397,9 +385,8 @@ let allGodparents = [];
 let gpFilter      = 'todos';
 
 // ══════════════════════════════════════
-// MAPEAMENTO COMPLETO
-// Cada entrada tem: nome, tipo, categoria, paramType, paramKey
-// paramType: 'casal' ou 'convidado'
+// MAPEAMENTO COMPLETO (ATUALIZADO COM TODOS OS CONVIDADOS)
+// Inclui Padrinhos, Pais, Dama de Honra e Floristas
 // ══════════════════════════════════════
 const allInvites = {
   // ── CASAIS DE PADRINHOS ──
@@ -412,6 +399,10 @@ const allInvites = {
   // ── MADRINHAS INDIVIDUAIS ──
   'lorena':               { nome:'Lorena',               tipo:'madrinha',  categoria:'padrinhos',   paramType:'casal',     paramKey:'lorena' },
   'nicole':               { nome:'Nicole',               tipo:'madrinha',  categoria:'padrinhos',   paramType:'casal',     paramKey:'nicole' },
+  // ── PAIS DO NOIVO ──
+  'sueli-e-ivanir':       { nome:'Sueli e Ivanir',       tipo:'pais-noivo',categoria:'pais',        paramType:'pais',      paramKey:'sueli-e-ivanir' },
+  // ── PAIS DA NOIVA ──
+  'gerson-e-rose':        { nome:'Gerson e Rose',        tipo:'pais-noiva',categoria:'pais',        paramType:'pais',      paramKey:'gerson-e-rose' },
   // ── DAMA DE HONRA ──
   'special_anedina':      { nome:'Anedina',              tipo:'dama-honra',categoria:'especiais',   paramType:'convidado', paramKey:'anedina' },
   // ── FLORISTAS ──
@@ -421,24 +412,33 @@ const allInvites = {
 
 // Labels amigáveis por tipo
 const tipoLabel = {
-  'casal':     'Casal de Padrinhos',
-  'madrinha':  'Madrinha Individual',
-  'dama-honra':'Dama de Honra',
-  'florista':  'Florista',
-};
-const tipoIcon = {
-  'casal':     '💍',
-  'madrinha':  '👰',
-  'dama-honra':'👑',
-  'florista':  '🌸',
+  'casal':      'Casal de Padrinhos',
+  'madrinha':   'Madrinha Individual',
+  'pais-noivo': 'Pais do Noivo',
+  'pais-noiva': 'Pais da Noiva',
+  'dama-honra': 'Dama de Honra',
+  'florista':   'Florista',
 };
 
+const tipoIcon = {
+  'casal':      '💍',
+  'madrinha':   '👰',
+  'pais-noivo': '👨‍👩‍👦',
+  'pais-noiva': '👨‍👩‍👧',
+  'dama-honra': '👑',
+  'florista':   '🌸',
+};
+
+// Função para gerar link de convite (compatível com a página padrinhos.html)
 function buildLink(invite) {
+  if (invite.paramType === 'pais') {
+    return `${BASE_URL}/padrinhos.html?pais=${invite.paramKey}`;
+  }
   return `${BASE_URL}/padrinhos.html?${invite.paramType}=${invite.paramKey}`;
 }
 
 // ══════════════════════════════════════
-// LOGIN
+// LOGIN (igual)
 // ══════════════════════════════════════
 async function doLogin(){
   const email = document.getElementById('login-email').value.trim();
@@ -480,7 +480,7 @@ function switchTab(tab){
 // ══════════════════════════════════════
 async function loadData(){
   const tbody = document.getElementById('rsvpTableBody');
-  tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin" style="margin-right:.5rem"></i>A carregar...</td></tr>';
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="7"><i class="fas fa-spinner fa-spin"></i> A carregar...<\/td><\/tr>';
   const { data, error } = await sb.from('rsvp').select('*').order('created_at',{ascending:false});
   if(error){ showToast('Erro: '+error.message,'error'); return; }
   allData = data || [];
@@ -527,7 +527,7 @@ function renderTable(){
   document.getElementById('tableCount').textContent = `${filtered.length} de ${allData.length} registos`;
   const tbody = document.getElementById('rsvpTableBody');
   if(!filtered.length){
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo encontrado.</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo encontrado.</p></div><\/td><\/tr>`;
     return;
   }
   tbody.innerHTML = filtered.map((r,i) => {
@@ -535,17 +535,14 @@ function renderTable(){
     const badge = r.presenca==='Sim' ? '<span class="presenca-badge badge-sim">✓ Sim</span>' : '<span class="presenca-badge badge-nao">✗ Não</span>';
     const msgTxt = r.mensagem ? r.mensagem.substring(0,50)+(r.mensagem.length>50?'…':'') : '<span style="color:#ccc">—</span>';
     return `<tr>
-      <td style="color:var(--muted);font-size:.8rem">${i+1}</td>
-      <td class="td-nome"><strong>${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small></td>
-      <td class="td-contact">${escHtml(r.telefone||'—')}</td>
-      <td>${badge}</td>
-      <td class="td-msg" onclick="viewDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" title="${escHtml(r.mensagem||'')}">${msgTxt}</td>
-      <td class="td-date">${dt}</td>
-      <td><div class="td-actions">
-        <button class="row-btn view" onclick="viewDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" title="Ver detalhe"><i class="fas fa-eye"></i></button>
-        <button class="row-btn del" onclick="deleteRsvpRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button>
-      </div></td>
-    </tr>`;
+      <td style="color:var(--muted);font-size:.8rem">${i+1}<\/td>
+      <td class="td-nome"><strong>${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small><\/td>
+      <td class="td-contact">${escHtml(r.telefone||'—')}<\/td>
+      <td>${badge}<\/td>
+      <td class="td-msg" onclick="viewDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" title="${escHtml(r.mensagem||'')}">${msgTxt}<\/td>
+      <td class="td-date">${dt}<\/td>
+      <td><div class="td-actions"><button class="row-btn view" onclick="viewDetail(${JSON.stringify(r).replace(/"/g,'&quot;')})" title="Ver detalhe"><i class="fas fa-eye"></i></button><button class="row-btn del" onclick="deleteRsvpRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button><\/div><\/td>
+    <\/tr>`;
   }).join('');
 }
 function setFilter(btn, filter){
@@ -586,7 +583,7 @@ function updateGpStats(){
 }
 
 // ══════════════════════════════════════
-// RENDER GODPARENTS
+// RENDER GODPARENTS (Cards + Tabela)
 // ══════════════════════════════════════
 function setGpFilter(btn, filter){
   gpFilter = filter;
@@ -619,10 +616,11 @@ function renderGodparents(){
     pendingList.innerHTML = pendingIds.map(id => {
       const inv  = allInvites[id];
       const link = buildLink(inv);
+      const tipoNome = tipoLabel[inv.tipo] || inv.tipo;
       return `<div class="pending-item">
         <div>
           <div class="pending-nome">${tipoIcon[inv.tipo] || '👤'} ${escHtml(inv.nome)}</div>
-          <div class="pending-tipo">${tipoLabel[inv.tipo] || inv.tipo}</div>
+          <div class="pending-tipo">${tipoNome}</div>
         </div>
         <div style="display:flex;gap:.5rem;align-items:center">
           <button class="copy-link-btn" onclick="copyLink('${escHtml(link)}','${escHtml(inv.nome)}')">
@@ -637,7 +635,6 @@ function renderGodparents(){
   }
 
   // ── Cards ──
-  // Filtrar grupos
   let visibleEntries = Object.entries(grouped);
   if(gpFilter === 'pendente') visibleEntries = [];
   else if(gpFilter === 'Sim') visibleEntries = visibleEntries.filter(([,m]) => m.some(r => r.resposta==='Sim'));
@@ -650,8 +647,9 @@ function renderGodparents(){
     );
   }
 
-  // Separar por categoria
+  // Separar por categoria (padrinhos, pais, especiais)
   const padrinhosEntries = visibleEntries.filter(([id]) => allInvites[id]?.categoria === 'padrinhos');
+  const paisEntries      = visibleEntries.filter(([id]) => allInvites[id]?.categoria === 'pais');
   const especiaisEntries = visibleEntries.filter(([id]) => allInvites[id]?.categoria === 'especiais');
   const unknownEntries   = visibleEntries.filter(([id]) => !allInvites[id]);
 
@@ -661,6 +659,10 @@ function renderGodparents(){
   if(padrinhosEntries.length){
     html += `<div class="section-group-title"><i class="fas fa-ring"></i> Padrinhos & Madrinhas (${padrinhosEntries.length})</div>`;
     html += `<div class="couples-grid">${padrinhosEntries.map(([id,m]) => buildCard(id,m)).join('')}</div>`;
+  }
+  if(paisEntries.length){
+    html += `<div class="section-group-title"><i class="fas fa-heart"></i> Pais dos Noivos (${paisEntries.length})</div>`;
+    html += `<div class="couples-grid">${paisEntries.map(([id,m]) => buildCard(id,m)).join('')}</div>`;
   }
   if(especiaisEntries.length){
     html += `<div class="section-group-title"><i class="fas fa-star"></i> Convidadas Especiais (${especiaisEntries.length})</div>`;
@@ -676,9 +678,6 @@ function renderGodparents(){
   }
 
   container.innerHTML = html;
-
-  // Stats dos grupos
-  document.getElementById('gp-couples-count') && (document.getElementById('gp-couples-count').textContent = `${visibleEntries.length} grupos com resposta`);
 
   renderGpTable(q);
 }
@@ -700,9 +699,14 @@ function buildCard(coupleId, members){
   const typeClass = isSpecial ? 'couple-card-type type-special' : 'couple-card-type';
 
   const membersHtml = members.map(m => {
-    const isM  = m.tipo === 'madrinha' || isSpecial;
-    const avatarClass = isSpecial ? 'avatar-special' : (isM ? 'avatar-madrinha' : 'avatar-padrinho');
-    const icon = tipoIcon[m.tipo] || (isM ? '👰' : '🤵');
+    const isM  = m.tipo === 'madrinha' || isSpecial || tipo === 'pais-noiva' || tipo === 'pais-noivo';
+    let avatarClass = 'avatar-special';
+    let icon = '👤';
+    if (isSpecial) { avatarClass = 'avatar-special'; icon = tipoIcon[tipo] || '✨'; }
+    else if (m.tipo === 'madrinha') { avatarClass = 'avatar-madrinha'; icon = '👰'; }
+    else if (m.tipo === 'padrinho') { avatarClass = 'avatar-padrinho'; icon = '🤵'; }
+    else if (tipo === 'pais-noivo' || tipo === 'pais-noiva') { avatarClass = 'avatar-special'; icon = tipoIcon[tipo]; }
+
     return `<div class="couple-member">
       <div class="member-avatar ${avatarClass}">${icon}</div>
       <div class="member-info">
@@ -720,7 +724,6 @@ function buildCard(coupleId, members){
   }, null);
   const dateStr = latestDate ? latestDate.toLocaleDateString('pt-PT') : '—';
 
-  // Link
   const link = inv ? buildLink(inv) : '#';
 
   return `<div class="couple-card ${statusClass}">
@@ -756,7 +759,7 @@ function renderGpTable(q = ''){
   document.getElementById('gp-tableCount').textContent = `${filtered.length} de ${allGodparents.length} registos`;
   const tbody = document.getElementById('gpTableBody');
   if(!filtered.length){
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo.</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhum registo.</p></div><\/td><\/tr>`;
     return;
   }
   tbody.innerHTML = filtered.map((r,i) => {
@@ -766,14 +769,14 @@ function renderGpTable(q = ''){
       : '<span class="presenca-badge badge-nao">✗ Não</span>';
     const icon  = tipoIcon[r.tipo] || '👤';
     return `<tr>
-      <td style="color:var(--muted);font-size:.8rem">${i+1}</td>
-      <td class="td-nome"><strong>${icon} ${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small></td>
-      <td><span style="font-size:.75rem;text-transform:capitalize;color:var(--brown)">${escHtml(r.tipo||'—')}</span></td>
-      <td style="font-size:.82rem;color:var(--muted)">${escHtml(r.couple||'—')}</td>
-      <td>${badge}</td>
-      <td class="td-date">${dt}</td>
-      <td><button class="row-btn del" onclick="deleteGpRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button></td>
-    </tr>`;
+      <td style="color:var(--muted);font-size:.8rem">${i+1}<\/td>
+      <td class="td-nome"><strong>${icon} ${escHtml(r.nome||'')}</strong><small>${escHtml(r.email||'')}</small><\/td>
+      <td><span style="font-size:.75rem;text-transform:capitalize;color:var(--brown)">${escHtml(r.tipo||'—')}</span><\/td>
+      <td style="font-size:.82rem;color:var(--muted)">${escHtml(r.couple||'—')}<\/td>
+      <td>${badge}<\/td>
+      <td class="td-date">${dt}<\/td>
+      <td><button class="row-btn del" onclick="deleteGpRow('${r.id}','${escHtml(r.nome||'')}')" title="Apagar"><i class="fas fa-trash"></i></button><\/td>
+    <\/tr>`;
   }).join('');
 }
 
