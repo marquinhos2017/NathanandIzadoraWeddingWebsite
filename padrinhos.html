@@ -819,12 +819,37 @@ async function initializeApp() {
     setupAttireForCasal();
   }
   
-  const couple_id = coupleName.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
-  try {
-    const { data } = await sb.from('godparents').select('*').eq('couple_id', couple_id).eq('resposta', 'Sim');
-    if (data && data.length > 0) showGodparentArea(coupleName);
-    else showForm();
-  } catch { showForm(); }
+ // Gerar couple_id com remoção CORRETA de acentos
+const couple_id = coupleName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+&\s+/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+
+console.log("🔍 Buscando por couple_id:", couple_id);
+
+try {
+  const { data } = await sb
+    .from('godparents')
+    .select('*')
+    .eq('couple_id', couple_id)
+    .eq('resposta', 'Sim');
+  
+  console.log("📊 Resultado da busca:", data);
+  
+  if (data && data.length > 0) {
+    console.log("✅ Confirmado! Mostrando área exclusiva");
+    showGodparentArea(coupleName);
+  } else {
+    console.log("📝 Sem resposta SIM, mostrando formulário");
+    showForm();
+  }
+} catch (err) { 
+  console.error("❌ Erro:", err);
+  showForm(); 
+}
 }
 
 /* ── SUBMIT ── */
