@@ -760,7 +760,14 @@ async function initializeApp() {
     
     setupAttireForParents(tipo);
     
-    const couple_id = nome.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-');
+let couple_id;
+if (tipo === 'pais-noivo') {
+    couple_id = 'sueli-ivanir';
+} else if (tipo === 'pais-noiva') {
+    couple_id = 'gerson-e-rose';  // Atenção: é "gerson-e-rose" para corresponder ao banco
+} else {
+    couple_id = nome.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-');
+}
     console.log("couple_id:", couple_id);
     
     try {
@@ -776,25 +783,55 @@ async function initializeApp() {
   }
   
   // DEPOIS: CONVIDADOS ESPECIAIS
-  if (specialData) {
-    console.log("É ESPECIAL!");
-    const { nome, tipo, titulo } = specialData;
-    const messages = getSpecialMessage(tipo, nome, titulo);
-    fillInvite(nome, messages);
-    document.getElementById('padrinho-fields-row').style.display = 'none';
-    document.getElementById('form-title').textContent = 'Responda ao Convite';
-    document.getElementById('form-sub').innerHTML = `Querida <span>${nome}</span>, preencha seus dados abaixo`;
-    document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
-    document.getElementById('accept-no-text').textContent = 'Não poderei';
-    setupAttireForSpecial(tipo, nome);
-    try {
-      const { data } = await sb.from('godparents').select('*').eq('couple_id', `special_${nome.toLowerCase()}`).eq('resposta', 'Sim');
-      if (data && data.length > 0) showGodparentArea(titulo + ': ' + nome);
-      else showForm();
-    } catch { showForm(); }
-    return;
+// DEPOIS: CONVIDADOS ESPECIAIS
+if (specialData) {
+  console.log("É ESPECIAL!");
+  const { nome, tipo, titulo } = specialData;
+  const messages = getSpecialMessage(tipo, nome, titulo);
+  fillInvite(nome, messages);
+  document.getElementById('padrinho-fields-row').style.display = 'none';
+  document.getElementById('form-title').textContent = 'Responda ao Convite';
+  document.getElementById('form-sub').innerHTML = `Querida <span>${nome}</span>, preencha seus dados abaixo`;
+  document.getElementById('accept-yes-text').textContent = 'Sim, aceito!';
+  document.getElementById('accept-no-text').textContent = 'Não poderei';
+  setupAttireForSpecial(tipo, nome);
+  
+  // CORREÇÃO: definir couple_id correto para cada especial
+  let couple_id;
+  if (nome === 'Anedina') {
+    couple_id = 'special_anedina';
+  } else if (nome === 'Laura') {
+    couple_id = 'special_laura';
+  } else if (nome === 'Esther') {
+    couple_id = 'special_esther';
+  } else {
+    couple_id = `special_${nome.toLowerCase()}`;
   }
   
+  console.log("🔍 Buscando especial por couple_id:", couple_id);
+  
+  try {
+    const { data } = await sb
+      .from('godparents')
+      .select('*')
+      .eq('couple_id', couple_id)
+      .eq('resposta', 'Sim');
+    
+    console.log("📊 Resultado da busca especial:", data);
+    
+    if (data && data.length > 0) {
+      console.log("✅ Especial confirmado! Mostrando área exclusiva");
+      showGodparentArea(titulo + ': ' + nome);
+    } else {
+      console.log("📝 Especial sem resposta SIM, mostrando formulário");
+      showForm();
+    }
+  } catch (err) { 
+    console.error("❌ Erro na busca especial:", err);
+    showForm(); 
+  }
+  return;
+}
   // POR FIM: PADRINHOS
   if (!coupleData) { 
     console.log("Nenhum dado encontrado!");
@@ -819,7 +856,7 @@ async function initializeApp() {
     setupAttireForCasal();
   }
   
- // Gerar couple_id com remoção CORRETA de acentos
+// Gerar couple_id com remoção CORRETA de acentos
 const couple_id = coupleName
     .toLowerCase()
     .normalize('NFD')
@@ -950,7 +987,13 @@ window.submitGodparentResponse = async function() {
   if (coupleType === 'casal' && !padrinhoNome) return showToast('Por favor, digite o nome do padrinho.', 'error');
   if (coupleType === 'casal' && !padrinhoEmail) return showToast('Por favor, digite o email do padrinho.', 'error');
   
-  const couple_id = couple.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+const couple_id = couple
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+&\s+/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
   
   try {
     const { error: e1 } = await sb.from('godparents').insert([{ 
