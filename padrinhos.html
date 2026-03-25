@@ -762,9 +762,9 @@ async function initializeApp() {
     
 let couple_id;
 if (tipo === 'pais-noivo') {
-    couple_id = 'sueli-ivanir';
+    couple_id = 'sueli-e-ivanir';  // CORRIGIDO: com o "e"
 } else if (tipo === 'pais-noiva') {
-    couple_id = 'gerson-e-rose';  // Atenção: é "gerson-e-rose" para corresponder ao banco
+    couple_id = 'gerson-e-rose';
 } else {
     couple_id = nome.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-');
 }
@@ -906,8 +906,9 @@ window.submitGodparentResponse = async function() {
   const resposta = responseEl.value;
   
   // PARA PAIS
-  if (parentsData) {
+if (parentsData) {
     const { nome, tipo } = parentsData;
+    // Gera "sueli-e-ivanir" corretamente
     const couple_id = nome.toLowerCase().replace(/\s+&\s+/g,'-').replace(/\s+/g,'-');
     const padrinhoNome = document.getElementById('padrinho-name').value.trim();
     const padrinhoEmail = document.getElementById('padrinho-email').value.trim();
